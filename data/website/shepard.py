@@ -10,6 +10,10 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
+@app.route('/test')
+def test():
+    return 'this is not a test, but a tribute'
+
 
 # enter debug mode, if this file is called directly
 if __name__ == "__main__":
