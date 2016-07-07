@@ -4,7 +4,7 @@
 
 1. Install Virtualbox and Vagrant
 2. git clone this repo
-3. open a Terminal, run "vagrant up"
+3. open a Terminal, and run "vagrant up"
 4. Wait about 10 min
 5. open a browser: http://127.0.0.1:8080
 
@@ -24,6 +24,8 @@ sudo nano /var/log/nginx/access.log
 sudo nano /var/log/nginx/error.log
 
 ```
+
+
 
 ## Postgres
 
