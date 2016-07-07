@@ -25,6 +25,8 @@ sudo nano /var/log/nginx/error.log
 
 ```
 
+
+
 ## Postgres
 
 Ensure that you have the Postgres 9.5 client. To install it, on Ubuntu Wily 15.10:
