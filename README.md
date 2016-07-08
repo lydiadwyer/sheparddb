@@ -8,6 +8,38 @@
 4. Wait about 10 min
 5. open a browser: http://127.0.0.1:8080
 
+
+
+
+
+## Debug, run Flask directly
+
+```shell
+sudo su -
+cd /var/www/sheparddb/
+sudo ./shepard.py
+# open https://127.0.0.1:9999
+```
+
+
+## Debug, run uWSGI directly
+- http://uwsgi.readthedocs.io/en/latest/Configuration.html
+- http://uwsgi-docs.readthedocs.io/en/latest/Options.html
+- http://uwsgi.readthedocs.io/en/latest/Systemd.html
+- http://uwsgi.readthedocs.io/en/latest/Logging.html
+
+```shell
+sudo su -
+cd /var/www/sheparddb/
+sudo uwsgi --plugin http,python --http :8000 \
+    --ini /vagrant/config/uwsgi/sheparddb.ini \
+    --honour-stdin
+```
+
+
+
+
+
 ## System Logs
 ```shell
 
@@ -52,11 +84,53 @@ sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 # become the postgres user, and run the command psql, with the file db_reset.sql
 ```
 
-
-## Coding Guidelines
+## Coding Guidlines
 
 Don't use Python virtual environments. They don't really offer robust dependency
 isolation, and are an anti-patter in production systems. Instead, just use a
 Vagrant VM.
 
 https://pythonrants.wordpress.com/2013/12/06/why-i-hate-virtualenv-and-pip/
+
+- run pylint, sloccount, radon
+- group related functions into a class
+- a class should do one thing well
+- a class should be less than 500 lines, 20 functions
+- a function should be less than 50 lines
+- move more than 3 lines of duplicate code into a base class (Push Down)
+- use Yoda conditions, ex: (if None is var_name)
+- on failure, log it, abort() or return False
+- review app logs, uwsgi logs, nginx logs, fix errors
+- all logs should ideally be clean all the time
+- read all the Flask, Blueprints, Jinja, SQLAlchemy, Werkzeug, uwsgi, nginx
+http://flask.pocoo.org/docs/0.11/
+http://flask.pocoo.org/docs/0.11/blueprints/
+http://jinja.pocoo.org/docs/dev/
+http://docs.sqlalchemy.org/en/latest/
+http://werkzeug.pocoo.org/docs/0.11/
+https://uwsgi-docs.readthedocs.io/en/latest/
+https://nginx.org/en/docs/
+
+- follow the PEP8 standard
+https://www.python.org/dev/peps/pep-0008/
+
+- document your code using the Sphing documetation format
+http://dolphm.com/pep257-good-python-docstrings-by-example/
+http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
+http://www.sphinx-doc.org/en/stable/ext/example_google.html
+https://pythonhosted.org/an_example_pypi_project/sphinx.html#full-code-example
+
+- use the Flask Blueprint Divisional layout
+http://exploreflask.com/en/latest/blueprints.html#divisional
+
+```shell
+# change the working directory to the website
+cd /var/www/sheparddb
+
+# search for a string in files, case insensitive
+grep -inr "<string>"
+
+# run linting
+pylint ./*.py
+
+```
