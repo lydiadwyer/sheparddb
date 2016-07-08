@@ -35,8 +35,10 @@ sudo uwsgi --plugin http,python --http :8000 \
     --ini /vagrant/config/uwsgi/sheparddb.ini \
     --honour-stdin
 ```
-
-
+## Reset Database
+```shell
+su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
+```
 
 
 
@@ -86,7 +88,7 @@ sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 
 ## Coding Guidlines
 
-Don't use Python virtual environments. They don't really offer robust dependency
+Don\'t use Python virtual environments. They don\'t really offer robust dependency
 isolation, and are an anti-patter in production systems. Instead, just use a
 Vagrant VM.
 

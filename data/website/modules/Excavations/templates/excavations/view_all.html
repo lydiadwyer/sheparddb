@@ -1,0 +1,25 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Excavations</h1>
+    <table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Updated</th>
+    </tr>
+    {% for entry in Excavations.query.all() %}
+    <tr>
+        <td>{{entry.excavation_id}}</td>
+        <td>{{entry.excavation_name}}</td>
+        <td>{{entry.excavation_created}}</td>
+        <td>{{entry.excavation_updated}}</td>
+        <td>
+            <a href="/excavations/view/{{entry.excavation_id}}">View</a>
+            <a href="/excavations/edit/{{entry.excavation_id}}">Edit</a>
+            <a href="/excavations/delete/{{entry.excavation_id}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

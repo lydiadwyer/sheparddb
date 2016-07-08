@@ -17,6 +17,10 @@ GRANT ALL PRIVILEGES ON DATABASE "sheparddb" TO shepard;
 -- Setup database schema:
 CREATE SCHEMA IF NOT EXISTS sheparddb;
 
+
+
+
+
 -- Setup database tables;
 CREATE TABLE artifacts(
     artifact_id         SERIAL PRIMARY KEY,
@@ -53,5 +57,16 @@ CREATE TRIGGER update_artifact_updated_trigger BEFORE UPDATE
     ON artifacts FOR EACH ROW EXECUTE PROCEDURE
     update_artifact_updated();
 
+
+
+
+
+CREATE TABLE excavations(
+    excavation_id         SERIAL PRIMARY KEY,
+    excavation_name       VARCHAR(128),
+    excavation_created    TIMESTAMP,
+    excavation_updated    TIMESTAMP
+);
+ALTER TABLE excavations OWNER TO shepard;
 
 ALTER DATABASE sheparddb OWNER TO shepard;

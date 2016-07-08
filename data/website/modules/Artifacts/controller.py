@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for
-from modules.Shared.database import db
 from modules.Artifacts.model import Artifact
 
 
-
+# collection of URLs for the artifact section of the website
 # setup the controller, use a local folder for templates
 artifacts = Blueprint(
     'artifacts',
