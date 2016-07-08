@@ -1,0 +1,25 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Artifacts</h1>
+    <table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Updated</th>
+    </tr>
+    {% for entry in Artifacts.query.all() %}
+    <tr>
+        <td>{{entry.artifact_id}}</td>
+        <td>{{entry.artifact_name}}</td>
+        <td>{{entry.artifact_created}}</td>
+        <td>{{entry.artifact_updated}}</td>
+        <td>
+            <a href="/artifact/view/{{entry.artifact_id}}">View</a>
+            <a href="/artifact/edit/{{entry.artifact_id}}">Edit</a>
+            <a href="/artifact/delete/{{entry.artifact_id}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
