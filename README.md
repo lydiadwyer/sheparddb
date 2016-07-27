@@ -50,7 +50,10 @@ sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
 ```
 
 
-
+## Reset Database
+```shell
+su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
+```
 
 
 ## System Logs
@@ -99,7 +102,7 @@ sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 
 ## Coding Guidlines
 
-Don't use Python virtual environments. They don't really offer robust dependency
+Don\'t use Python virtual environments. They don\'t really offer robust dependency
 isolation, and are an anti-patter in production systems. Instead, just use a
 Vagrant VM.
 

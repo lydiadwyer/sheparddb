@@ -6,6 +6,7 @@ from flask import Flask, render_template
 # import various routes
 from modules.Shared.database import db
 from modules.Artifacts.controller import artifacts
+from modules.Excavations.controller import excavations
 
 
 
@@ -20,11 +21,12 @@ app.config.from_pyfile('config.py')
 db.init_app(app)
 
 # register the module controllers
+# sets up URL collections, that we wrote in CONTROLLER file
 app.register_blueprint(artifacts)
+app.register_blueprint(excavations)
 
 
-
-
+# http://flask.pocoo.org/docs/0.11/api/#flask.Flask.route
 # example of a simple static route
 @app.route('/')
 def home():
