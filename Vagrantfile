@@ -30,6 +30,11 @@ Vagrant.configure(2) do |config|
         override.vm.network "forwarded_port", guest: 9999, host: 9999 # Flask
     end
     
+    # Configure Vagrant Cachier
+    if Vagrant.has_plugin?("vagrant-cachier")
+        config.cache.scope = :box
+    end
+    
     # default provisioning script
     config.vm.provision :shell, path: "./provision/bootstrap.sh"
 
