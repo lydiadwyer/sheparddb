@@ -21,7 +21,8 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > \
 	/etc/apt/sources.list.d/postgres.list
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 apt-get update
-apt-get install -y postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5
+apt-get install -y postgresql-9.5 postgresql-client-9.5 \
+	postgresql-contrib-9.5 2>&1
 
 # configure Postgres
 cp /vagrant/psql/postgresql.conf /etc/postgresql/9.5/main/postgresql.conf
@@ -67,10 +68,10 @@ echo "INFO: Installing Python..."
 # install, upgrade pip
 apt-get -q install -y python=2.7.5* python-dev python-pip \
 	libpq-dev python-gi libxml2-dev libxslt-dev libffi-dev libssl-dev
-pip install --upgrade pip
+pip install --upgrade pip requests
 
 # install requirements
-pip install -qq -r /vagrant/pip_requirements.txt 2>&1
+pip install -r /vagrant/pip_requirements.txt 2>&1
 
 
 

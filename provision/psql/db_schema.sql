@@ -123,7 +123,8 @@ CREATE TABLE excavation_squares(
     square_size_units       size_units,
     field_id                INT references excavation_fields(field_id)
 );
-COMMENT ON COLUMN excavation_squares.square_size_area IS 'The size of a field in meters';
+COMMENT ON COLUMN excavation_squares.square_size_area
+    IS 'The size of a field in meters';
 ALTER TABLE excavation_squares OWNER TO shepard;
 
 

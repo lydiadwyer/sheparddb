@@ -18,7 +18,7 @@
 sudo su -
 cd /var/www/sheparddb/
 sudo ./shepard.py
-# open https://127.0.0.1:9999
+# open http://127.0.0.1:9999
 ```
 
 
@@ -115,27 +115,38 @@ https://pythonrants.wordpress.com/2013/12/06/why-i-hate-virtualenv-and-pip/
 - a function should be less than 50 lines
 - move more than 3 lines of duplicate code into a base class (Push Down)
 - use Yoda conditions, ex: (if None is var_name)
-- on failure, log it, abort() or return False
+- on failure, log it, and abort()
 - review app logs, uwsgi logs, nginx logs, fix errors
 - all logs should ideally be clean all the time
-- read all the Flask, Blueprints, Jinja, SQLAlchemy, Werkzeug, uwsgi, nginx
-http://flask.pocoo.org/docs/0.11/
-http://flask.pocoo.org/docs/0.11/blueprints/
-http://jinja.pocoo.org/docs/dev/
-http://docs.sqlalchemy.org/en/latest/
-http://werkzeug.pocoo.org/docs/0.11/
-https://uwsgi-docs.readthedocs.io/en/latest/
-https://nginx.org/en/docs/
-
+- read all the documentation:
+    - Flask
+        - http://flask.pocoo.org/docs/0.11/
+        - http://flask.pocoo.org/docs/0.11/api/
+        - http://flask.pocoo.org/docs/0.11/api/#incoming-request-data
+        - http://flask.pocoo.org/docs/0.11/api/#response-objects
+        - http://flask.pocoo.org/docs/0.11/appcontext/
+        - http://flask.pocoo.org/docs/0.11/patterns/appfactories/
+    - Blueprints
+        - http://flask.pocoo.org/docs/0.11/blueprints/
+        - http://flask.pocoo.org/docs/0.11/api/#blueprint-objects
+    - Jinja
+        - http://jinja.pocoo.org/docs/dev/
+    - SQLAlchemy
+        - http://docs.sqlalchemy.org/en/latest/
+    - Werkzeug
+        - http://werkzeug.pocoo.org/docs/0.11/
+        - http://werkzeug.pocoo.org/docs/0.11/wrappers/#werkzeug.wrappers.Request
+    - uwsgi
+        - https://uwsgi-docs.readthedocs.io/en/latest/
+    - nginx
+        - https://nginx.org/en/docs/
 - follow the PEP8 standard
-https://www.python.org/dev/peps/pep-0008/
-
-- document your code using the Sphing documetation format
-http://dolphm.com/pep257-good-python-docstrings-by-example/
-http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
-http://www.sphinx-doc.org/en/stable/ext/example_google.html
-https://pythonhosted.org/an_example_pypi_project/sphinx.html#full-code-example
-
+    - https://www.python.org/dev/peps/pep-0008/
+- document your code using the Sphinx documetation format
+    - http://dolphm.com/pep257-good-python-docstrings-by-example/
+    - http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
+    - http://www.sphinx-doc.org/en/stable/ext/example_google.html
+    - https://pythonhosted.org/an_example_pypi_project/sphinx.html#full-code-example
 - use the Flask Blueprint Divisional layout
 http://exploreflask.com/en/latest/blueprints.html#divisional
 

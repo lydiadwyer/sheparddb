@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, current_app
 from modules.Artifacts.model import Artifact
 
 
@@ -13,6 +13,13 @@ artifacts = Blueprint(
 
 @artifacts.route('/artifacts')
 def view_all_artifacts():
+
+    # error, info, warn, debug, critical, exception, fatal
+    current_app.logger.error('called "/artifacts"')
+    current_app.logger.info('called "/artifacts"')
+    print str(current_app.jinja_env.globals)
+    print str(dir(current_app.jinja_env.globals))
+
     return render_template('artifacts/view_all.html', Artifacts=Artifact)
 
 @artifacts.route('/artifacts/<artifact_id>')
