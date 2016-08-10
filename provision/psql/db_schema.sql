@@ -121,6 +121,9 @@ CREATE TABLE excavation_squares(
     square_size_width       INT,
     square_size_area        INT,
     square_size_units       size_units,
+    square_opening          DATE,
+    square_closing          DATE,
+    square_supervisor       VARCHAR(128) references excavators(excavator_initials),
     field_id                INT references excavation_fields(field_id)
 );
 COMMENT ON COLUMN excavation_squares.square_size_area IS 'The size of a field in meters';
@@ -132,16 +135,47 @@ ALTER TABLE excavation_squares OWNER TO shepard;
 CREATE TABLE excavation_square_loci(
     locus_id               SERIAL PRIMARY KEY,
     locus_name             VARCHAR(128),
-    square_id              INT references excavation_squares(square_id)
+    square_id              INT references excavation_squares(square_id),
+    locus_begin_period     VARCHAR(128) references culture_eras(era_name),
+    locus_end_period       VARCHAR(128) references culture_eras(era_name),
+    z_top                  INT,
+    z_bottom               INT,
+    locus_depth            INT,
+    locus_description      VARCHAR(128),
+    locus_association      VARCHAR(128)         
 );
 ALTER TABLE excavation_square_loci OWNER TO shepard;
 
 
 
 
+CREATE TABLE excavation_square_structure(
+    structure_id               SERIAL PRIMARY KEY,
+    structure_name             VARCHAR(128),
+    structure_description      VARCHAR(128),
+    square_id                  INT references excavation_squares(square_id),
+    structure_begin_period     VARCHAR(128) references culture_eras(era_name),
+    structure_end_period       VARCHAR(128) references culture_eras(era_name)  
+);
+ALTER TABLE excavation_square_loci OWNER TO shepard;
+
+
+
+
+CREATE TABLE pottery_buckets(
+    pottery_bucket_id               SERIAL PRIMARY KEY,
+    pottery_bucket_number           INT,
+    object_count                    INT,
+    pottery_bucket_date             DATE,
+    locus_id                        INT references excavation_square_loci(locus_id)
+);
+ALTER TABLE pottery_buckets OWNER TO shepard;
+
+
 CREATE TABLE excavators(
     excavator_id               SERIAL PRIMARY KEY,
-    excavator_name             VARCHAR(128)
+    excavator_name             VARCHAR(128),
+    excavator_initials         VARCHAR(128)
 );
 ALTER TABLE excavators OWNER TO shepard;
 
@@ -150,10 +184,9 @@ ALTER TABLE excavators OWNER TO shepard;
 
 CREATE TABLE excavation_years(
     excavation_year_id               SERIAL PRIMARY KEY,
-    excavator_year                   INT
+    excavation_year                  DATE
 );
 ALTER TABLE excavation_years OWNER TO shepard;
-
 
 
 
@@ -168,15 +201,57 @@ ALTER TABLE storage_locations OWNER TO shepard;
 
 
 
+CREATE TABLE pottery_buckets(
+    pottery_bucket_id               SERIAL PRIMARY KEY,
+    pottery_bucket_number           INT,
+    pottery_bucket_date             DATE,
+    pottery_bucket_count            INT,
+    excavator_initials              VARCHAR(128) references excavators(excavator_name),
+    square_id                       INT references excavation_squares(square_id),
+    locus_id                        INT references excavation_square_loci(locus_id)
+);
+ALTER TABLE pottery_buckets OWNER TO shepard;
 
-CREATE TABLE excavation_objects(
-    object_id               SERIAL PRIMARY KEY,
+
+
+
+CREATE TABLE excavation_finds(
+    find_id                 SERIAL PRIMARY KEY,
     object_reg_id           INT,
     gen_reg_id              INT,
     square_id               INT references excavation_squares(square_id),
-    locus_id                INT references excavation_square_loci(locus_id)
+    locus_id                INT references excavation_square_loci(locus_id),
+    pottery_bucket_id       INT references pottery_buckets(pottery_bucket_id),
+    unsure_object           BOOLEAN,
 );
-ALTER TABLE excavation_objects OWNER TO shepard;
+ALTER TABLE excavation_finds OWNER TO shepard;
+
+
+
+CREATE TABLE material_categories(
+    material_id              SERIAL PRIMARY KEY,
+    material_type            VARCHAR(128),
+    material_name            VARCHAR(128)
+);
+ALTER TABLE material_categories OWNER TO shepard;
+
+
+
+
+CREATE TABLE ceramic_fabrics(
+    ceramic_fabric_id              SERIAL PRIMARY KEY,
+    ceramic_fabric_name            VARCHAR(128)
+);
+ALTER TABLE ceramic_fabrics OWNER TO shepard;
+
+
+
+
+CREATE TABLE ceramic_decorations(
+    ceramic_decorations_id              SERIAL PRIMARY KEY,
+    ceramic_decorations                 VARCHAR(128)
+);
+ALTER TABLE ceramic_decorations OWNER TO shepard;
 
 
 
@@ -187,6 +262,25 @@ ALTER TABLE excavation_objects OWNER TO shepard;
 
 
 
+-- Need to add chems, make them individual or oxides?
+CREATE TABLE chemical_data(
+    data_id                        SERIAL PRIMARY KEY,
+    material_name                  VARCHAR(128) references material_categories(material_name),
+    find_id                        INT references excavation_finds(find_id)
+);
+ALTER TABLE chemical_data OWNER TO shepard;
+
+
+
+
+-- Date object cannot go below 4713 BC, consider using INT
+CREATE TABLE culture_eras(
+    era_id                             SERIAL PRIMARY KEY,
+    era_name                           VARCHAR(128),
+    era_beginning_date                 DATE,
+    era_ending_date                    DATE
+);
+ALTER TABLE culture_eras OWNER TO shepard;
 
 
 

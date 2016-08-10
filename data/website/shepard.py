@@ -7,7 +7,7 @@ from flask import Flask, render_template
 from modules.Shared.database import db
 from modules.Artifacts.controller import artifacts
 from modules.Excavations.controller import excavations
-
+from modules.Artifacts.model import Artifact
 
 
 
@@ -35,7 +35,9 @@ def home():
 # example of a simple static route, with a unique name
 @app.route('/test')
 def test():
-    return 'this is not a test, but a tribute'
+    artifacts = Artifact.query.all()
+    print str(artifacts)
+    return render_template('artifact.html', artifacts=artifacts)
 
 
 
