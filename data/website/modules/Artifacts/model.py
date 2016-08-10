@@ -17,3 +17,7 @@ class Artifact(db.Model):
     artifact_name = Column(String(128), unique=True)
     artifact_created = Column(DateTime)
     artifact_updated = Column(DateTime)
+    
+    def __repr__(self):
+        return "<Artifact(artifact_id='%s', artifact_name='%s')>" % (
+                             self.artifact_id, self.artifact_name)

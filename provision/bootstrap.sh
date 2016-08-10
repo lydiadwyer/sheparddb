@@ -68,7 +68,8 @@ echo "INFO: Installing Python..."
 # install, upgrade pip
 apt-get -q install -y python=2.7.5* python-dev python-pip \
 	libpq-dev python-gi libxml2-dev libxslt-dev libffi-dev libssl-dev
-pip install --upgrade pip requests
+pip install pip requests --upgrade
+pip install requests['security']
 
 # install requirements
 pip install -r /vagrant/pip_requirements.txt 2>&1
