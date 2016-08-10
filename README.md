@@ -35,11 +35,25 @@ sudo uwsgi --plugin http,python --http :8000 \
     --ini /vagrant/config/uwsgi/sheparddb.ini \
     --honour-stdin
 ```
+
+
+## Code Quality Checks
+
+```shell
+vagrant ssh
+cd /var/www/sheparddb
+pylint -f ./ > pylint.out
+nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace --cover-package=project --cover-inclusive --cover-erase -x tests.py > /dev/null
+clonedigger --cpd-output -o clonedigger.xml project > /dev/null
+sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
+
+```
+
+
 ## Reset Database
 ```shell
 su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 ```
-
 
 
 ## System Logs
