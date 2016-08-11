@@ -1,6 +1,7 @@
-INSERT INTO artifacts(artifact_name) VALUES('test1');
-INSERT INTO artifacts(artifact_name) VALUES('test2');
-INSERT INTO artifacts(artifact_name) VALUES('test3');
+INSERT INTO artifacts(artifact_name, artifact_obj_reg) VALUES('test1', 111);
+INSERT INTO artifacts(artifact_name, artifact_obj_reg) VALUES('test2', 112);
+INSERT INTO artifacts(artifact_name, artifact_obj_reg) VALUES('test3', 113);
+
 
 INSERT INTO excavations(excavation_name) VALUES('test1');
 INSERT INTO excavations(excavation_name) VALUES('test2');

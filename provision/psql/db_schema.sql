@@ -25,6 +25,7 @@ CREATE SCHEMA IF NOT EXISTS sheparddb;
 CREATE TABLE artifacts(
     artifact_id         SERIAL PRIMARY KEY,
     artifact_name       VARCHAR(128),
+    artifact_obj_reg    INT UNSIGNED,
     artifact_created    TIMESTAMP,
     artifact_updated    TIMESTAMP
 );
@@ -98,7 +99,7 @@ CREATE TABLE cities(
 );
 ALTER TABLE cities OWNER TO shepard;
 
-
+/*
 
 CREATE TYPE size_units AS ENUM ('meters', 'feet');
 CREATE TABLE excavation_fields(
@@ -282,7 +283,7 @@ CREATE TABLE culture_eras(
     era_ending_date                    DATE
 );
 ALTER TABLE culture_eras OWNER TO shepard;
-
+*/
 
 
 

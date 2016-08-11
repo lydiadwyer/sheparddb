@@ -7,7 +7,6 @@ from flask import Flask, render_template
 from modules.Shared.database import db
 from modules.Artifacts.controller import artifacts
 from modules.Excavations.controller import excavations
-from modules.Artifacts.model import Artifact
 
 
 
@@ -37,29 +36,16 @@ handler.setFormatter(Formatter(
 app.logger.addHandler(handler)
 app.logger.setLevel('INFO')
 
-
-
-# register the module controllers
-# sets up URL collections, that we wrote in CONTROLLER file
-app.register_blueprint(artifacts)
-app.register_blueprint(excavations)
-
-
-
 # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.route
 # example of a simple static route
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# example of a simple static route, with a unique name
-@app.route('/test')
-def test():
-    artifacts = Artifact.query.all()
-    print str(artifacts)
-    return render_template('artifact.html', artifacts=artifacts)
-
-
+# register the module controllers
+# sets up URL collections, that we wrote in CONTROLLER file
+app.register_blueprint(artifacts)
+app.register_blueprint(excavations)
 
 
 

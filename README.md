@@ -161,3 +161,19 @@ grep -inr "<string>"
 pylint ./*.py
 
 ```
+
+
+
+## Add a new database table column:
+
+- add new col to db schema
+- add example db data
+- run database reset script
+- add new attribute to the model
+- add new attribute to the model __init__ function
+- update view one template
+- update view all template???
+- update the add and edit HTML templates
+- update the add and edit functions in controller
+- test add
+- test edit

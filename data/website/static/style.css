@@ -130,12 +130,12 @@ textarea{
     padding: 2px;
     margin: 0 0 16px;
     font-size: 1em;
-    color:#777;
-    background-color: #000;
+    color:#000;
+    background-color: #fff;
 }
 input[type="text"],
 input[type="number"]{
-    color: #FFF;
+    color: #000;
 }
 textarea{
 
@@ -176,12 +176,7 @@ textarea{
     height: 32px;
     clear: both;
 }
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus{
-    border: 1px solid #FFF;
-    color: #FFF;
-}
+
 input[type="submit"],
 input[type='button']{
     margin: 0;
