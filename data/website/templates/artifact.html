@@ -1,8 +1,0 @@
-{% extends "global.html" %}
-{% block body_content %}
-<ul>
-{% for item in artifacts %}
-    <li><a href="{{ item.artifact_id }}">{{ item.artifact_name }}</a></li>
-{% endfor %}
-</ul>
-{% endblock %}

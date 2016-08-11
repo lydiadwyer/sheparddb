@@ -1,0 +1,9 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Add An Artifact</h1>
+    <form method="POST" action="{{ url_for('artifacts.add_artifact') }}">
+        <input type="text" name="artifact_name" />
+        <input type="text" name="artifact_obj_reg" />
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}

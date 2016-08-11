@@ -1,6 +1,7 @@
 {% extends "global.html" %}
 {% block body_content %}
     <h1>Artifacts</h1>
+    <a href="{{ url_for('artifacts.add_artifact') }}">add</a>
     <table>
     <tr>
         <th>ID</th>
@@ -10,14 +11,14 @@
     </tr>
     {% for entry in Artifacts.query.all() %}
     <tr>
-        <td>{{entry.artifact_id}}</td>
-        <td>{{entry.artifact_name}}</td>
-        <td>{{entry.artifact_created}}</td>
-        <td>{{entry.artifact_updated}}</td>
+        <td>{{ entry.artifact_id }}</td>
+        <td>{{ entry.artifact_name }}</td>
+        <td>{{ entry.artifact_created }}</td>
+        <td>{{ entry.artifact_updated }}</td>
         <td>
-            <a href="/artifact/view/{{entry.artifact_id}}">View</a>
-            <a href="/artifact/edit/{{entry.artifact_id}}">Edit</a>
-            <a href="/artifact/delete/{{entry.artifact_id}}">Delete</a>
+            <a href="/artifacts/view/{{ entry.artifact_id }}">View</a>
+            <a href="/artifacts/edit/{{ entry.artifact_id }}">Edit</a>
+            <a href="/artifacts/delete/{{ entry.artifact_id }}">Delete</a>
         </td>
     </tr>
     {% endfor %}
