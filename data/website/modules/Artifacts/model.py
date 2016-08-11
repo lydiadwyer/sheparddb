@@ -15,12 +15,14 @@ class Artifact(db.Model):
 
     artifact_id         = Column(Integer, primary_key=True)
     artifact_name       = Column(String(128), unique=True)
+    artifact_obj_reg    = Column(Integer)
     artifact_created    = Column(DateTime)
     artifact_updated    = Column(DateTime)
     
         
-    def __init__(self, artifact_name=""):
-        self.artifact_name = artifact_name
+    def __init__(self, artifact_name="", artifact_obj_reg=None):
+        self.artifact_name    = artifact_name
+        self.artifact_obj_reg = artifact_obj_reg
         
     def __repr__(self):
         return "<Artifact(artifact_id='%s', artifact_name='%s', artifact_created='%s', artifact_updated='%s')>" % (

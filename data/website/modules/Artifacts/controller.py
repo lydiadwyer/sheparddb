@@ -32,7 +32,14 @@ def add_artifact():
     if request.method == 'POST':
         data = request.form
         entry = Artifact()  #creates a model.py instance, instance only has a name right now
-        entry.artifact_name = data['artifact_name'] #set the Artifact name
+        entry.artifact_name = str(data['artifact_name'])[:127] #set the Artifact name
+        try:
+            val = int(data['artifact_obj_reg'])
+            if val > 1000000000:
+                val = 1000000000
+            entry.artifact_obj_reg = val
+        except ValueError:
+            entry.artifact_obj_reg = 0
         db.session.add(entry)
         db.session.commit()
         
@@ -49,7 +56,14 @@ def edit_artifact(artifact_id):
     if request.method == 'POST':
         data = request.form
         entry = Artifact.query.get(artifact_id)
-        entry.artifact_name = data['artifact_name'] #set the Artifact name
+        entry.artifact_name = str(data['artifact_name'])[:127] #set the Artifact name
+        try:
+            val = int(data['artifact_obj_reg'])
+            if val > 1000000000:
+                val = 1000000000
+            entry.artifact_obj_reg = val
+        except ValueError:
+            entry.artifact_obj_reg = 0
         db.session.commit()
         
         return redirect(url_for('artifacts.view_all_artifacts'))

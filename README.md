@@ -177,3 +177,5 @@ pylint ./*.py
 - update the add and edit functions in controller
 - test add
 - test edit
+- test delete
+- test ALL other features (yes really, you may have broken them)
