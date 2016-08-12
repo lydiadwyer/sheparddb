@@ -133,6 +133,8 @@ https://pythonrants.wordpress.com/2013/12/06/why-i-hate-virtualenv-and-pip/
         - http://jinja.pocoo.org/docs/dev/
     - SQLAlchemy
         - http://docs.sqlalchemy.org/en/latest/
+        - http://flask-sqlalchemy.pocoo.org/2.1/api/#models
+        - http://stackoverflow.com/questions/31750441/generalised-insert-into-sqlalchemy-using-dictionary
     - Werkzeug
         - http://werkzeug.pocoo.org/docs/0.11/
         - http://werkzeug.pocoo.org/docs/0.11/wrappers/#werkzeug.wrappers.Request
