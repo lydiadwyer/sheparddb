@@ -1,0 +1,11 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Edit A Country</h1>
+    <form method="POST" action="{{ url_for('countries.edit_country', country_id=entry.country_id) }}">
+        <input type="text" name="country_name"
+            value="{{ entry.country_name }}"/>
+        <input type="text" name="country_abrev"
+            value="{{ entry.country_abrev }}"/>
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}

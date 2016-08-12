@@ -1,0 +1,17 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>A Single Country</h1>
+<table>
+    <tr>
+        <td>{{ entry.country_id }}</td>
+        <td>{{ entry.country_name }}</td>
+        <td>{{ entry.country_abrev }}</td>
+        <td>{{ entry.country_created }}</td>
+        <td>
+            <a href="/countries/edit/{{ entry.country_id }}">Edit</a>
+            <a href="/countries/delete/{{ entry.country_id }}">Delete</a>
+        </td>
+    </tr>
+</table>
+          <a href="/countries">View All</a>
+{% endblock %}

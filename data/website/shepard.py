@@ -7,7 +7,7 @@ from flask import Flask, render_template
 from modules.Shared.database import db
 from modules.Artifacts.controller import artifacts
 from modules.Excavations.controller import excavations
-
+from modules.Countries.controller import countries
 
 
 
@@ -46,7 +46,7 @@ def home():
 # sets up URL collections, that we wrote in CONTROLLER file
 app.register_blueprint(artifacts)
 app.register_blueprint(excavations)
-
+app.register_blueprint(countries)
 
 
 # enter debug mode, if this file is called directly

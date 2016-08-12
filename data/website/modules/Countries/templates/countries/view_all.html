@@ -1,0 +1,26 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Countries</h1>
+    <a href="{{ url_for('countries.add_country') }}">add country</a>
+    <table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Abreviation</th>
+        <th>Created</th>
+    </tr>
+    {% for entry in Countries.query.all() %}
+    <tr>
+        <td>{{ entry.country_id }}</td>
+        <td>{{ entry.country_name }}</td>
+        <td>{{ entry.country_abrev }}</td>
+        <td>{{ entry.country_created }}</td>
+        <td>
+            <a href="/countries/view/{{ entry.country_id }}">View</a>
+            <a href="/countries/edit/{{ entry.country_id }}">Edit</a>
+            <a href="/countries/delete/{{ entry.country_id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

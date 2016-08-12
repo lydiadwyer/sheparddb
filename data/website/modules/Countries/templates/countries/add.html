@@ -1,0 +1,9 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Add A Country</h1>
+    <form method="POST" action="{{ url_for('countries.add_country') }}">
+        <input type="text" name="country_name" />
+        <input type="text" name="country_abrev" />
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}
