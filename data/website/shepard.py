@@ -1,13 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""The Central Controller class for the ShepardDB website."""
+
+import logging
+from logging import Formatter
+from logging.handlers import WatchedFileHandler
 
 from flask import Flask, render_template
 
 # import various routes
-from modules.Shared.database import db
-from modules.Artifacts.controller import artifacts
-from modules.Excavations.controller import excavations
-from modules.Countries.controller import countries
+from sheparddb.modules.Shared.database import db
+from sheparddb.modules.Artifacts.controller import artifacts
+from sheparddb.modules.Excavations.controller import excavations
+from sheparddb.modules.Countries.controller import countries
 
 
 
@@ -23,9 +28,6 @@ db.init_app(app)
 # configure logger
 # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.logger
 # https://docs.python.org/dev/library/logging.html#logging.Logger
-import logging
-from logging import Formatter
-from logging.handlers import WatchedFileHandler
 handler = WatchedFileHandler(app.config['DEBUG_LOG_FILE'])
 handler.setLevel(logging.INFO)
 # http://flask.pocoo.org/docs/0.11/errorhandling/#controlling-the-log-format
@@ -36,11 +38,26 @@ handler.setFormatter(Formatter(
 app.logger.addHandler(handler)
 app.logger.setLevel('INFO')
 
+
+
+
+
 # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.route
-# example of a simple static route
 @app.route('/')
 def home():
+    """Default homepage
+
+    Args:
+        None
+    Returns:
+        The the homepage HTML.
+
+    """
     return render_template('home.html')
+
+
+
+
 
 # register the module controllers
 # sets up URL collections, that we wrote in CONTROLLER file

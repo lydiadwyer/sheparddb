@@ -71,6 +71,10 @@ apt-get -q install -y python=2.7.5* python-dev python-pip \
 pip install pip requests --upgrade
 pip install requests['security']
 
+# install code quality tools
+pip install -qqq pylint 2>&1
+pip install --quiet mock coverage nose nosexcover clonedigger
+
 # install requirements
 pip install -r /vagrant/pip_requirements.txt 2>&1
 
