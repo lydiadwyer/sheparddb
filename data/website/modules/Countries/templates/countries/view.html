@@ -8,10 +8,12 @@
         <td>{{ entry.country_abrev }}</td>
         <td>{{ entry.country_created }}</td>
         <td>
-            <a href="/countries/edit/{{ entry.country_id }}">Edit</a>
-            <a href="/countries/delete/{{ entry.country_id }}">Delete</a>
+            <a href="{{ url_for('countries.edit_country',
+                country_id=entry.country_id) }}">Edit</a>
+            <a href="{{ url_for('countries.delete_country',
+                country_id=entry.country_id) }}">Delete</a>
         </td>
     </tr>
 </table>
-          <a href="/countries">View All</a>
+          <a href="{{ url_for('countries.view_all') }}">View All</a>
 {% endblock %}

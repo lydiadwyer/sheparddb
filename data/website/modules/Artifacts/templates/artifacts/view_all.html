@@ -16,9 +16,12 @@
         <td>{{ entry.artifact_created }}</td>
         <td>{{ entry.artifact_updated }}</td>
         <td>
-            <a href="/artifacts/view/{{ entry.artifact_id }}">View</a>
-            <a href="/artifacts/edit/{{ entry.artifact_id }}">Edit</a>
-            <a href="/artifacts/delete/{{ entry.artifact_id }}">Delete</a>
+            <a href="{{ url_for('artifacts.view_artifact',
+                 artifact_id=entry.artifact_id) }}">View</a>
+            <a href="{{ url_for('artifacts.edit_artifact',
+                 artifact_id=entry.artifact_id) }}">Edit</a>
+            <a href="{{ url_for('artifacts.delete_artifact',
+                 artifact_id=entry.artifact_id) }}">Delete</a>
         </td>
     </tr>
     {% endfor %}

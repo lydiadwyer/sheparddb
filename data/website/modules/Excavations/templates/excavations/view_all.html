@@ -15,9 +15,12 @@
         <td>{{entry.excavation_created}}</td>
         <td>{{entry.excavation_updated}}</td>
         <td>
-            <a href="/excavations/view/{{entry.excavation_id}}">View</a>
-            <a href="/excavations/edit/{{entry.excavation_id}}">Edit</a>
-            <a href="/excavations/delete/{{entry.excavation_id}}">Delete</a>
+            <a href="{{ url_for('excavations.view_excavation',
+                excavation_id=entry.excavation_id) }}">View</a>
+            <a href="{{ url_for('excavations.edit_excavation',
+                excavation_id=entry.excavation_id) }}">Edit</a>
+            <a href="{{ url_for('excavations.edit_excavation',
+                excavation_id=entry.excavation_id) }}">Delete</a>
         </td>
     </tr>
     {% endfor %}

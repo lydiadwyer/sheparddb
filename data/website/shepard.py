@@ -9,10 +9,10 @@ from logging.handlers import WatchedFileHandler
 from flask import Flask, render_template
 
 # import various routes
-from sheparddb.modules.Shared.database import db
-from sheparddb.modules.Artifacts.controller import artifacts
-from sheparddb.modules.Excavations.controller import excavations
-from sheparddb.modules.Countries.controller import countries
+from modules.Shared.database import db
+from modules.Artifacts.controller import artifacts
+from modules.Excavations.controller import excavations
+from modules.Countries.controller import countries
 
 
 
