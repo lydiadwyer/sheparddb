@@ -17,8 +17,8 @@ As an Archeologist, I want to have a list of countries and select them when savi
 3. I go to the url: "/artifacts/countries"
 4. I click the "Add" link
 5. I go to the url: "/artifacts/countries/new"
-	a. I see the input called "country_name"
-	b. I see the button called "Submit"
+	- I see the input called "country_name"
+	- I see the button called "Submit"
 6. I fill in the input "country_name"
 	a. I fill in "Greece"
 	b. I fill in ""
@@ -33,10 +33,10 @@ As an Archeologist, I want to have a list of countries and select them when savi
   d. I am forwarded, the country name is truncated to 32 chars
   e. I see an error message, for "country_name"
   f. I see an error message, for "country_name"
-8. I am forwarded to the new country page, at "/artifacts/country/view/15"
-  a. I see the page title set to "Greece"
-  b. I see the "edit" link
-  c. I see the "delete" link
+8. I am forwarded to the new country page, at "/artifacts/countries/view/15"
+  - I see the page title set to "Greece"
+  - I see the "edit" link
+  - I see the "delete" link
 
 ## Post Conditions
 
