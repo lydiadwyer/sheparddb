@@ -23,20 +23,59 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	a. I fill in "Greece"
 	b. I fill in ""
 	c. I fill in -1
-  d. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (33 chars)
-  e. I fill in "a"
-  f. I fill in "a!@#$%^&*()-=☺" (weird chars)
-7. I click "Submit"
-  a. I am forwarded
-  b. I see an error message, for "country_name"
-  c. I see an error message, for "country_name"
-  d. I am forwarded, the country name is truncated to 32 chars
-  e. I see an error message, for "country_name"
-  f. I see an error message, for "country_name"
-8. I am forwarded to the new country page, at "/artifacts/countries/view/15"
-  - I see the page title set to "Greece"
-  - I see the "edit" link
-  - I see the "delete" link
+    d. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (33 chars)
+    e. I fill in "a"
+    f. I fill in "a!@#$%^&*()-=☺" (weird chars)
+7. I fill in the input "country_abrev"
+    a. I fill in "GR"
+    b. I fill in ""
+    c. I fill in -1
+    d. I fill in "GRE" (33 chars)
+    e. I fill in "a"
+    f. I fill in "a!@#$%^&*()-=☺" (weird chars)
+8. I click "Submit"
+    6a7a. I am forwarded
+      7b. I see an error message, for "country_abrev"
+      7c. I see an error message, for "country_abrev"
+      7d. I see an error message, for "country_abrev"
+      7e. I see an error message, for "country_abrev"
+      7f. I see an error message, for "country_abrev"
+    6b7a. I see an error message, for "country_name"
+      7b. I see an error message, for "country_name", for "country_abrev"
+      7c. I see an error message, for "country_name", for "country_abrev"
+      7d. I see an error message, for "country_name", for "country_abrev"
+      7e. I see an error message, for "country_name", for "country_abrev"
+      7f. I see an error message, for "country_name", for "country_abrev"
+    6c7a. I see an error message, for "country_name"
+      7b. I see an error message, for "country_name", for "country_abrev"
+      7c. I see an error message, for "country_name", for "country_abrev"
+      7d. I see an error message, for "country_name", for "country_abrev"
+      7e. I see an error message, for "country_name", for "country_abrev"
+      7f. I see an error message, for "country_name", for "country_abrev"
+    6d7a. I see an error message, for "country_name"
+      7b. I see an error message, for "country_name", for "country_abrev"
+      7c. I see an error message, for "country_name", for "country_abrev"
+      7d. I see an error message, for "country_name", for "country_abrev"
+      7e. I see an error message, for "country_name", for "country_abrev"
+      7f. I see an error message, for "country_name", for "country_abrev"
+    6e7a. I see an error message, for "country_name"
+      7b. I see an error message, for "country_name", for "country_abrev"
+      7c. I see an error message, for "country_name", for "country_abrev"
+      7d. I see an error message, for "country_name", for "country_abrev"
+      7e. I see an error message, for "country_name", for "country_abrev"
+      7f. I see an error message, for "country_name", for "country_abrev"
+    6f7a. I see an error message, for "country_name"
+      7b. I see an error message, for "country_name", for "country_abrev"
+      7c. I see an error message, for "country_name", for "country_abrev"
+      7d. I see an error message, for "country_name", for "country_abrev"
+      7e. I see an error message, for "country_name", for "country_abrev"
+      7f. I see an error message, for "country_name", for "country_abrev"
+9. I am forwarded to the new country page, at "/artifacts/countries/view/15"
+    - 6a7a
+    - I see the country name set to "Greece"
+    - I see the country abbreviation set to "GR"
+    - I see the "edit" link, with url "/countries/edit/4"
+    - I see the "delete" link, with url "/countries/delete/4"
 
 ## Post Conditions
 

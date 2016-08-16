@@ -1,6 +1,6 @@
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>A Single Country</h1>
+<h1>{{ entry.country_name }}</h1>
 <table>
     <tr>
         <td>{{ entry.country_id }}</td>
@@ -15,5 +15,5 @@
         </td>
     </tr>
 </table>
-          <a href="{{ url_for('countries.view_all') }}">View All</a>
+<a href="{{ url_for('countries.view_all_countries') }}">View All</a>
 {% endblock %}
