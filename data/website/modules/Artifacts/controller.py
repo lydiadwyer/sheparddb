@@ -19,7 +19,22 @@ def view_all_artifacts():
 #view a single artifact in detail
 @artifacts.route('/artifacts/view/<artifact_id>')
 def view_artifact(artifact_id):
+    
+    # ensure that the artifact_id is numerica
+    if not artifact_id.isdigit():
+        current_app.logger.error("invalid artifact_id = " + artifact_id)
+        return redirect(url_for("artifacts.view_all_artifacts"))
+    
+    # attempt to retrieve an Artifact using it's artifact_id
     entry = Artifact.query.get(artifact_id)
+    
+    # ensure we have a valid Artifact
+    if None is entry:
+        current_app.logger.error("invalid artifact_id = " + artifact_id + \
+                                 ", entry = " + str(entry))
+        return redirect(url_for("artifacts.view_all_artifacts"))
+    
+    # return the HTML page
     return render_template('artifacts/view.html', entry=entry)  # , Artifacts=Artifact
 
 #add an artifact page function
@@ -71,7 +86,22 @@ def edit_artifact(artifact_id):
 
 @artifacts.route('/artifacts/delete/<artifact_id>')
 def delete_artifact(artifact_id):
+    
+    # ensure that the artifact_id is numerica
+    if not artifact_id.isdigit():
+        current_app.logger.error("invalid artifact_id = " + artifact_id)
+        return redirect(url_for("artifacts.view_all_artifacts"))
+    
+    # attempt to retrieve the artifact
     entry = Artifact.query.get(artifact_id)
+    
+    # ensure we have a valid Artifact
+    if None is entry:
+        current_app.logger.error("invalid artifact_id = " + artifact_id + \
+                                 ", entry = " + str(entry))
+        return redirect(url_for("artifacts.view_all_artifacts"))
+    
+    # delete the artifact
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('artifacts.view_all_artifacts'))  # , Artifacts=Artifact
