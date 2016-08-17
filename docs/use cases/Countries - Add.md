@@ -28,6 +28,7 @@ As an Archeologist, I want to have a list of countries and select them when savi
     f. I fill in "This    is a multispace test" (whitespace)
     g. I fill in "a!@#$%^&*()-=☺" (weird chars)
     h. I fill in "<script>alert("hello!")</script>" (XSS)
+    i. I fill in " onhover="alert('hello!')" " (XSS inline)
 7. I fill in the input "country_abrev"
     a. I fill in "CY"
     b. I fill in ""

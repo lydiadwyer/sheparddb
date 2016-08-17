@@ -31,6 +31,7 @@ service postgresql restart
 
 # rebuild the database
 echo "INFO: Setting up the database..."
+su - postgres -c "psql -c \"ALTER USER postgres with encrypted password 'postgres';\""
 su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 service postgresql restart
 

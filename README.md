@@ -56,6 +56,7 @@ su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 ```
 
 
+
 ## System Logs
 ```shell
 
@@ -72,6 +73,54 @@ sudo nano /var/log/nginx/access.log
 sudo nano /var/log/nginx/error.log
 
 ```
+
+
+
+## Selenium
+
+### Install, Ubuntu
+http://initd.org/psycopg/docs/install.html#installation
+```shell
+sudo apt-get install -y python-psycopg2
+
+```
+
+### Run Tests
+
+```shell
+# in host machine
+cd ~/Sites/sheparddb/data/selenium
+
+# test that Selenium can be run
+python ./selenium_test.py
+
+# run all features
+lettuce
+
+# run one feature
+lettuce ./features/country.feature
+
+# run a single step, in a feature
+lettuce ./features/country.feature -s 1 --failfast
+
+# run individual steps, in a feature
+lettuce ./features/country.feature -s 1,2
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

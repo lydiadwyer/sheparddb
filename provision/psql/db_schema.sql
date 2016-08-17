@@ -1,6 +1,11 @@
 -- Postgres Cheatsheet
 -- https://gist.github.com/apolloclark/ea5466d5929e63043dcf
 
+-- Close any open connections to the database
+SELECT pg_terminate_backend(pid) from pg_stat_activity where datname='sheparddb';
+
+
+
 -- Drop the database (schema and tables),
 -- Create the initial user, set their password:
 DROP DATABASE IF EXISTS sheparddb;

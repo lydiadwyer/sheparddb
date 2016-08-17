@@ -3,7 +3,7 @@
 <h1>Edit A Country</h1>
 <script type="application/javascript"
     src="{{ url_for('countries.static', filename='form.js') }}"></script>
-<form method="POST" action="{{ url_for('countries.edit_country',
+<form method="post" action="{{ url_for('countries.edit_country',
     country_id=entry.country_id) }}" onsubmit="return verify_country();">
     <label>Country Name</label>
     <span id="country_name_msg" class="error_msg">
