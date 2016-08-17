@@ -13,23 +13,24 @@ countries = Blueprint(
     'countries',
     __name__,
     template_folder='templates',
-    static_folder='static'
+    static_folder='static',
+    url_prefix='/countries'
 )
 
-@countries.route('/countries')
+@countries.route('/')
 def view_all_countries():
     """ homepage with all countries in a table """
     return render_template('countries/view_all.html', Countries=Country)
 
 
-@countries.route('/countries/view/<country_id>')
+@countries.route('/view/<country_id>')
 def view_country(country_id):
     """ view a single country in detail """
     entry = Country.query.get(country_id)
     return render_template('countries/view.html', entry=entry)
 
 ####restrict who can add/edit/delete countries?
-@countries.route('/countries/add', methods=['GET', 'POST'])
+@countries.route('/add', methods=['GET', 'POST'])
 def add_country():
     """ add an country page function """
 
@@ -54,12 +55,30 @@ def add_country():
             form_is_valid = False
             error_msg['country_name'] = "Please fill in the country name"
 
-        # ensure the country_name is filled in
+        # country name underflow check
+        if len(entry.country_name) < 4:
+            form_is_valid = False
+            error_msg['country_name'] = "Please fill in the country name completely."
+
+        # ensure the country name is letters
+        if not entry.country_name.isalpha():
+            form_is_valid = False
+            error_msg['country_name'] = "Please fill in the country name using only letters."
+
+        # ensure the country abbrev is filled in
         if not entry.country_abrev:
             form_is_valid = False
             error_msg['country_abrev'] = "Please fill in the country abbreviation"
 
+        # ensure the abbrev is 2 characters
+        if 2 != len(entry.country_abrev):
+            form_is_valid = False
+            error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
 
+        # ensure the abbrev is letters
+        if not entry.country_abrev.isalpha():
+            form_is_valid = False
+            error_msg['country_abrev'] = "Please fill in the country abbreviation using only letters."
 
         # check if the form is valid
         if not form_is_valid:
@@ -75,7 +94,7 @@ def add_country():
                                 country_id=entry.country_id))
     current_app.logger.error("unsupported method")
 
-@countries.route('/countries/edit/<country_id>', methods=['GET', 'POST'])
+@countries.route('/edit/<country_id>', methods=['GET', 'POST'])
 def edit_country(country_id):
     """ edit country details """
     if request.method == 'GET':
@@ -93,7 +112,7 @@ def edit_country(country_id):
                                 country_id=entry.country_id))
     current_app.logger.error("unsupported method")
 
-@countries.route('/countries/delete/<country_id>')
+@countries.route('/delete/<country_id>')
 def delete_country(country_id):
     """ delete a country """
     entry = Country.query.get(country_id)
