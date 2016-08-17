@@ -23,9 +23,11 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	a. I fill in "Cyprus"
 	b. I fill in ""
 	c. I fill in -1
-    d. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (33 chars)
-    e. I fill in "a"
-    f. I fill in "a!@#$%^&*()-=☺" (weird chars)
+    d. I fill in "a"
+    e. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (33 chars)
+    f. I fill in "This    is a multispace test" (whitespace)
+    g. I fill in "a!@#$%^&*()-=☺" (weird chars)
+    h. I fill in "<script>alert("hello!")</script>" (XSS)
 7. I fill in the input "country_abrev"
     a. I fill in "CY"
     b. I fill in ""

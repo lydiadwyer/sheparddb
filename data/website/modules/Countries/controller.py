@@ -6,6 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, current_app, \
     request
 from modules.Countries.model import Country
 from modules.Shared.database import db
+import re
 
 # collection of URLs for the artifact section of the website
 # setup the controller, use a local folder for templates
@@ -34,7 +35,7 @@ def view_country(country_id):
 def add_country():
     """ add an country page function """
 
-    # create a blank Country instance
+    # init variables
     entry = Country()  # creates a model.py instance, instance only has a name right now
     error_msg = {}
     form_is_valid = True
@@ -44,16 +45,16 @@ def add_country():
                                error_msg=error_msg)
 
     if request.method == 'POST':
-        
+
         # validate input
         [entry, form_is_valid, error_msg] = form_validate_country(entry)
-        
+
         # check if the form is valid
         if not form_is_valid:
             current_app.logger.info('invalid add country')
             return render_template('countries/add.html', entry=entry, \
                                    error_msg=error_msg)
-            
+
         # the data is valid, save it
         db.session.add(entry)
         db.session.commit()
@@ -65,25 +66,28 @@ def add_country():
 @countries.route('/edit/<country_id>', methods=['GET', 'POST'])
 def edit_country(country_id):
     """ edit country details """
-    entry = Country.query.get(country_id)      
+
+    # init variables
+    entry = Country.query.get(country_id)
     error_msg = {}
     form_is_valid = True
-    
+
     if request.method == 'GET':
-        return render_template('countries/edit.html', entry=entry)
+        return render_template('countries/edit.html', \
+                               entry=entry, error_msg=error_msg)
 
     if request.method == 'POST':
-  
+
         # validate input
         [entry, form_is_valid, error_msg] = form_validate_country(entry)
-        
+
         # check if the form is valid
         if not form_is_valid:
-            current_app.logger.info('invalid edit country')
+            current_app.logger.info('invalid edit country: ' + str(entry))
             return render_template('countries/edit.html', entry=entry, \
                                    error_msg=error_msg)
-            
-        # save update
+
+        # the data is valid, save it
         db.session.commit()
         return redirect(url_for('countries.view_country', \
                                 country_id=entry.country_id))
@@ -91,8 +95,10 @@ def edit_country(country_id):
 
 def form_validate_country(entry):
     data = request.form
-    entry.country_name = str(data['country_name'])[:32]
-    entry.country_abrev = str(data['country_abrev'])[:3]
+    entry.country_name = re.sub(' +', ' ',
+        data['country_name'].encode('ascii', 'ignore')[:32])
+    entry.country_abrev = re.sub(' +', ' ',
+        data['country_abrev'].encode('ascii', 'ignore')[:3])
 
     # validate data
     form_is_valid = True
@@ -109,9 +115,12 @@ def form_validate_country(entry):
         error_msg['country_name'] = "Please fill in the country name completely."
 
     # ensure the country name is letters
-    if not entry.country_name.isalpha():
+    match = re.match('^[a-zA-Z ]*$', entry.country_name)
+    if not match:
         form_is_valid = False
         error_msg['country_name'] = "Please fill in the country name using only letters."
+    else:
+        current_app.logger.info("match = " + str(match.group(0)))
 
     # ensure the country abbrev is filled in
     if not entry.country_abrev:
@@ -124,9 +133,12 @@ def form_validate_country(entry):
         error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
 
     # ensure the abbrev is letters
-    if not entry.country_abrev.isalpha():
+    match = re.match('^[a-zA-Z ]*$', entry.country_abrev)
+    if not match:
         form_is_valid = False
         error_msg['country_abrev'] = "Please fill in the country abbreviation using only letters."
+    else:
+        current_app.logger.info("match = " + str(match.group(0)))
 
     return [entry, form_is_valid, error_msg]
 

@@ -2,10 +2,12 @@
 
 // function to check for alphabetic letters
 function isAlpha(xStr){
-    var regEx = /^[a-zA-Z]+$/;
+    var regEx = /^[a-zA-Z ]+$/;
     return xStr.match(regEx);
 }
 function verify_country() {
+
+    return true;
 
 
     // flag for any value errors
