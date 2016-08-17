@@ -19,7 +19,7 @@ def reset_database():
         stdout=FNULL, stderr=subprocess.STDOUT
     )
 
-    time.sleep(2)
+    time.sleep(1)
 
     subprocess.call(
         psql_str + '-d sheparddb -f ../../provision/psql/db_data.sql',
