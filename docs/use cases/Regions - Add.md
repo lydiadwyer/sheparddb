@@ -56,6 +56,6 @@ based on their region of excavation.
 
 ## Post Conditions
 
-1. I can see the new region listed on the "All Gregions" page
+1. I can see the new region listed on the "All Regions" page
 2. I can choose the new region from the "regions" drop-down on the
     "Add Artifact" page

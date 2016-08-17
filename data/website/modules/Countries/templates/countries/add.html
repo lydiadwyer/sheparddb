@@ -5,6 +5,8 @@
     "use strict";
 
     function verify_country() {
+        
+        return true;
 
         // flag for any value errors
         var form_is_valid = true;
@@ -57,11 +59,14 @@
     <form method="post" action="{{ url_for('countries.add_country') }}"
         onsubmit="return verify_country();">
         <label>Name</label>
-        <span id="country_name_msg" class="error_msg"></span>
-        <input type="text" id="country_name" name="country_name" />
+        <span id="country_name_msg" class="error_msg">
+            {{ error_msg.country_name if error_msg.country_name is defined }}</span>
+        <input type="text" id="country_name" name="country_name"
+            value="{{ entry.country_name }}"/>
 
         <label>Abbreviation</label>
-        <span id="country_abrev_msg" class="error_msg"></span>
+        <span id="country_abrev_msg" class="error_msg">
+            {{ error_msg.country_abrev if error_msg.country_abrev is defined }}</span>
         <input type="text" id="country_abrev" name="country_abrev" />
 
         <input type="submit" value="submit" />

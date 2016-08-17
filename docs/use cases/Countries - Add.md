@@ -20,14 +20,14 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	- I see the input called "country_name"
 	- I see the button called "Submit"
 6. I fill in the input "country_name"
-	a. I fill in "Greece"
+	a. I fill in "Cyprus"
 	b. I fill in ""
 	c. I fill in -1
     d. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" (33 chars)
     e. I fill in "a"
     f. I fill in "a!@#$%^&*()-=☺" (weird chars)
 7. I fill in the input "country_abrev"
-    a. I fill in "GR"
+    a. I fill in "CY"
     b. I fill in ""
     c. I fill in -1
     d. I fill in "GRE" (33 chars)
@@ -72,8 +72,8 @@ As an Archeologist, I want to have a list of countries and select them when savi
       7f. I see an error message, for "country_name", for "country_abrev"
 9. I am forwarded to the new country page, at "/artifacts/countries/view/15"
     - 6a7a
-    - I see the country name set to "Greece"
-    - I see the country abbreviation set to "GR"
+    - I see the country name set to "Cyprus"
+    - I see the country abbreviation set to "CY"
     - I see the "edit" link, with url "/countries/edit/4"
     - I see the "delete" link, with url "/countries/delete/4"
 
