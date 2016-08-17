@@ -37,55 +37,23 @@ def add_country():
     # create a blank Country instance
     entry = Country()  # creates a model.py instance, instance only has a name right now
     error_msg = {}
+    form_is_valid = True
 
     if request.method == 'GET':
         return render_template('countries/add.html', entry=entry, \
                                error_msg=error_msg)
 
     if request.method == 'POST':
-        data = request.form
-        entry.country_name = str(data['country_name'])[:32]
-        entry.country_abrev = str(data['country_abrev'])[:3]
-
-        # validate data
-        form_is_valid = True
-
-        # ensure the country_name is filled in
-        if not entry.country_name:
-            form_is_valid = False
-            error_msg['country_name'] = "Please fill in the country name"
-
-        # country name underflow check
-        if len(entry.country_name) < 4:
-            form_is_valid = False
-            error_msg['country_name'] = "Please fill in the country name completely."
-
-        # ensure the country name is letters
-        if not entry.country_name.isalpha():
-            form_is_valid = False
-            error_msg['country_name'] = "Please fill in the country name using only letters."
-
-        # ensure the country abbrev is filled in
-        if not entry.country_abrev:
-            form_is_valid = False
-            error_msg['country_abrev'] = "Please fill in the country abbreviation"
-
-        # ensure the abbrev is 2 characters
-        if 2 != len(entry.country_abrev):
-            form_is_valid = False
-            error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
-
-        # ensure the abbrev is letters
-        if not entry.country_abrev.isalpha():
-            form_is_valid = False
-            error_msg['country_abrev'] = "Please fill in the country abbreviation using only letters."
-
+        
+        # validate input
+        [entry, form_is_valid, error_msg] = form_validate_country(entry)
+        
         # check if the form is valid
         if not form_is_valid:
             current_app.logger.info('invalid add country')
             return render_template('countries/add.html', entry=entry, \
                                    error_msg=error_msg)
-
+            
         # the data is valid, save it
         db.session.add(entry)
         db.session.commit()
@@ -97,20 +65,70 @@ def add_country():
 @countries.route('/edit/<country_id>', methods=['GET', 'POST'])
 def edit_country(country_id):
     """ edit country details """
+    entry = Country.query.get(country_id)      
+    error_msg = {}
+    form_is_valid = True
+    
     if request.method == 'GET':
-        entry = Country.query.get(country_id)
         return render_template('countries/edit.html', entry=entry)
 
     if request.method == 'POST':
-        data = request.form
-        entry = Country.query.get(country_id)
-        entry.country_name = str(data['country_name'])[:127]
-        entry.country_abrev = str(data['country_abrev'])[:127]
+  
+        # validate input
+        [entry, form_is_valid, error_msg] = form_validate_country(entry)
+        
+        # check if the form is valid
+        if not form_is_valid:
+            current_app.logger.info('invalid edit country')
+            return render_template('countries/edit.html', entry=entry, \
+                                   error_msg=error_msg)
+            
+        # save update
         db.session.commit()
-
         return redirect(url_for('countries.view_country', \
                                 country_id=entry.country_id))
     current_app.logger.error("unsupported method")
+
+def form_validate_country(entry):
+    data = request.form
+    entry.country_name = str(data['country_name'])[:32]
+    entry.country_abrev = str(data['country_abrev'])[:3]
+
+    # validate data
+    form_is_valid = True
+    error_msg = {}
+
+    # ensure the country_name is filled in
+    if not entry.country_name:
+        form_is_valid = False
+        error_msg['country_name'] = "Please fill in the country name"
+
+    # country name underflow check
+    if len(entry.country_name) < 4:
+        form_is_valid = False
+        error_msg['country_name'] = "Please fill in the country name completely."
+
+    # ensure the country name is letters
+    if not entry.country_name.isalpha():
+        form_is_valid = False
+        error_msg['country_name'] = "Please fill in the country name using only letters."
+
+    # ensure the country abbrev is filled in
+    if not entry.country_abrev:
+        form_is_valid = False
+        error_msg['country_abrev'] = "Please fill in the country abbreviation"
+
+    # ensure the abbrev is 2 characters
+    if 2 != len(entry.country_abrev):
+        form_is_valid = False
+        error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
+
+    # ensure the abbrev is letters
+    if not entry.country_abrev.isalpha():
+        form_is_valid = False
+        error_msg['country_abrev'] = "Please fill in the country abbreviation using only letters."
+
+    return [entry, form_is_valid, error_msg]
 
 @countries.route('/delete/<country_id>')
 def delete_country(country_id):
