@@ -21,20 +21,20 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	- I see the button called "Submit"
 6. I fill in the input "country_name"
 	a. I fill in "Cyprus"
-	b. I fill in ""
-	c. I fill in -1
-    d. I fill in "a"
-    e. I fill in "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (33 chars)
+	b. I fill in "" (null)
+	c. I fill in -1 (type mismatch)
+    d. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
+    e. I fill in "a" (underflow)
     f. I fill in "This    is a multispace test" (whitespace)
     g. I fill in "a!@#$%^&*()-=☺" (weird chars)
     h. I fill in "<script>alert("hello!")</script>" (XSS)
     i. I fill in " onhover="alert('hello!')" " (XSS inline)
 7. I fill in the input "country_abrev"
     a. I fill in "CY"
-    b. I fill in ""
-    c. I fill in -1
-    d. I fill in "GRE" (33 chars)
-    e. I fill in "a"
+    b. I fill in "" (null)
+    c. I fill in -1 (type mismatch)
+    d. I fill in "aaz" (overflow)
+    e. I fill in "a" (underflow)
     f. I fill in "a!@#$%^&*()-=☺" (weird chars)
 8. I click "Submit"
     6a7a. I am forwarded

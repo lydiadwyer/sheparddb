@@ -7,9 +7,6 @@ function isAlpha(xStr){
 }
 function verify_country() {
 
-    return true;
-
-
     // flag for any value errors
     var form_is_valid = true;
 
@@ -21,7 +18,7 @@ function verify_country() {
     country_name_msg.innerHTML = "";
 
     // ensure country_name is not null
-    if(!country_name) {
+    if(!country_name || "" == country_name) {
         country_name_msg.innerHTML = "Please fill in the country name.";
         form_is_valid = false;
     }
@@ -53,7 +50,7 @@ function verify_country() {
     country_abrev_msg.innerHTML = "";
 
     // ensure country_abrev is not null
-    if(!country_abrev) {
+    if(!country_abrev || "" == country_abrev) {
         country_abrev_msg.innerHTML = "Please fill in the country abbreviation.";
         form_is_valid = false;
     }
@@ -66,7 +63,7 @@ function verify_country() {
 
     // character check for country_abrev
     if(!country_abrev_msg.innerHTML && !isAlpha(country_abrev)) {
-        country_abrev_msg.innerHTML = "Please fill in a country abbreviation only with English letters.";
+        country_abrev_msg.innerHTML = "Please fill in a country abbreviation with only English letters.";
         form_is_valid = false;
     }
 
