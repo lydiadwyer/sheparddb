@@ -87,7 +87,6 @@ li{
 ul li ul{
     margin-left: 16px;
     display: inline;
-    margin-bottom: 0;
 }
 ul li ul li{
     width: auto;
@@ -135,16 +134,13 @@ input[type="text"],
 input[type="number"]{
     color: #000;
 }
-textarea{
-
-}
 div.mce-tinymce{
     margin-bottom: 15px;
 }
 select{
     border: 1px solid #737373;
     height: 32px;
-    padding: 0px;
+    padding: 0;
     margin-bottom: 16px;
 
     font-size: 1em;

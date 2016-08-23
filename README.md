@@ -1,5 +1,7 @@
 # sheparddb
 
+[![Code Climate](https://codeclimate.com/github/lydiadwyer/sheparddb/badges/gpa.svg)](https://codeclimate.com/github/lydiadwyer/sheparddb)
+
 ## Install
 
 1. Install Virtualbox and Vagrant
