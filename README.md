@@ -88,6 +88,7 @@ sudo apt-get update
 sudo apt-get install -y openjdk-7-jre unzip python-dev
 
 # install Selenium Server
+# Always use a month(s) old build because the newest never works right
 cd ~/Downloads
 wget -q http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
 
