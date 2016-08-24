@@ -94,6 +94,7 @@ service uwsgi restart 2>&1
 mkdir -p /var/log/sheparddb/
 touch /var/log/sheparddb/info.log
 chown -R www-data:www-data /var/log/sheparddb
+chmod 0777 /var/log/sheparddb/info.log
 
 mkdir -p /var/log/uwsgi/app
 chown -R www-data:www-data /var/log/uwsgi/app

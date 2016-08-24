@@ -43,9 +43,24 @@ sudo uwsgi --plugin http,python --http :8000 \
 
 ```shell
 vagrant ssh
+sudo su -
 cd /var/www/sheparddb
-pylint -f ./ --reports=n
-nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace --cover-package=project --cover-inclusive --cover-erase -x tests.py > /dev/null
+export PYTHONPATH=$(pwd)
+
+pylint shepard.py --reports=n
+pylint ./modules/Countries/controller.py --reports=n
+
+nosetests --verbosity=2
+
+nosetests --with-xcoverage --cover-package=sheparddb \
+    -q -x --verbosity=2
+
+nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
+    -q -x --verbosity=2
+
+nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace \
+    --cover-package=sheparddb --cover-inclusive --cover-erase -x
+
 clonedigger --cpd-output -o clonedigger.xml project > /dev/null
 sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
 

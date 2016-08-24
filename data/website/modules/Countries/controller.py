@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """The Controller class for Countries."""
 
+import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
     request
 from modules.Countries.model import Country
 from modules.Shared.database import db
-import re
 
 # collection of URLs for the artifact section of the website
 # setup the controller, use a local folder for templates
@@ -94,11 +94,20 @@ def edit_country(country_id):
     current_app.logger.error("unsupported method")
 
 def form_validate_country(entry):
+    """ validate Country form data """
+
+    # retrieve data from the global Request object
     data = request.form
-    entry.country_name = re.sub(' +', ' ',
-        data['country_name'].encode('ascii', 'ignore')[:32])
-    entry.country_abrev = re.sub(' +', ' ',
-        data['country_abrev'].encode('ascii', 'ignore')[:3])
+
+    # get string, cast to ASCII, truncate to 32 chars, strip multi spaces
+    entry.country_name = \
+        re.sub(' +', ' ',
+               data['country_name'].encode('ascii', 'ignore')[:32])
+
+    # get string, cast to ASCII, truncate to 3 chars, strip multi spaces
+    entry.country_abrev = \
+        re.sub(' +', ' ',
+               data['country_abrev'].encode('ascii', 'ignore')[:2])
 
     # validate data
     form_is_valid = True
@@ -128,7 +137,7 @@ def form_validate_country(entry):
         error_msg['country_abrev'] = "Please fill in the country abbreviation"
 
     # ensure the abbrev is 2 characters
-    if 2 != len(entry.country_abrev):
+    if len(entry.country_abrev) != 2:
         form_is_valid = False
         error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
 
