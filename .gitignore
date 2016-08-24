@@ -93,3 +93,4 @@ ENV/
 .settings/**
 .vagrant/**
 **.md~
+cover/
