@@ -50,6 +50,9 @@ export PYTHONPATH=$(pwd)
 pylint shepard.py --reports=n
 pylint ./modules/Countries/controller.py --reports=n
 
+# reset the database, before running tests
+sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql" > /dev/null
+
 # runs all tests in folder and subfolders
 nosetests --verbosity=2
 
