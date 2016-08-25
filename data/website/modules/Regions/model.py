@@ -14,8 +14,7 @@ class Region(db.Model):
     of the SQLAlchemy class, and inherits various common database actions.
     """
 
-    region_id = Column(Integer,
-                                primary_key=True)
+    region_id = Column(Integer, primary_key=True)
     region_name = Column(String(128), unique=True)
     country_id = Column(Integer, ForeignKey('countries.country_id'))
     cities = relationship("City", cascade="delete, delete-orphan")

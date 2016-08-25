@@ -1,0 +1,15 @@
+{% extends "global.html" %}
+{% block body_content %}
+<h1>Edit A Region</h1>
+<script type="application/javascript"
+    src="{{ url_for('regions.static', filename='form.js') }}"></script>
+<form method="post" action="{{ url_for('regions.edit_region',
+    region_id=entry.region_id) }}" onsubmit="return verify_region();">
+    <label>Region Name</label>
+    <span id="region_name_msg" class="error_msg">{{ error_msg.region_name if error_msg.region_name is defined }}</span>
+    <input type="text" id="region_name" name="region_name"
+        value="{{ entry.region_name }}"/>
+
+    <input type="submit" value="submit" />
+</form>
+{% endblock %}
