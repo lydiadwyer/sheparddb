@@ -42,10 +42,10 @@ service postgresql restart
 echo "INFO: Installing nginx..."
 
 # add the nginx apt-get repo
-wget -q -O - http://nginx.org/keys/nginx_signing.key | \
-	apt-key add -
 echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" > \
 	/etc/apt/sources.list.d/nginx.list
+wget -q -O - http://nginx.org/keys/nginx_signing.key | \
+	apt-key add -
 apt-get update
 
 # install

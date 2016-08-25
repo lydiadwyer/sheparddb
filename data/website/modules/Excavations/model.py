@@ -16,8 +16,7 @@ class Excavation(db.Model):
 
     excavation_id       = Column(Integer, primary_key=True)
     excavation_name     = Column(String(128), unique=True)
-    country_id          = Column(Integer, ForeignKey('countries.country_id'),
-                                  nullable=False)
+    country_id          = Column(Integer, ForeignKey('countries.country_id'))
     region_id           = Column(Integer, ForeignKey('regions.region_id'))
     city_id             = Column(Integer, ForeignKey('cities.city_id'))
     excavation_created  = Column(DateTime)

@@ -15,13 +15,11 @@ class Region(db.Model):
     """
 
     region_id         = Column(Integer,  
-                                ForeignKey('cities.region_id', onupdate="CASCADE",
-                                ondelete="CASCADE"),
                                 primary_key=True)
     region_name       = Column(String(128), unique=True)
     country_id        = Column(Integer, ForeignKey('countries.country_id'))
 #    parent_country    = relationship("Country", back_populates="regions")
-#    child_cities      = relationship("City", back_populates="regions")
+#    child_cities      = relationship("City", backref="regions")
 
 
     def __init__(self, region_name=""):

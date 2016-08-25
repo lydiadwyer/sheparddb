@@ -6,7 +6,7 @@ from modules.Shared.database import db
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
-# this part of the database that is the ARTIFACT TABLE
+# this part of the database that is the COUNTRIES TABLE
 # http://flask-sqlalchemy.pocoo.org/2.1/models/
 class Country(db.Model):
 
@@ -27,7 +27,7 @@ class Country(db.Model):
     regions            = relationship("Region", backref="countries"
 #                                   cascade="all, delete, delete-orphan",
                                    )
-#    cities             = relationship("City", back_populates="countries",
+#    cities             = relationship("City", backref="countries",
 #                                   cascade="all, delete, delete-orphan",
 #                                   passive_deletes=True)
     def __init__(self, country_name="", country_abrev=""):
