@@ -27,6 +27,7 @@ CREATE SCHEMA IF NOT EXISTS sheparddb;
 
 
 -- Setup database tables;
+
 CREATE TABLE artifacts(
     artifact_id         SERIAL PRIMARY KEY,
     artifact_name       VARCHAR(128),
@@ -64,6 +65,9 @@ CREATE TRIGGER update_artifact_updated_trigger BEFORE UPDATE
     update_artifact_updated();
 
 
+
+
+
 CREATE TABLE countries(
     country_id         SERIAL PRIMARY KEY,
     country_name       VARCHAR(128),
@@ -71,6 +75,7 @@ CREATE TABLE countries(
     country_created    TIMESTAMP
 );
 ALTER TABLE countries OWNER TO shepard;
+
 
 
 
@@ -84,6 +89,8 @@ ALTER TABLE regions OWNER TO shepard;
 
 
 
+
+
 -- Add city coordinates?
 CREATE TABLE cities(
     city_id         SERIAL PRIMARY KEY,
@@ -92,6 +99,9 @@ CREATE TABLE cities(
     region_id       INT references regions(region_id)
 );
 ALTER TABLE cities OWNER TO shepard;
+
+
+
 
 
 CREATE TABLE excavations(

@@ -8,7 +8,8 @@ regions = Blueprint(
     'regions',
     __name__,
     template_folder='templates',
-    static_folder='static'
+    static_folder='static',
+    url_prefix='/regions'
 )
 
 @regions.route('/')
@@ -16,5 +17,15 @@ def view_all_regions():
     return render_template('regions/view_all.html', Regions=Region)
 
 @regions.route('/view/<region_id>')
-def view_region(region_id):
-    return render_template('regions/view.html')  # , Artifacts=Artifact
+def view_one_region(region_id):
+    return render_template('regions/view.html')
+
+@regions.route('/edit/<region_id>')
+def edit_region(region_id):
+    return render_template('regions/view.html')
+
+
+@regions.route('/delete/<region_id>')
+def delete_region(region_id):
+    return render_template('regions/view.html')
+
