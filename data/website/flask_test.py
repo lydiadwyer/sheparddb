@@ -5,6 +5,7 @@ import tempfile
 import subprocess, os, time
 
 # http://flask.pocoo.org/docs/0.11/testing/
+# http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class CountryTestCase(unittest.TestCase):
 
@@ -19,8 +20,6 @@ class CountryTestCase(unittest.TestCase):
 
     def test_country_default(self):
 
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.get('/countries/')
 
         self.assertIn('Cyprus', result.data)
@@ -30,8 +29,6 @@ class CountryTestCase(unittest.TestCase):
 
     def test_country_view1(self):
 
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.get('/countries/view/1')
 
         self.assertIn('Cyprus', result.data)
@@ -40,10 +37,7 @@ class CountryTestCase(unittest.TestCase):
 
     def test_country_add(self):
 
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.get('/countries/add')
-        print result.data
 
         self.assertIn('Add A Country', result.data)
         self.assertIn('Country Name', result.data)
@@ -51,9 +45,6 @@ class CountryTestCase(unittest.TestCase):
 
     def test_country_add_valid(self):
 
-
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.post(
             '/countries/add',
             data={
@@ -62,18 +53,13 @@ class CountryTestCase(unittest.TestCase):
             },
             follow_redirects=True
         )
-        # print result.data
 
         self.assertIn('<h1>Greece</h1>', result.data)
         self.assertIn('<a href="/countries/edit/4">Edit</a>', result.data)
         self.assertIn('<a href="/countries/delete/4">Delete</a>', result.data)
 
     def test_country_add_invalid(self):
-        # ensure response is invalid
 
-
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.post(
             '/countries/add',
             data={
@@ -93,17 +79,12 @@ class CountryTestCase(unittest.TestCase):
 
     def test_country_edit3(self):
 
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.get('/countries/edit/3')
 
         self.assertIn('Turkey', result.data)
 
     def test_country_edit_valid(self):
 
-
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.post(
             '/countries/edit/3',
             data={
@@ -112,7 +93,6 @@ class CountryTestCase(unittest.TestCase):
             },
             follow_redirects=True
         )
-        # print result.data
 
         self.assertIn('<h1>Turkey</h1>', result.data)
         self.assertIn('<td>Turkey</td>', result.data)
@@ -122,11 +102,7 @@ class CountryTestCase(unittest.TestCase):
 
 
     def test_country_edit_invalid(self):
-        # ensure response is invalid
 
-
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.post(
             '/countries/edit/3',
             data={
@@ -135,7 +111,6 @@ class CountryTestCase(unittest.TestCase):
             },
             follow_redirects=True
         )
-        # print result.data
 
         self.assertIn('<span id="country_name_msg" class="error_msg">Please fill in a country name only with English letters.</span>',
                        result.data)
@@ -165,28 +140,23 @@ class CountryTestCase(unittest.TestCase):
 
 
     def test_country_delete_valid(self):
-        # ensure entry is deleted
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+
+        result = self.app.get(
             '/countries/delete/2',
             follow_redirects=True
         )
         # print result.data
 
-        self.assertIn('Turkey' not in result.data)
+        self.assertNotIn('France', result.data)
 
     def test_country_delete_invalid(self):
-        # test if nonexistant entry doesnt crash
-        # response
-        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+
+        result = self.app.get(
             '/countries/delete/10',
             follow_redirects=True
         )
-        # print result.data
 
-        self.assertIn(400, result.data)
+        self.assertEqual(400, result.status_code)
         self.assertIn('Entry does not exist.', result.data)
 
 

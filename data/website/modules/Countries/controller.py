@@ -4,7 +4,7 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request
+    request, abort
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
@@ -155,7 +155,7 @@ def form_validate_country(entry):
 def delete_country(country_id):
     """ delete a country """
     entry = Country.query.get(country_id)
-    #check something doesnt exist
+    # check something doesnt exist
     if entry is None:
         return abort(400, 'Entry does not exist.')
     db.session.delete(entry)
