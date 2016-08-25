@@ -18,18 +18,13 @@ class Country(db.Model):
 
     __tablename__ = 'countries'
 
-    country_id         = Column(Integer,
-                                primary_key=True)
-    country_name       = Column(String(128), unique=True)
-    country_abrev      = Column(String(128), unique=True)
-    country_created    = Column(DateTime)
-    
-    regions            = relationship("Region", backref="countries"
-#                                   cascade="all, delete, delete-orphan",
-                                   )
-#    cities             = relationship("City", backref="countries",
-#                                   cascade="all, delete, delete-orphan",
-#                                   passive_deletes=True)
+    country_id = Column(Integer, primary_key=True)
+    country_name = Column(String(128), unique=True)
+    country_abrev = Column(String(128), unique=True)
+    country_created = Column(DateTime)
+    regions = relationship("Region", cascade="delete, delete-orphan")
+    # http://docs.sqlalchemy.org/en/latest/orm/cascades.html
+
     def __init__(self, country_name="", country_abrev=""):
-        self.country_name    = country_name
-        self.country_abrev   = country_abrev
+        self.country_name = country_name
+        self.country_abrev = country_abrev

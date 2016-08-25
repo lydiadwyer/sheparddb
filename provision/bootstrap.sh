@@ -19,18 +19,21 @@ echo "INFO: Installing Postgres..."
 # install
 echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > \
 	/etc/apt/sources.list.d/postgres.list
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+	apt-key add -
 apt-get update
 apt-get install -y postgresql-9.5 postgresql-client-9.5 \
 	postgresql-contrib-9.5 2>&1
 
 # configure Postgres
+# INSECURE!!!
 cp /vagrant/psql/postgresql.conf /etc/postgresql/9.5/main/postgresql.conf
 cp /vagrant/psql/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
 service postgresql restart
 
 # rebuild the database
 echo "INFO: Setting up the database..."
+# INSECURE!!!
 su - postgres -c "psql -c \"ALTER USER postgres with encrypted password 'postgres';\""
 su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 service postgresql restart
@@ -57,6 +60,7 @@ mkdir -p /var/log/nginx/
 chown -R www-data:www-data /var/log/nginx/
 
 # copy over configs, restart
+# INSECURE!!!
 cp -R /vagrant/nginx/* /etc/nginx/
 service nginx restart 2>&1
 
@@ -94,7 +98,7 @@ service uwsgi restart 2>&1
 mkdir -p /var/log/sheparddb/
 touch /var/log/sheparddb/info.log
 chown -R www-data:www-data /var/log/sheparddb
-chmod 0777 /var/log/sheparddb/info.log
+chmod 0777 /var/log/sheparddb/info.log # INSECURE!!!
 
 mkdir -p /var/log/uwsgi/app
 chown -R www-data:www-data /var/log/uwsgi/app
