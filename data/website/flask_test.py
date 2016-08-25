@@ -7,6 +7,7 @@ import subprocess, os, time
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
+# Tests most forms and validation, can be used for other forms
 class CountryTestCase(unittest.TestCase):
 
     def setUp(self):
