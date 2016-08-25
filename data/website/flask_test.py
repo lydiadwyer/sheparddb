@@ -143,6 +143,27 @@ class CountryTestCase(unittest.TestCase):
                        result.data)
 
 
+    def test_country_form_validation(self):
+        # ensure data is being cleansed
+        # response
+        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
+        result = self.app.post(
+            '/countries/add',
+            data={
+                  'country_name': '9999999rf',
+                  'country_abrev': 'sfghhgds'
+            },
+            follow_redirects=True
+        )
+        # print result.data
+
+        self.assertIn('',
+                       result.data)
+        self.assertIn('',
+                       result.data)
+
+
+
     def test_country_delete_valid(self):
         # ensure entry is deleted
         # response

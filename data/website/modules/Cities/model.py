@@ -21,7 +21,7 @@ class City(db.Model):
     country_id             = Column(Integer, ForeignKey('countries.country_id'))
 #    country                = relationship("Country", back_populates="cities")
 #    region                 = relationship("Region", back_populates="cities")
-#    child_excavations      = relationship("Excavation", backref="excavations")
+    child_excavations      = relationship("Excavation", backref="cities")
     
     def __init__(self, city_name=""):
         self.city_name    = city_name
