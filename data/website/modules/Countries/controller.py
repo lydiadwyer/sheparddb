@@ -116,7 +116,7 @@ def form_validate_country(entry):
     # ensure the country_name is filled in
     if not entry.country_name:
         form_is_valid = False
-        error_msg['country_name'] = "Please fill in the country name"
+        error_msg['country_name'] = "Please fill in the country name."
 
     # country name underflow check
     if len(entry.country_name) < 4:
