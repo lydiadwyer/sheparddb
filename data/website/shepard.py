@@ -12,9 +12,10 @@ from flask import Flask, render_template
 from modules.Shared.database import db
 from modules.Artifacts.controller import artifacts
 from modules.Excavations.controller import excavations
+
 from modules.Countries.controller import countries
-
-
+from modules.Regions.controller import regions
+from modules.Cities.controller import cities
 
 # create app
 app = Flask(__name__)
@@ -64,6 +65,8 @@ def home():
 app.register_blueprint(artifacts)
 app.register_blueprint(excavations)
 app.register_blueprint(countries)
+app.register_blueprint(regions)
+app.register_blueprint(cities)
 
 
 # enter debug mode, if this file is called directly

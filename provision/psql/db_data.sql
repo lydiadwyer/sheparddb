@@ -14,3 +14,7 @@ INSERT INTO countries(country_name) VALUES('Turkey');
 INSERT INTO regions(region_name, country_id) VALUES('Dali', 1);
 INSERT INTO regions(region_name, country_id) VALUES('Loire Valley', 2);
 INSERT INTO regions(region_name, country_id) VALUES('Ankara', 3);
+
+INSERT INTO cities(city_name, country_id, region_id) VALUES('testy', 1, 1);
+INSERT INTO cities(city_name, country_id, region_id) VALUES('testy2', 2, 2);
+INSERT INTO cities(city_name, country_id, region_id) VALUES('testy3', 3, 3);

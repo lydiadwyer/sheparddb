@@ -50,8 +50,10 @@ export PYTHONPATH=$(pwd)
 pylint shepard.py --reports=n
 pylint ./modules/Countries/controller.py --reports=n
 
+# runs all tests in folder and subfolders
 nosetests --verbosity=2
 
+# run all tests for sheparddb, show coverage
 nosetests --with-xcoverage --cover-package=sheparddb \
     -q -x --verbosity=2
 

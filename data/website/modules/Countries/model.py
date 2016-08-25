@@ -3,7 +3,8 @@
 """The Countries Model class for the ShepardDB website."""
 
 from modules.Shared.database import db
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 
 # this part of the database that is the ARTIFACT TABLE
 # http://flask-sqlalchemy.pocoo.org/2.1/models/
@@ -17,12 +18,18 @@ class Country(db.Model):
 
     __tablename__ = 'countries'
 
-    country_id         = Column(Integer, primary_key=True)
+    country_id         = Column(Integer,
+                                primary_key=True)
     country_name       = Column(String(128), unique=True)
     country_abrev      = Column(String(128), unique=True)
     country_created    = Column(DateTime)
-    #do I even need country created?
-
+    
+    regions            = relationship("Region", backref="countries"
+#                                   cascade="all, delete, delete-orphan",
+                                   )
+#    cities             = relationship("City", back_populates="countries",
+#                                   cascade="all, delete, delete-orphan",
+#                                   passive_deletes=True)
     def __init__(self, country_name="", country_abrev=""):
         self.country_name    = country_name
         self.country_abrev   = country_abrev

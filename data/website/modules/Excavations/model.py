@@ -16,6 +16,10 @@ class Excavation(db.Model):
 
     excavation_id       = Column(Integer, primary_key=True)
     excavation_name     = Column(String(128), unique=True)
+    country_id          = Column(Integer, ForeignKey('countries.country_id'),
+                                  nullable=False)
+    region_id           = Column(Integer, ForeignKey('regions.region_id'))
+    city_id             = Column(Integer, ForeignKey('cities.city_id'))
     excavation_created  = Column(DateTime)
     excavation_updated  = Column(DateTime)
 
@@ -25,10 +29,3 @@ class Excavation(db.Model):
     def __repr__(self):
         return "<Excavation(excavation_id='%s', excavation_name='%s', excavation_created='%s',excavation_updated='%s')>" % (
             self.excavation_id, self.excavation_name, self.excavation_created, self.excavation_updated)
-
-          ## country_id          = Column(Integer, ForeignKey('countries.country_id'), nullable=False)
-   ## country             = relationship("Country")
-   ## region_id           = Column(Integer, ForeignKey('regions.region_id'))
-   ## region              = relationship("Region")
-   ## city_id             = Column(Integer, ForeignKey('cities.city_id'))
-   ## city                = relationship("City") 

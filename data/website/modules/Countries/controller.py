@@ -51,7 +51,7 @@ def add_country():
 
         # check if the form is valid
         if not form_is_valid:
-            current_app.logger.info('invalid add country')
+            # current_app.logger.info('invalid add country')
             return render_template('countries/add.html', entry=entry, \
                                    error_msg=error_msg)
 
@@ -61,7 +61,7 @@ def add_country():
 
         return redirect(url_for('countries.view_country', \
                                 country_id=entry.country_id))
-    current_app.logger.error("unsupported method")
+    # current_app.logger.error("unsupported method")
 
 @countries.route('/edit/<country_id>', methods=['GET', 'POST'])
 def edit_country(country_id):
@@ -83,7 +83,7 @@ def edit_country(country_id):
 
         # check if the form is valid
         if not form_is_valid:
-            current_app.logger.info('invalid edit country: ' + str(entry))
+            # current_app.logger.info('invalid edit country: ' + str(entry))
             return render_template('countries/edit.html', entry=entry, \
                                    error_msg=error_msg)
 
@@ -91,7 +91,7 @@ def edit_country(country_id):
         db.session.commit()
         return redirect(url_for('countries.view_country', \
                                 country_id=entry.country_id))
-    current_app.logger.error("unsupported method")
+   # current_app.logger.error("unsupported method")
 
 def form_validate_country(entry):
     """ validate Country form data """
@@ -127,14 +127,14 @@ def form_validate_country(entry):
     match = re.match('^[a-zA-Z ]*$', entry.country_name)
     if not match:
         form_is_valid = False
-        error_msg['country_name'] = "Please fill in the country name using only letters."
+        error_msg['country_name'] = "Please fill in a country name only with English letters."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
 
     # ensure the country abbrev is filled in
     if not entry.country_abrev:
         form_is_valid = False
-        error_msg['country_abrev'] = "Please fill in the country abbreviation"
+        error_msg['country_abrev'] = "Please fill in the country abbreviation."
 
     # ensure the abbrev is 2 characters
     if len(entry.country_abrev) != 2:
@@ -155,6 +155,9 @@ def form_validate_country(entry):
 def delete_country(country_id):
     """ delete a country """
     entry = Country.query.get(country_id)
+    #check something doesnt exist
+    if entry is None:
+        return abort(400, 'Entry does not exist.')
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('countries.view_all_countries'))

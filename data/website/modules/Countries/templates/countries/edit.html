@@ -6,14 +6,12 @@
 <form method="post" action="{{ url_for('countries.edit_country',
     country_id=entry.country_id) }}" onsubmit="return verify_country();">
     <label>Country Name</label>
-    <span id="country_name_msg" class="error_msg">
-        {{ error_msg.country_name if error_msg.country_name is defined }}</span>
+    <span id="country_name_msg" class="error_msg">{{ error_msg.country_name if error_msg.country_name is defined }}</span>
     <input type="text" id="country_name" name="country_name"
         value="{{ entry.country_name }}"/>
 
     <label>Country Abbreviation</label>
-    <span id="country_abrev_msg" class="error_msg">
-        {{ error_msg.country_abrev if error_msg.country_abrev is defined }}</span>
+    <span id="country_abrev_msg" class="error_msg">{{ error_msg.country_abrev if error_msg.country_abrev is defined }}</span>
     <input type="text" id="country_abrev" name="country_abrev"
         value="{{ entry.country_abrev }}" />
 

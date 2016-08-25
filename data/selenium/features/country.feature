@@ -1,4 +1,4 @@
-Feature: Signup
+Feature: Country, Add
 
   Users's shoud be able to save Countries
 
