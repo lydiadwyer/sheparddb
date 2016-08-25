@@ -14,15 +14,11 @@ class City(db.Model):
     of the SQLAlchemy class, and inherits various common database actions.
     """
 
-    city_id = Column(Integer,
-                                primary_key=True)
+    city_id = Column(Integer, primary_key=True)
 
     city_name              = Column(String(128), unique=True)
     region_id              = Column(Integer, ForeignKey('regions.region_id'))
     country_id             = Column(Integer, ForeignKey('countries.country_id'))
-
-
-
     child_excavations      = relationship("Excavation", backref="cities")
     
 
