@@ -142,26 +142,31 @@ class CountryTestCase(unittest.TestCase):
         self.assertIn('<span id="country_abrev_msg" class="error_msg">Please fill in the country abbreviation with 2 characters.</span>',
                        result.data)
 
-    def test_country_delete(self):
+
+    def test_country_delete_valid(self):
         # ensure entry is deleted
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
         result = self.app.post(
             '/countries/delete/2',
-            data={
-                  'country_name': 'Turk8',
-                  'country_abrev': ''
-            },
             follow_redirects=True
         )
         # print result.data
 
-        self.assertIn('',
-                       result.data)
-        self.assertIn('',
-                       result.data)
+        self.assertIn('Turkey' not in result.data)
 
+    def test_country_delete_invalid(self):
+        # test if nonexistant entry doesnt crash
+        # response
+        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
+        result = self.app.post(
+            '/countries/delete/10',
+            follow_redirects=True
+        )
+        # print result.data
 
+        self.assertIn(400, result.data)
+        self.assertIn('Entry does not exist.', result.data)
 
 
 
