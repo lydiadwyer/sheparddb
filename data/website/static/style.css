@@ -145,22 +145,17 @@ select{
 
     font-size: 1em;
     text-align: left;
-    color:#fff;
-    background-color: #000;
+    color:#000;
+    background-color: #fff;
 }
 option{
     text-align: left;
     padding-left: 16px;
     padding-top: 16px;
-    color: #FFF;
+    color: #000;
     height: 48px;
     line-height: 48px;
-    border: 1px solid #262626;
     cursor: pointer;
-}
-select:focus{
-    border: 1px solid #FFF;
-    color: #FFF;
 }
 input[type="text"],
 input[type="email"],

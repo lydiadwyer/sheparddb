@@ -4,11 +4,25 @@
 <script type="application/javascript"
     src="{{ url_for('regions.static', filename='form.js') }}"></script>
 <form method="post" action="{{ url_for('regions.edit_region',
-    region_id=entry.region_id) }}" onsubmit="return verify_region();">
+    region_id=entry.region_id) }}"
+    onsubmit="return verify_region();">
+
     <label>Region Name</label>
-    <span id="region_name_msg" class="error_msg">{{ error_msg.region_name if error_msg.region_name is defined }}</span>
+    <span id="region_name_msg" class="error_msg">
+        {{ error_msg.region_name if error_msg.region_name is defined }}
+    </span>
     <input type="text" id="region_name" name="region_name"
         value="{{ entry.region_name }}"/>
+
+    <label>Country</label>
+    <span id="country_id_msg" class="error_msg">
+        {{ error_msg.country_id_msg if error_msg.country_id_msg is defined }}
+    </span>
+    <select name="country_id">
+    {% for entry in country_list %}
+        <option value="{{ entry.country_id }}">{{ entry.country_name }}</option>
+    {% endfor %}
+    </select>
 
     <input type="submit" value="submit" />
 </form>

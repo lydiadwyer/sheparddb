@@ -28,9 +28,8 @@ def view_all_regions():
 def view_one_region(region_id):
     """ view a single region in detail """
     entry = Region.query.get(region_id)
-    return render_template('regions/view.html')
+    return render_template('regions/view.html', entry=entry)
 
-#########add country entry option for association
 @regions.route('/add', methods=['GET', 'POST'])
 def add_region():
     """ add an region page function """
@@ -39,15 +38,11 @@ def add_region():
     entry = Region()  # creates a model.py instance, instance only has a name right now
     error_msg = {}
     form_is_valid = True
-    country_list = []
-    ####need to query a list of all country ids + names and make list
+    country_list = Country.query.all()
 
     if request.method == 'GET':
-        
-        country_list = Country.query.all()
         return render_template('regions/add.html', entry=entry, \
-                               country_id=country_list.country_id, \
-                               country_name=country_list.country_name, \
+                               country_list=country_list, \
                                error_msg=error_msg)
 
     if request.method == 'POST':
@@ -58,18 +53,19 @@ def add_region():
         if not form_is_valid:
             # current_app.logger.info('invalid add region')
             return render_template('regions/add.html', entry=entry, \
+                                   country_list=country_list, \
                                    error_msg=error_msg)
 
         # the data is valid, save it
         db.session.add(entry)
         db.session.commit()
 
-        return redirect(url_for('regions.view_region', \
+        return redirect(url_for('regions.view_one_region', \
                                 region_id=entry.region_id))
     # current_app.logger.error("unsupported method")
 
 #### should add country entry option
-@regions.route('/edit/<region_id>')
+@regions.route('/edit/<region_id>', methods=['GET', 'POST'])
 def edit_region(region_id):
     """ edit region details """
 
@@ -77,11 +73,12 @@ def edit_region(region_id):
     entry = Region.query.get(region_id)
     error_msg = {}
     form_is_valid = True
+    country_list = Country.query.all()
 
-    ##### should I be using url_for here or hardcoding?
     if request.method == 'GET':
-        return render_template(url_for('regions.edit_region', \
-                               region_id=entry.region_id))
+        return render_template('regions/edit.html', \
+                               entry=entry, error_msg=error_msg, \
+                               country_list=country_list)
 
     if request.method == 'POST':
 
@@ -92,11 +89,12 @@ def edit_region(region_id):
         if not form_is_valid:
             # current_app.logger.info('invalid edit region: ' + str(entry))
             return render_template('regions/edit.html', entry=entry, \
+                                   country_list=country_list, \
                                    error_msg=error_msg)
 
         # the data is valid, save it
         db.session.commit()
-        return redirect(url_for('regions.view_region', \
+        return redirect(url_for('regions.view_one_region', \
                                 region_id=entry.region_id))
    # current_app.logger.error("unsupported method")
 
