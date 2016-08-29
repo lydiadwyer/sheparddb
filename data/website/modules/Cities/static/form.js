@@ -5,39 +5,39 @@ function isAlpha(xStr){
     var regEx = /^[a-zA-Z ]+$/;
     return xStr.match(regEx);
 }
-function verify_city() {
+function verify_excavation() {
 
     // flag for any value errors
     var form_is_valid = true;
 
     // retrieve the form values
-    var city_name = document.getElementById('city_name').value;
-    var city_name_msg = document.getElementById("city_name_msg");
+    var excavation_name = document.getElementById('excavation_name').value;
+    var excavation_name_msg = document.getElementById("excavation_name_msg");
 
     // clear out the error message
-    city_name_msg.innerHTML = "";
+    excavation_name_msg.innerHTML = "";
 
-    // ensure country_name is not null
-    if(!city_name || "" == city_name) {
-        city_name_msg.innerHTML = "Please fill in the city name.";
+    // ensure excavation_name is not null
+    if(!excavation_name || "" == excavation_name) {
+        excavation_name_msg.innerHTML = "Please fill in the excavation name.";
         form_is_valid = false;
     }
 
-    // ensure city_name is longer than 3 characters
-    if(!city_name_msg.innerHTML && city_name.length < 3) {
-        city_name_msg.innerHTML = "Please fill in the city name completely.";
+    // ensure excavation_name is longer than 1 characters
+    if(!excavation_name_msg.innerHTML && excavation_name.length < 2) {
+        excavation_name_msg.innerHTML = "Please fill in the excavation name completely.";
         form_is_valid = false;
     }
 
-    // ensure city_name is less than 128 characters
-    if(!city_name_msg.innerHTML && city_name.length > 128) {
-        city_name_msg.innerHTML = "Please fill in a shorter city name.";
+    // ensure excavation_name is less than 128 characters
+    if(!excavation_name_msg.innerHTML && excavation_name.length > 128) {
+        excavation_name_msg.innerHTML = "Please fill in a shorter excavation name.";
         form_is_valid = false;
     }
 
-    // character check for city_name
-    if(!city_name_msg.innerHTML && !isAlpha(city_name)) {
-        city_name_msg.innerHTML = "Please fill in a city name only with English letters.";
+    // character check for excavation_name
+    if(!excavation_name_msg.innerHTML && !isAlpha(excavation_name)) {
+        excavation_name_msg.innerHTML = "Please fill in an excavation name only with English letters.";
         form_is_valid = false;
     }
 

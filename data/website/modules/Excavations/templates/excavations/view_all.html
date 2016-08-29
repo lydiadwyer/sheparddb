@@ -1,10 +1,14 @@
 {% extends "global.html" %}
 {% block body_content %}
     <h1>Excavations</h1>
+    <a href="{{ url_for('excavations.add_excavation') }}">add excavation</a>
     <table>
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Country</th>
+        <th>Region</th>
+        <th>City</th>
         <th>Created</th>
         <th>Updated</th>
     </tr>
@@ -12,10 +16,13 @@
     <tr>
         <td>{{entry.excavation_id}}</td>
         <td>{{entry.excavation_name}}</td>
+        <td>{{entry.country_id}}</td>
+        <td>{{entry.region_id}}</td>
+        <td>{{entry.city_id}}</td>
         <td>{{entry.excavation_created}}</td>
         <td>{{entry.excavation_updated}}</td>
         <td>
-            <a href="{{ url_for('excavations.view_excavation',
+            <a href="{{ url_for('excavations.view_one_excavation',
                 excavation_id=entry.excavation_id) }}">View</a>
             <a href="{{ url_for('excavations.edit_excavation',
                 excavation_id=entry.excavation_id) }}">Edit</a>

@@ -1,4 +1,31 @@
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>A Single Excavation</h1>
+    <h1>{{ entry.excavation_name }}</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Region</th>
+        <th>City</th>
+        <th>Created</th>
+        <th>Updated</th>
+    </tr>
+    <tr>
+        <td>{{entry.excavation_id}}</td>
+        <td>{{entry.excavation_name}}</td>
+        <td>{{entry.country_id}}</td>
+        <td>{{entry.region_id}}</td>
+        <td>{{entry.city_id}}</td>
+        <td>{{entry.excavation_created}}</td>
+        <td>{{entry.excavation_updated}}</td>
+        <td>
+            <a href="{{ url_for('excavations.edit_excavation',
+                excavation_id=entry.excavation_id) }}">Edit</a>
+            <a href="{{ url_for('excavations.delete_excavation',
+                excavation_id=entry.excavation_id) }}">Delete</a>
+        </td>
+    </tr>
+</table>
+<a href="{{ url_for('excavations.view_all_excavations') }}">View All</a>
 {% endblock %}

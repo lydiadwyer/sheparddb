@@ -1,0 +1,50 @@
+{% extends "global.html" %}
+{% block body_content %}
+<h1>Edit An Excavation</h1>
+<script type="application/javascript"
+    src="{{ url_for('excavations.static', filename='form.js') }}"></script>
+<form method="post" action="{{ url_for('excavations.edit_excavation',
+    excavation_id=entry.excavation_id) }}"
+    onsubmit="return verify_excavation();">
+
+    <label>Excavation Name</label>
+    <span id="excavation_name_msg" class="error_msg">
+        {{ error_msg.excavation_name if error_msg.excavation_name is defined }}
+    </span>
+    <input type="text" id="excavation_name" name="excavation_name"
+        value="{{ entry.excavation_name }}"/>
+
+    <label>Country</label>
+    <span id="country_id_msg" class="error_msg">
+        {{ error_msg.country_id_msg if error_msg.country_id_msg is defined }}
+    </span>
+    <select name="country_id">
+    {% for entry in country_list %}
+        <option value="{{ entry.country_id }}">{{ entry.country_name }}</option>
+    {% endfor %}
+    </select>
+
+    <label>Region</label>
+    <span id="region_id_msg" class="error_msg">
+        {{ error_msg.region_id_msg if error_msg.region_id_msg is defined }}
+    </span>
+    <select name="region_id">
+    {% for entry in region_list %}
+        <option value="{{ entry.region_id }}">{{ entry.region_name }}</option>
+    {% endfor %}
+    </select>
+
+    <label>City</label>
+    <span id="city_id_msg" class="error_msg">
+        {{ error_msg.city_id_msg if error_msg.city_id_msg is defined }}
+    </span>
+    <select id="city_id" name="city_id">
+    {% for entry in city_list %}
+        <option value="{{ entry.city_id }}">{{ entry.city_name }}</option>
+    {% endfor %}
+    </select>
+
+    <input type="submit" value="submit" />
+</form>
+    <a href="{{ url_for('excavations.view_all_excavations') }}">Cancel Edit</a>
+{% endblock %}

@@ -133,6 +133,10 @@ def form_validate_region(entry):
     else:
         current_app.logger.info("match = " + str(match.group(0)))
 
+    if not entry.country_id:
+        form_is_valid = False
+        error_msg['country_id'] = "Please choose the country."
+
     return [entry, form_is_valid, error_msg]
 
 

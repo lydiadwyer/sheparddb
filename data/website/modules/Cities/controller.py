@@ -24,12 +24,19 @@ cities = Blueprint(
 @cities.route('/')
 def view_all_cities():
     """ homepage with all cities in a table """
+    
+    ###should get country+regions to display names
+    
+    
     return render_template('cities/view_all.html', Cities=City)
 
 @cities.route('/view/<city_id>')
 def view_one_city(city_id):
     """ view a single city in detail """
     entry = City.query.get(city_id)
+    
+    ###should get country+regions to display names
+    
     return render_template('cities/view.html', entry=entry)
 
 @cities.route('/add', methods=['GET', 'POST'])
@@ -141,6 +148,15 @@ def form_validate_city(entry):
         error_msg['city_name'] = "Please fill in a city name only with English letters."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
+    
+    # ensure country_id and region_id are chosen
+    if not entry.country_id:
+        form_is_valid = False
+        error_msg['country_id'] = "Please choose the country."
+    
+    if not entry.region_id:
+        form_is_valid = False
+        error_msg['region_id'] = "Please choose the region."
 
     return [entry, form_is_valid, error_msg]
 
