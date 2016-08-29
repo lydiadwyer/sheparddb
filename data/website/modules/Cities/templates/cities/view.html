@@ -1,4 +1,19 @@
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>A Single Excavation</h1>
+<h1>{{ entry.city_name }}</h1>
+<table>
+    <tr>
+        <td>{{ entry.city_id }}</td>
+        <td>{{ entry.city_name }}</td>
+        <td>{{ entry.country_id }}</td>
+        <td>{{ entry.region_id }}</td>
+        <td>
+            <a href="{{ url_for('cities.edit_city',
+                city_id=entry.city_id) }}">Edit</a>
+            <a href="{{ url_for('cities.delete_city',
+                city_id=entry.city_id) }}">Delete</a>
+        </td>
+    </tr>
+</table>
+<a href="{{ url_for('cities.view_all_cities') }}">View All</a>
 {% endblock %}

@@ -108,7 +108,9 @@ def form_validate_region(entry):
     entry.region_name = \
         re.sub(' +', ' ',
                data['region_name'].encode('ascii', 'ignore')[:127])
-
+    # grab the country_id
+    entry.country_id = data['country_id']
+    
     # validate data
     form_is_valid = True
     error_msg = {}

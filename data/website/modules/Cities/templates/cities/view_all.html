@@ -1,26 +1,27 @@
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>Excavations</h1>
+    <h1>Cities</h1>
+    <a href="{{ url_for('cities.add_city') }}">add city</a>
     <table>
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Created</th>
-        <th>Updated</th>
+        <th>Region</th>
+        <th>Country</th>
     </tr>
-    {% for entry in Excavations.query.all() %}
+    {% for entry in Cities.query.all() %}
     <tr>
-        <td>{{entry.excavation_id}}</td>
-        <td>{{entry.excavation_name}}</td>
-        <td>{{entry.excavation_created}}</td>
-        <td>{{entry.excavation_updated}}</td>
+        <td>{{entry.city_id}}</td>
+        <td>{{entry.city_name}}</td>
+        <td>{{entry.region_id}}</td>
+        <td>{{entry.country_id}}</td>
         <td>
-            <a href="{{ url_for('excavations.view_excavation',
-                excavation_id=entry.excavation_id) }}">View</a>
-            <a href="{{ url_for('excavations.edit_excavation',
-                excavation_id=entry.excavation_id) }}">Edit</a>
-            <a href="{{ url_for('excavations.edit_excavation',
-                excavation_id=entry.excavation_id) }}">Delete</a>
+            <a href="{{ url_for('cities.view_one_city',
+                city_id=entry.city_id) }}">View</a>
+            <a href="{{ url_for('cities.edit_city',
+                city_id=entry.city_id) }}">Edit</a>
+            <a href="{{ url_for('cities.delete_city',
+                city_id=entry.city_id) }}">Delete</a>
         </td>
     </tr>
     {% endfor %}
