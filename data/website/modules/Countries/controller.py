@@ -4,11 +4,11 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request, abort
+    request, abort, flash
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
-# collection of URLs for the artifact section of the website
+# collection of URLs for the COUNTRY section of the website
 # setup the controller, use a local folder for templates
 countries = Blueprint(
     'countries',
@@ -27,10 +27,15 @@ def view_all_countries():
 @countries.route('/view/<country_id>')
 def view_country(country_id):
     """ view a single country in detail """
+    # validate view to return view_country page if country_id exists,
+    # else return to view all
     entry = Country.query.get(country_id)
-    return render_template('countries/view.html', entry=entry)
+    if not entry is None:
+        return render_template('countries/view.html', entry=entry)
+    else:
+        flash('Entry does not exist.', 'error')
+        return redirect(url_for('countries.view_all_countries'))
 
-####restrict who can add/edit/delete countries?
 @countries.route('/add', methods=['GET', 'POST'])
 def add_country():
     """ add an country page function """
@@ -141,11 +146,12 @@ def form_validate_country(entry):
         form_is_valid = False
         error_msg['country_abrev'] = "Please fill in the country abbreviation with 2 characters."
 
-    # ensure the abbrev is letters
-    match = re.match('^[a-zA-Z ]*$', entry.country_abrev)
+    # ensure the abbrev is uppercase letters
+    match = re.match('^[A-Z ]*$', entry.country_abrev)
     if not match:
         form_is_valid = False
-        error_msg['country_abrev'] = "Please fill in the country abbreviation using only letters."
+        error_msg['country_abrev'] = \
+            "Please fill in the country abbreviation using only uppercase letters."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
 

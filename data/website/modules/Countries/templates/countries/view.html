@@ -1,6 +1,10 @@
+<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
 <h1>{{ entry.country_name }}</h1>
+  {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
 <table>
     <tr>
         <td>{{ entry.country_id }}</td>

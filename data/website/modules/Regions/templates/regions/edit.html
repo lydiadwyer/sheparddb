@@ -1,8 +1,9 @@
+<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
 <h1>Edit A Region</h1>
 <script type="application/javascript"
-    src="{{ url_for('regions.static', filename='form.js') }}"></script>
+    src="{{ url_for('regions.static', filename='form_region.js') }}"></script>
 <form method="post" action="{{ url_for('regions.edit_region',
     region_id=entry.region_id) }}"
     onsubmit="return verify_region();">

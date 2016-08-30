@@ -12,7 +12,11 @@ function verify_city() {
 
     // retrieve the form values
     var city_name = document.getElementById('city_name').value;
+    var country_id = document.getElementById('country_id').value;
+    var region_id = document.getElementById('region_id').value;
     var city_name_msg = document.getElementById("city_name_msg");
+    var country_id_msg = document.getElementById("country_id_msg");
+    var region_id_msg = document.getElementById("region_id_msg");
 
     // clear out the error message
     city_name_msg.innerHTML = "";
@@ -41,6 +45,17 @@ function verify_city() {
         form_is_valid = false;
     }
 
+    // ensure country_id is not null
+    if(!country_id || "" == country_id) {
+        country_id_msg.innerHTML = "Please choose the country.";
+        form_is_valid = false;
+    }
+
+    // ensure region_id is not null
+    if(!region_id || "" == region_id) {
+        region_id_msg.innerHTML = "Please choose the region.";
+        form_is_valid = false;
+    }
 
     return form_is_valid;
 }

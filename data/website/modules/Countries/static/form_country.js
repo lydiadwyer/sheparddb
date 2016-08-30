@@ -1,8 +1,13 @@
 "use strict";
 
+// javascript form verification for countries
 // function to check for alphabetic letters
 function isAlpha(xStr){
     var regEx = /^[a-zA-Z ]+$/;
+    return xStr.match(regEx);
+}
+function isUpper(xStr){
+    var regEx = /^[A-Z ]+$/;
     return xStr.match(regEx);
 }
 function verify_country() {
@@ -13,9 +18,14 @@ function verify_country() {
     // retrieve the form values
     var country_name = document.getElementById('country_name').value;
     var country_name_msg = document.getElementById("country_name_msg");
+    // retrieve the form values
+    var country_abrev = document.getElementById('country_abrev').value;
+    var country_abrev_msg = document.getElementById("country_abrev_msg");
 
     // clear out the error message
     country_name_msg.innerHTML = "";
+    // clear out the error message
+    country_abrev_msg.innerHTML = "";
 
     // ensure country_name is not null
     if(!country_name || "" == country_name) {
@@ -41,14 +51,7 @@ function verify_country() {
         form_is_valid = false;
     }
 
-
-    // retrieve the value
-    var country_abrev = document.getElementById('country_abrev').value;
-    var country_abrev_msg = document.getElementById("country_abrev_msg");
-
-    // clear out the error message
-    country_abrev_msg.innerHTML = "";
-
+    // Country abbreviation validation
     // ensure country_abrev is not null
     if(!country_abrev || "" == country_abrev) {
         country_abrev_msg.innerHTML = "Please fill in the country abbreviation.";
@@ -62,11 +65,10 @@ function verify_country() {
     }
 
     // character check for country_abrev
-    if(!country_abrev_msg.innerHTML && !isAlpha(country_abrev)) {
-        country_abrev_msg.innerHTML = "Please fill in a country abbreviation with only English letters.";
+    if(!country_abrev_msg.innerHTML && !isUpper(country_abrev)) {
+        country_abrev_msg.innerHTML = "Please fill in the country abbreviation using only uppercase letters.";
         form_is_valid = false;
     }
-
 
 
     return form_is_valid;

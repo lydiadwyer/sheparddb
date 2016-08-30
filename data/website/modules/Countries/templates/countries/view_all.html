@@ -1,15 +1,16 @@
+<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
     <h1>Countries</h1>
-    <a href="{{ url_for('countries.add_country') }}">add country</a>
+    <a href="{{ url_for('countries.add_country') }}">Add country</a>
     <table>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Country Name</th>
         <th>Abreviation</th>
         <th>Created</th>
     </tr>
-    {% for entry in Countries.query.all() %}
+    {% for entry in Countries.query.all()|sort(attribute='country_id') %}
     <tr>
         <td>{{ entry.country_id }}</td>
         <td>{{ entry.country_name }}</td>

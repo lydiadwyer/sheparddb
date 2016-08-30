@@ -13,10 +13,13 @@ function verify_region() {
 
     // retrieve the form values
     var region_name = document.getElementById('region_name').value;
+    var country_id = document.getElementById('country_id').value;
     var region_name_msg = document.getElementById("region_name_msg");
+    var country_id_msg = document.getElementById("country_id_msg");
 
     // clear out the error message
     region_name_msg.innerHTML = "";
+    country_id_msg.innerHTML = "";
 
     // ensure region_name is not null
     if(!region_name || "" == region_name) {
@@ -39,6 +42,12 @@ function verify_region() {
     // character check for region_name
     if(!region_name_msg.innerHTML && !isAlpha(region_name)) {
         region_name_msg.innerHTML = "Please fill in a region name only with English letters.";
+        form_is_valid = false;
+    }
+
+    // ensure country_id is not null
+    if(!country_id || "" == country_id) {
+        country_id_msg.innerHTML = "Please choose the country.";
         form_is_valid = false;
     }
 

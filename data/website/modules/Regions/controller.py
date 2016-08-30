@@ -4,12 +4,12 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request, abort
+    request, abort, flash
 from modules.Regions.model import Region
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
-# collection of URLs for the artifact section of the website
+# collection of URLs for the REGION section of the website
 # setup the controller, use a local folder for templates
 regions = Blueprint(
     'regions',
@@ -28,7 +28,11 @@ def view_all_regions():
 def view_one_region(region_id):
     """ view a single region in detail """
     entry = Region.query.get(region_id)
-    return render_template('regions/view.html', entry=entry)
+    if not entry is None:
+        return render_template('regions/view.html', entry=entry)
+    else:
+        flash('Entry does not exist.', 'error')
+        return redirect(url_for('regions.view_all_regions'))
 
 @regions.route('/add', methods=['GET', 'POST'])
 def add_region():
@@ -108,8 +112,9 @@ def form_validate_region(entry):
     entry.region_name = \
         re.sub(' +', ' ',
                data['region_name'].encode('ascii', 'ignore')[:127])
-    # grab the country_id
-    entry.country_id = data['country_id']
+    # grab the country_id, cast to integer
+    entry.country_id = \
+        re.sub(' +', ' ', data['country_id'].encode('int', 'ignore'))
     
     # validate data
     form_is_valid = True

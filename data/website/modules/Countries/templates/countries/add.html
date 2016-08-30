@@ -1,8 +1,9 @@
+<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
 <h1>Add A Country</h1>
 <script type="application/javascript"
-    src="{{ url_for('countries.static', filename='form.js') }}"></script>
+    src="{{ url_for('countries.static', filename='form_country.js') }}"></script>
 <form method="post" action="{{ url_for('countries.add_country') }}"
     onsubmit="return verify_country();">
     <label>Country Name</label>

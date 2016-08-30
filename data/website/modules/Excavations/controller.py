@@ -61,8 +61,9 @@ def add_excavation():
                                    region_list=region_list, \
                                    city_list=city_list, \
                                    error_msg=error_msg)
-
-
+        #if data is valid, commit
+        db.session.add(entry)
+        db.session.commit()
         return redirect(url_for('excavations.view_one_excavation', \
                                 excavation_id=entry.excavation_id))
 
@@ -135,12 +136,11 @@ def form_validate_excavation(entry):
         form_is_valid = False
         error_msg['excavation_name'] = "Please fill in the excavation name completely."
 
-    #### may want to add numbers to accepted characters
-    # ensure the excavation name is letters
-    match = re.match('^[a-zA-Z ]*$', entry.excavation_name)
+    # ensure the excavation name is alphanumeric
+    match = re.match('^[a-zA-Z0-9 ]*$', entry.excavation_name)
     if not match:
         form_is_valid = False
-        error_msg['excavation_name'] = "Please fill in a excavation name only with English letters."
+        error_msg['excavation_name'] = "Please fill in a excavation name only with English letters and numbers."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
     
