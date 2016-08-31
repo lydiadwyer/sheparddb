@@ -1,5 +1,30 @@
-<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>Hello World!</h1>
+<h1>Hello World!</h1>
+
+<script type="application/javascript">
+"use strict";
+
+function do_the_ajax(){
+
+    // http://www.w3schools.com/jsref/dom_obj_event.asp
+    // http://api.jquery.com/jquery.ajax/
+    $.ajax({
+        url: "{{ url_for('countries.add_country') }}",
+        beforeSend: function( xhr ) {
+            xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+    }).done(function( data ) {
+        if ( console && console.log ) {
+            console.log( "Sample of data:", data.slice( 0, 100 ) );
+        }
+    });
+return False;
+};
+</script>
+<form  method="post" action="#" onsubmit="do_the_ajax();">
+    <label>Text</label>
+    <input type="text" name="" value="" />
+    <input type="submit" value="submit" />
+</form>
 {% endblock %}
