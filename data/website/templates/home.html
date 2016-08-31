@@ -11,18 +11,17 @@ function do_the_ajax(){
     // http://api.jquery.com/jquery.ajax/
     $.ajax({
         url: "{{ url_for('countries.add_country') }}",
-        beforeSend: function( xhr ) {
-            xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
+        data: {'test': 1},
+        method: 'post'
     }).done(function( data ) {
         if ( console && console.log ) {
-            console.log( "Sample of data:", data.slice( 0, 100 ) );
+            console.log( "Sample of data:", data );
         }
     });
-return False;
+return false;
 };
 </script>
-<form  method="post" action="#" onsubmit="do_the_ajax();">
+<form  method="post" action="#" onsubmit="return do_the_ajax();">
     <label>Text</label>
     <input type="text" name="" value="" />
     <input type="submit" value="submit" />

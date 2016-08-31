@@ -1,4 +1,3 @@
-<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
     <h1>Regions</h1>
@@ -8,6 +7,7 @@
         <th>ID</th>
         <th>Region Name</th>
         <th>Country</th>
+        <th>Options</th>
     </tr>
     {% for entry in Regions.query.all()|sort(attribute='region_id') %}
     <tr>

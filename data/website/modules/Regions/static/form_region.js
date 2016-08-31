@@ -14,6 +14,7 @@ function verify_region() {
     // retrieve the form values
     var region_name = document.getElementById('region_name').value;
     var country_id = document.getElementById('country_id').value;
+    var country_list = document.getElementsByName('country_list').value;
     var region_name_msg = document.getElementById("region_name_msg");
     var country_id_msg = document.getElementById("country_id_msg");
 
@@ -50,6 +51,19 @@ function verify_region() {
         country_id_msg.innerHTML = "Please choose the country.";
         form_is_valid = false;
     }
+
+    // ensure country_id is an int
+    if(!country_id_msg.innerHTML && isNaN(country_id)) {
+        country_id_msg.innerHTML = "Please choose a valid country id.";
+        form_is_valid = false;
+    }
+
+// cant get to work right now
+    // ensure country_id is a valid country
+ //   if(!country_id_msg.innerHTML && !($.inArray(country_id, country_list) > 0)){
+ //       country_id_msg.innerHTML = "Please choose a valid country.";
+//        form_is_valid = false;
+//    }
 
 
     return form_is_valid;

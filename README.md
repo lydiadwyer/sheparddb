@@ -63,6 +63,9 @@ nosetests --with-xcoverage --cover-package=sheparddb \
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
     -q -x --verbosity=2
 
+nosetests --with-xcoverage --cover-package=sheparddb.modules.Regions \
+    -q -x --verbosity=2
+
 nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace \
     --cover-package=sheparddb --cover-inclusive --cover-erase -x
 

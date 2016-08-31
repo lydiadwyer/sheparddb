@@ -36,7 +36,7 @@ def view_one_region(region_id):
 
 @regions.route('/add', methods=['GET', 'POST'])
 def add_region():
-    """ add an region page function """
+    """ add a region page function """
 
     # init variables
     entry = Region()  # creates a model.py instance, instance only has a name right now
@@ -68,7 +68,7 @@ def add_region():
                                 region_id=entry.region_id))
     # current_app.logger.error("unsupported method")
 
-#### should add country entry option
+
 @regions.route('/edit/<region_id>', methods=['GET', 'POST'])
 def edit_region(region_id):
     """ edit region details """
@@ -104,21 +104,35 @@ def edit_region(region_id):
 
 def form_validate_region(entry):
     """ validate Region form data """
-
+    
+    # validate data
+    form_is_valid = True
+    error_msg = {}
     # retrieve data from the global Request object
     data = request.form
 
+    # check to make sure data has attributes we want before stripping them
+    if not 'region_name' in data \
+        or not 'country_id' in data:
+    
+        if not 'region_name' in data:
+            error_msg['region_name'] = "Please fill in the region name."
+        if not 'country_id' in data:
+            error_msg['country_id'] = "Please choose the country."
+        form_is_valid = False
+        return [entry, form_is_valid, error_msg]
+    
     # get string, cast to ASCII, truncate to 128 chars, strip multi spaces
     entry.region_name = \
         re.sub(' +', ' ',
                data['region_name'].encode('ascii', 'ignore')[:127])
     # grab the country_id, cast to integer
-    entry.country_id = \
-        re.sub(' +', ' ', data['country_id'].encode('int', 'ignore'))
+    if data['country_id'].isdigit():
+        entry.country_id = int(data['country_id'])
+    else:
+        form_is_valid=False
+        error_msg['country_id'] = "Please choose the country."
     
-    # validate data
-    form_is_valid = True
-    error_msg = {}
 
     # ensure the region_name is filled in
     if not entry.region_name:
@@ -135,14 +149,15 @@ def form_validate_region(entry):
     if not match:
         form_is_valid = False
         error_msg['region_name'] = "Please fill in a region name only with English letters."
-    else:
-        current_app.logger.info("match = " + str(match.group(0)))
 
+    # ensure the country id is inputted
     if not entry.country_id:
         form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-
+        
+        
     return [entry, form_is_valid, error_msg]
+
 
 
 @regions.route('/delete/<region_id>')

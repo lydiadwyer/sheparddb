@@ -1,8 +1,13 @@
-<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
 <h1>{{ entry.region_name }}</h1>
 <table>
+    <tr>
+        <th>ID</th>
+        <th>Region Name</th>
+        <th>Country</th>
+        <th>Options</th>
+    </tr>
     <tr>
         <td>{{ entry.region_id }}</td>
         <td>{{ entry.region_name }}</td>

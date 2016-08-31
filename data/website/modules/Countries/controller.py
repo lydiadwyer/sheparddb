@@ -4,7 +4,7 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request, abort, flash
+    request, abort, flash, jsonify
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
@@ -40,6 +40,7 @@ def view_country(country_id):
 def add_country():
     """ add an country page function """
 
+
     # init variables
     entry = Country()  # creates a model.py instance, instance only has a name right now
     error_msg = {}
@@ -50,12 +51,14 @@ def add_country():
                                error_msg=error_msg)
 
     if request.method == 'POST':
-
         # validate input
         [entry, form_is_valid, error_msg] = form_validate_country(entry)
 
         # check if the form is valid
         if not form_is_valid:
+            # check if it gets an ajax request
+            if request.is_xhr:
+                return jsonify({ 'error_msg': error_msg})
             # current_app.logger.info('invalid add country')
             return render_template('countries/add.html', entry=entry, \
                                    error_msg=error_msg)
@@ -100,9 +103,21 @@ def edit_country(country_id):
 
 def form_validate_country(entry):
     """ validate Country form data """
-
+    # validate data vars
+    form_is_valid = True
+    error_msg = {}
     # retrieve data from the global Request object
     data = request.form
+    
+    if not 'country_name' in data \
+        or not 'country_abrev' in data:
+    
+        if not 'country_name' in data:
+            error_msg['country_name'] = "Please fill in the country name."
+        if not 'country_abrev' in data:
+            error_msg['country_abrev'] = "Please fill in the country abbreviation."
+        form_is_valid = False
+        return [entry, form_is_valid, error_msg]
 
     # get string, cast to ASCII, truncate to 32 chars, strip multi spaces
     entry.country_name = \
@@ -114,9 +129,6 @@ def form_validate_country(entry):
         re.sub(' +', ' ',
                data['country_abrev'].encode('ascii', 'ignore')[:2])
 
-    # validate data
-    form_is_valid = True
-    error_msg = {}
 
     # ensure the country_name is filled in
     if not entry.country_name:

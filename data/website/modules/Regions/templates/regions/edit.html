@@ -1,4 +1,3 @@
-<!doctype html>
 {% extends "global.html" %}
 {% block body_content %}
 <h1>Edit A Region</h1>
@@ -17,11 +16,15 @@
 
     <label>Country</label>
     <span id="country_id_msg" class="error_msg">
-        {{ error_msg.country_id_msg if error_msg.country_id_msg is defined }}
+        {{ error_msg.country_id if error_msg.country_id is defined }}
     </span>
     <select name="country_id">
-    {% for entry in country_list %}
-        <option value="{{ entry.country_id }}">{{ entry.country_name }}</option>
+    {% for country in country_list %}
+        {% if country.country_id == entry.country_id %}
+        <option value="{{ country.country_id }}" selected>{{ country.country_name }}</option>
+        {% else %}
+        <option value="{{ country.country_id }}">{{ country.country_name }}</option>
+        {% endif %}
     {% endfor %}
     </select>
 
