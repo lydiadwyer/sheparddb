@@ -1,42 +1,25 @@
 import os
-from shepard import app, db
+from shepard import app
 import unittest
 import tempfile
 import subprocess, os, time
+from BaseTestCase import BaseTestCase
+from flask import url_for
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class CityTestCase(unittest.TestCase):
-
-    def reset_database(self):
-
-        conn = psycopg2.connect(
-            "dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")
-        conn.autocommit = True
-        cursor = conn.cursor()
-        cursor.execute(open("/vagrant/psql/db_create_schema.sql", "r").read())
-        cursor.execute(open("/vagrant/psql/db_data.sql", "r").read())
-        cursor.close()
-        conn.close()
-
-    def setUp(self):
-        self.app = app.test_client()
-        self.app.testing = True
-        self.reset_database()
-
-
-    def tearDown(self):
-        pass
-
+class CityTestCase(BaseTestCase):
 
     # view all cities default
     def test_city_default(self):
 
-        result = self.app.get('/cities/')
+        result = self.app.get(url_for('cities.view_all_cities'))
 
         self.assertIn('Cities', result.data)
-        self.assertIn('<a href="/cities/add">Add A City</a>', result.data)
+        self.assertIn('Dali', result.data)
+        self.assertIn('Tours', result.data)
+        self.assertIn('<a href="/cities/add">Add city</a>', result.data)
 
     # view city number 1
     def test_city_view1(self):
@@ -51,7 +34,10 @@ class CityTestCase(unittest.TestCase):
     def test_city_view_none(self):
 
         result = self.app.get(
-            '/cities/view/99',
+            url_for('cities.view_one_city'),
+            data={
+                  'city_id': '99'
+                  },
             follow_redirects=True
         )
 

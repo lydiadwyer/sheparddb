@@ -1,4 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for, current_app, request
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""The Controller class for Artifacts."""
+
+from flask import Blueprint, render_template, redirect, url_for, \
+    current_app, request
 from modules.Artifacts.model import Artifact
 from modules.Shared.database import db
 
@@ -8,11 +13,12 @@ artifacts = Blueprint(
     'artifacts',
     __name__,
     template_folder='templates',
-    static_folder='static'
+    static_folder='static',
+    url_prefix='/artifacts'
 )
 
 #homepage with all artifacts in a table
-@artifacts.route('/artifacts')
+@artifacts.route('/')
 def view_all_artifacts():
     return render_template('artifacts/view_all.html', Artifacts=Artifact)
 

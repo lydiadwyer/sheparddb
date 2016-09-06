@@ -24,6 +24,7 @@
         <option value="{{ country.country_id }}" selected>{{ country.country_name }}</option>
         {% else %}
         <option value="{{ country.country_id }}">{{ country.country_name }}</option>
+        {% endif %}
     {% endfor %}
     </select>
 
@@ -37,6 +38,7 @@
         <option value="{{ region.region_id }}" selected>{{ region.region_name }}</option>
         {% else %}
         <option value="{{ region.region_id }}">{{ region.region_name }}</option>
+        {% endif %}
     {% endfor %}
     </select>
 

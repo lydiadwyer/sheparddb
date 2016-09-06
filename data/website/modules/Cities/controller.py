@@ -4,7 +4,7 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request, abort
+    request, abort, flash
 from modules.Cities.model import City
 from modules.Regions.model import Region
 from modules.Countries.model import Country
@@ -24,7 +24,6 @@ cities = Blueprint(
 @cities.route('/')
 def view_all_cities():
     """ homepage with all cities in a table """
-
     return render_template('cities/view_all.html', Cities=City)
 
 @cities.route('/view/<city_id>')
@@ -118,7 +117,7 @@ def form_validate_city(entry):
     error_msg = {}
     # retrieve data from the global Request object
     data = request.form
-    if not 'city_name' or 'country_id' or 'region_id' in data:
+    if not 'city_name' or not 'country_id' or not 'region_id' in data:
 
         if not 'city_name' in data:
             error_msg['city_name'] = "Please fill in the city name."

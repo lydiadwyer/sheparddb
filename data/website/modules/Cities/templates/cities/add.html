@@ -31,7 +31,11 @@
     <select id="region_id" name="region_id">
         <option value="SelectRegion">Select A Region</option>
     {% for region in region_list %}
+        {% if region.region_id == entry.region_id %}
+        <option value="{{ region.region_id }}" selected>{{ region.region_name }}</option>
+        {% else %}
         <option value="{{ region.region_id }}">{{ region.region_name }}</option>
+        {% endif %}
     {% endfor %}
     </select>
 

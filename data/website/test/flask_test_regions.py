@@ -1,35 +1,20 @@
 import os
-from shepard import app, db
+from shepard import app
 import unittest
 import tempfile
 import subprocess, os, time
-import psycopg2
+from BaseTestCase import BaseTestCase
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class RegionTestCase(unittest.TestCase):
-
-    def reset_database(self):
-
-        conn = psycopg2.connect(
-            "dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")
-        conn.autocommit = True
-        cursor = conn.cursor()
-        cursor.execute(open("/vagrant/psql/db_create_schema.sql", "r").read())
-        cursor.execute(open("/vagrant/psql/db_data.sql", "r").read())
-        cursor.close()
-        conn.close()
+class RegionTestCase(BaseTestCase):
 
     def setUp(self):
+        self.reset_database()       
         self.app = app.test_client()
         self.app.testing = True
-        self.reset_database()
 
-    def tearDown(self):
-        pass
-
-    # ## conflicts occuring because of all tests being done
     def test_region_default(self):
 
         result = self.app.get('/regions/')

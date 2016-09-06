@@ -1,15 +1,15 @@
 import os
-from shepard import app, db
+from shepard import app
+import unittest
 import tempfile
 import subprocess, os, time
 import psycopg2
-from flask.ext.testing import TestCase
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
 # Tests most forms and validation, can be used for other forms
-class BaseTestCase(TestCase):
+class BaseTestCase(unittest.TestCase):
     """ A base test case to use with other test modules """
 
     def reset_database(self):
@@ -24,13 +24,13 @@ class BaseTestCase(TestCase):
         conn.close()
 
     def setUp(self):
+        self.reset_database()       
         self.app = app.test_client()
         self.app.testing = True
-        self.reset_database()
+
 
     def tearDown(self):
-        db.session.remove()
-        db.drop_all()
+        pass
 
 
 if __name__ == '__main__':
