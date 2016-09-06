@@ -3,8 +3,8 @@
 <h1>Add A Region</h1>
 <script type="application/javascript"
     src="{{ url_for('regions.static', filename='form_region.js') }}"></script>
-<form method="post" action="{{ url_for('regions.add_region') }}"
-    onsubmit="return verify_region();">
+<form method="post" onsubmit="return verify_region();"
+    action="{{ url_for('regions.add_region') }}">
 
     <label>Region Name</label>
     <span id="region_name_msg" class="error_msg">
@@ -30,4 +30,5 @@
 
     <input type="submit" value="submit" />
 </form>
+<a href="{{ url_for('regions.view_all_regions') }}">Cancel</a>
 {% endblock %}

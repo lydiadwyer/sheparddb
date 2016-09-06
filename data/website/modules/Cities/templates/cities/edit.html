@@ -3,9 +3,8 @@
 <h1>Edit A City</h1>
 <script type="application/javascript"
     src="{{ url_for('cities.static', filename='form.js') }}"></script>
-<form method="post" action="{{ url_for('cities.edit_city',
-    city_id=entry.city_id) }}"
-    onsubmit="return verify_city();">
+<form method="post" onsubmit="return verify_city();"
+    action="{{ url_for('cities.edit_city', city_id=entry.city_id) }}">
 
     <label>City Name</label>
     <span id="city_name_msg" class="error_msg">
@@ -18,7 +17,7 @@
     <span id="country_id_msg" class="error_msg">
         {{ error_msg.country_id_msg if error_msg.country_id_msg is defined }}
     </span>
-    <select name="country_id">
+    <select id="country_id" name="country_id">
     {% for entry in country_list %}
         <option value="{{ entry.country_id }}">{{ entry.country_name }}</option>
     {% endfor %}
@@ -28,7 +27,7 @@
     <span id="region_id_msg" class="error_msg">
         {{ error_msg.region_id_msg if error_msg.region_id_msg is defined }}
     </span>
-    <select name="region_id">
+    <select id="region_id" name="region_id">
     {% for entry in region_list %}
         <option value="{{ entry.region_id }}">{{ entry.region_name }}</option>
     {% endfor %}
@@ -36,5 +35,5 @@
 
     <input type="submit" value="submit" />
 </form>
-    <a href="{{ url_for('cities.view_all_cities') }}">Cancel Edit</a>
+<a href="{{ url_for('cities.view_all_cities') }}">Cancel</a>
 {% endblock %}

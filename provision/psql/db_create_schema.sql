@@ -1,33 +1,19 @@
 -- Postgres Cheatsheet
 -- https://gist.github.com/apolloclark/ea5466d5929e63043dcf
 
--- Close any open connections to the database
-SELECT pg_terminate_backend(pid) from pg_stat_activity where datname='sheparddb';
-
-
-
--- Drop the database (schema and tables),
--- Create the initial user, set their password:
-DROP DATABASE IF EXISTS sheparddb;
-DROP USER IF EXISTS shepard;
-CREATE USER shepard WITH PASSWORD 'shepard';
-
--- Create the database:
-CREATE DATABASE sheparddb WITH OWNER shepard;
-GRANT ALL PRIVILEGES ON DATABASE "sheparddb" TO shepard;
-
--- Connect to the database:
-\c sheparddb;
+-- Destroy the schema
+DROP SCHEMA IF EXISTS sheparddb CASCADE;
 
 -- Setup database schema:
-CREATE SCHEMA IF NOT EXISTS sheparddb;
+CREATE SCHEMA IF NOT EXISTS sheparddb AUTHORIZATION shepard;
+GRANT ALL ON SCHEMA sheparddb TO shepard;
 
 
 
 
 
 -- Setup database tables;
-
+DROP TABLE IF EXISTS artifacts CASCADE;
 CREATE TABLE artifacts(
     artifact_id         SERIAL PRIMARY KEY,
     artifact_name       VARCHAR(128),
@@ -47,6 +33,7 @@ BEGIN
    RETURN NEW;
 END;
 $$ language 'plpgsql';
+ALTER FUNCTION set_artifact_created() OWNER TO shepard;
 
 CREATE TRIGGER set_artifact_created_trigger BEFORE INSERT
     ON artifacts FOR EACH ROW EXECUTE PROCEDURE
@@ -59,6 +46,7 @@ BEGIN
    RETURN NEW;
 END;
 $$ language 'plpgsql';
+ALTER FUNCTION update_artifact_updated() OWNER TO shepard;
 
 CREATE TRIGGER update_artifact_updated_trigger BEFORE UPDATE
     ON artifacts FOR EACH ROW EXECUTE PROCEDURE
@@ -67,7 +55,7 @@ CREATE TRIGGER update_artifact_updated_trigger BEFORE UPDATE
 
 
 
-
+DROP TABLE IF EXISTS countries CASCADE;
 CREATE TABLE countries(
     country_id         SERIAL PRIMARY KEY,
     country_name       VARCHAR(128),
@@ -79,7 +67,7 @@ ALTER TABLE countries OWNER TO shepard;
 
 
 
-
+DROP TABLE IF EXISTS regions CASCADE;
 CREATE TABLE regions(
     region_id         SERIAL PRIMARY KEY,
     region_name       VARCHAR(128),
@@ -92,6 +80,7 @@ ALTER TABLE regions OWNER TO shepard;
 
 
 -- Add city coordinates?
+DROP TABLE IF EXISTS cities CASCADE;
 CREATE TABLE cities(
     city_id         SERIAL PRIMARY KEY,
     city_name       VARCHAR(128),
@@ -104,6 +93,7 @@ ALTER TABLE cities OWNER TO shepard;
 
 
 
+DROP TABLE IF EXISTS excavations CASCADE;
 CREATE TABLE excavations(
     excavation_id         SERIAL PRIMARY KEY,
     excavation_name       VARCHAR(128),

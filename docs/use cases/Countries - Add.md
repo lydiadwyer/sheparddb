@@ -25,7 +25,7 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	c. I fill in -1 (type mismatch)
     d. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
     e. I fill in "a" (underflow)
-    f. I fill in "This    is a multispace test" (whitespace)
+    f. I fill in "This    is a multispace test" (excess internal whitespace)
     g. I fill in "a!@#$%^&*()-=☺" (weird chars)
     h. I fill in "<script>alert("hello!")</script>" (XSS)
     i. I fill in " onhover="alert('hello!')" " (XSS inline)

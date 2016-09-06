@@ -1,32 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import subprocess, os, time
-
+import psycopg2
 def reset_database():
 
-    print("Resetting the database...")
-
-    # setup calls
-    psql = ['/usr/bin/psql', '-U', 'postgres', '-h', '127.0.0.1']
-    psql_str = '/usr/bin/psql -U postgres -h 127.0.0.1 '
-    FNULL = open(os.devnull, 'w')
-
-    subprocess.call(
-        psql_str + '-f ../../provision/psql/db_schema.sql',
-        shell=True,
-        env={'PGPASSWORD': 'postgres'},
-        stdout=FNULL, stderr=subprocess.STDOUT
-    )
-
-    time.sleep(1)
-
-    subprocess.call(
-        psql_str + '-d sheparddb -f ../../provision/psql/db_data.sql',
-        shell=True,
-        env={'PGPASSWORD': 'postgres'},
-        stdout=FNULL, stderr=subprocess.STDOUT
-    )
+    conn = psycopg2.connect("dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")
+    conn.autocommit = True
+    cursor = conn.cursor()
+    cursor.execute(open("../../provision/psql/db_create_schema.sql", "r").read())
+    cursor.execute(open("../../provision/psql/db_data.sql", "r").read())
+    cursor.close()
+    conn.close()
 
 if __name__ == "__main__":
     reset_database()
