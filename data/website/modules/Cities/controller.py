@@ -118,7 +118,7 @@ def form_validate_city(entry):
     error_msg = {}
     # retrieve data from the global Request object
     data = request.form
-    if not fields['city_name', 'country_id', 'region_id'] in data:
+    if not 'city_name' or 'country_id' or 'region_id' in data:
         
         if not 'city_name' in data:
             error_msg['city_name'] = "Please fill in the city name."

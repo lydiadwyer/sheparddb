@@ -1,5 +1,5 @@
 import os
-from shepard import app
+from shepard import app, db
 import unittest
 import tempfile
 import subprocess, os, time
@@ -17,7 +17,7 @@ class CountryTestCase(unittest.TestCase):
 
     def tearDown(self):
         pass
-
+        
     def test_country_default(self):
 
         result = self.app.get('/countries/')

@@ -1,5 +1,5 @@
 import os
-from shepard import app
+from shepard import app, db
 import unittest
 import tempfile
 import subprocess, os, time
@@ -12,6 +12,7 @@ class CityTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.app.testing = True
+        
         # self.reset_database()
 
 
@@ -54,8 +55,6 @@ class CityTestCase(unittest.TestCase):
 
         self.assertIn('Add A City', result.data)
         self.assertIn('City Name', result.data)
-        self.assertIn('<select name="city_id">', result.data)
-        self.assertIn('<option value="">Select a City</option>', result.data)
 
 
 #####using country ids created from country testing

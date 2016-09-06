@@ -3,9 +3,9 @@ INSERT INTO artifacts(artifact_name, artifact_obj_reg) VALUES('test2', 112);
 INSERT INTO artifacts(artifact_name, artifact_obj_reg) VALUES('test3', 113);
 
 
-INSERT INTO excavations(excavation_name) VALUES('Idalion', 1, 1, 1);
-INSERT INTO excavations(excavation_name) VALUES('Wine Cave', 2, 2, 2);
-INSERT INTO excavations(excavation_name) VALUES('Catal Houyouk', 3, 3, 3);
+INSERT INTO excavations(excavation_name) VALUES('Idalion');
+INSERT INTO excavations(excavation_name) VALUES('Wine Cave');
+INSERT INTO excavations(excavation_name) VALUES('Catal Houyouk');
 
 INSERT INTO countries(country_name) VALUES('Cyprus');
 INSERT INTO countries(country_name) VALUES('France');
