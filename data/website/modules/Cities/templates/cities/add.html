@@ -2,7 +2,7 @@
 {% block body_content %}
 <h1>Add A City</h1>
 <script type="application/javascript"
-    src="{{ url_for('cities.static', filename='form.js') }}"></script>
+    src="{{ url_for('cities.static', filename='form_city.js') }}"></script>
 <form method="post" onsubmit="return verify_city();"
     action="{{ url_for('cities.add_city') }}">
 
@@ -15,21 +15,23 @@
 
     <label>Country</label>
     <span id="country_id_msg" class="error_msg">
-        {{ error_msg.country_id_msg if error_msg.country_id_msg is defined }}
+        {{ error_msg.country_id if error_msg.country_id is defined }}
     </span>
     <select id="country_id" name="country_id">
-    {% for entry in country_list %}
-        <option value="{{ entry.country_id }}">{{ entry.country_name }}</option>
+        <option value="SelectCountry">Select A Country</option>
+    {% for country in country_list %}
+        <option value="{{ country.country_id }}">{{ country.country_name }}</option>
     {% endfor %}
     </select>
 
     <label>Region</label>
     <span id="region_id_msg" class="error_msg">
-        {{ error_msg.region_id_msg if error_msg.region_id_msg is defined }}
+        {{ error_msg.region_id if error_msg.region_id is defined }}
     </span>
     <select id="region_id" name="region_id">
-    {% for entry in region_list %}
-        <option value="{{ entry.region_id }}">{{ entry.region_name }}</option>
+        <option value="SelectRegion">Select A Region</option>
+    {% for region in region_list %}
+        <option value="{{ region.region_id }}">{{ region.region_name }}</option>
     {% endfor %}
     </select>
 

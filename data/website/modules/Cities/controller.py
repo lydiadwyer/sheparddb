@@ -10,7 +10,7 @@ from modules.Regions.model import Region
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
-# collection of URLs for the city section of the website
+# collection of URLs for the cities section of the website
 # setup the controller, use a local folder for templates
 cities = Blueprint(
     'cities',
@@ -18,26 +18,24 @@ cities = Blueprint(
     template_folder='templates',
     static_folder='static',
     url_prefix='/cities'
-)  
+)
 
 
 @cities.route('/')
 def view_all_cities():
     """ homepage with all cities in a table """
-    
-    ###should get country+regions to display names
-    
-    
+
     return render_template('cities/view_all.html', Cities=City)
 
 @cities.route('/view/<city_id>')
 def view_one_city(city_id):
     """ view a single city in detail """
     entry = City.query.get(city_id)
-    
-    ###should get country+regions to display names
-    
-    return render_template('cities/view.html', entry=entry)
+    if not entry is None:
+        return render_template('cities/view.html', entry=entry)
+    else:
+        flash('Entry does not exist.', 'error')
+        return redirect(url_for('cities.view_all_cities'))
 
 @cities.route('/add', methods=['GET', 'POST'])
 def add_city():
@@ -115,21 +113,38 @@ def edit_city(city_id):
 
 def form_validate_city(entry):
     """ validate City form data """
-
+    # validate data
+    form_is_valid = True
+    error_msg = {}
     # retrieve data from the global Request object
     data = request.form
+    if not 'city_name' or 'country_id' or 'region_id' in data:
 
+        if not 'city_name' in data:
+            error_msg['city_name'] = "Please fill in the city name."
+        if not 'country_id' in data:
+            error_msg['country_id'] = "Please choose the country."
+        if not 'region_id' in data:
+            error_msg['region_id'] = "Please choose the region."
+        form_is_valid = False
+        return [entry, form_is_valid, error_msg]
     # get string, cast to ASCII, truncate to 128 chars, strip multi spaces
     entry.city_name = \
         re.sub(' +', ' ',
                data['city_name'].encode('ascii', 'ignore')[:127])
+
     # retrieve ids in the data var from the html form
-    entry.country_id = data['country_id']
-    entry.region_id = data['region_id']
-    
-    # validate data
-    form_is_valid = True
-    error_msg = {}
+    if data['country_id'].isdigit():
+        entry.country_id = int(data['country_id'])
+    else:
+        form_is_valid = False
+        error_msg['country_id'] = "Please choose the country."
+
+    if data['region_id'].isdigit():
+        entry.region_id = int(data['region_id'])
+    else:
+        form_is_valid = False
+        error_msg['region_id'] = "Please choose the region."
 
     # ensure the city_name is filled in
     if not entry.city_name:
@@ -148,12 +163,12 @@ def form_validate_city(entry):
         error_msg['city_name'] = "Please fill in a city name only with English letters."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
-    
+
     # ensure country_id and region_id are chosen
     if not entry.country_id:
         form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-    
+
     if not entry.region_id:
         form_is_valid = False
         error_msg['region_id'] = "Please choose the region."
@@ -171,4 +186,3 @@ def delete_city(city_id):
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('cities.view_all_cities'))
-

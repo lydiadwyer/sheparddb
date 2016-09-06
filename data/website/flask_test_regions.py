@@ -1,5 +1,5 @@
 import os
-from shepard import app
+from shepard import app, db
 import unittest
 import tempfile
 import subprocess, os, time
@@ -26,10 +26,8 @@ class RegionTestCase(unittest.TestCase):
         self.app.testing = True
         self.reset_database()
 
-
     def tearDown(self):
         pass
-
 
     # ## conflicts occuring because of all tests being done
     def test_region_default(self):
@@ -77,14 +75,14 @@ class RegionTestCase(unittest.TestCase):
             '/regions/add',
             data={
                   'region_name': 'Bordeaux',
-                  'country_id': '4'
+                  'country_id': '2'
             },
             follow_redirects=True
         )
 
         self.assertIn('<h1>Bordeaux</h1>', result.data)
         self.assertIn('<td>Bordeaux</td>', result.data)
-        self.assertIn('<td>4</td>', result.data)
+        self.assertIn('<td>2</td>', result.data)
         self.assertIn('Edit', result.data)
         self.assertIn('Delete', result.data)
 
@@ -184,7 +182,7 @@ class RegionTestCase(unittest.TestCase):
     def test_region_delete_valid(self):
 
         result = self.app.get(
-            '/regions/delete/5',
+            '/regions/delete/3',
             follow_redirects=True
         )
         # print result.data
