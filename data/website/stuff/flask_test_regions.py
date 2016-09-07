@@ -1,7 +1,3 @@
-import os
-from shepard import app
-import unittest
-import tempfile
 import subprocess, os, time
 from BaseTestCase import BaseTestCase
 
@@ -10,14 +6,9 @@ from BaseTestCase import BaseTestCase
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class RegionTestCase(BaseTestCase):
 
-    def setUp(self):
-        self.reset_database()       
-        self.app = app.test_client()
-        self.app.testing = True
-
     def test_region_default(self):
 
-        result = self.app.get('/regions/')
+        result = self.client.get('/regions/')
 
         self.assertIn('Regions', result.data)
         self.assertIn('Dali', result.data)
@@ -26,7 +17,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_view1(self):
 
-        result = self.app.get('/regions/view/1')
+        result = self.client.get('/regions/view/1')
 
         self.assertIn('Dali', result.data)
         self.assertIn('<a href="/regions/edit/1">Edit</a>', result.data)
@@ -34,7 +25,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_view_none(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/regions/view/99',
             follow_redirects=True
         )
@@ -44,7 +35,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_add(self):
 
-        result = self.app.get('/regions/add')
+        result = self.client.get('/regions/add')
 
         self.assertIn('Add A Region', result.data)
         self.assertIn('Region Name', result.data)
@@ -56,7 +47,7 @@ class RegionTestCase(BaseTestCase):
 #####using country ids created from country testing
     def test_region_add_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/regions/add',
             data={
                   'region_name': 'Bordeaux',
@@ -73,7 +64,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_add_invalid(self):
         # send invalid name and non-number id
-        result = self.app.post(
+        result = self.client.post(
             '/regions/add',
             data={
                   'region_name': 'Greec1',
@@ -89,7 +80,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_edit3(self):
 
-        result = self.app.get('/regions/edit/3')
+        result = self.client.get('/regions/edit/3')
 
         self.assertIn('Edit A Region', result.data)
         self.assertIn('Ankara', result.data)
@@ -97,7 +88,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_edit_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/regions/edit/3',
             data={
                   'region_name': 'Izmir',
@@ -114,7 +105,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_edit_invalid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/regions/edit/3',
             data={
                   'region_name': '88888',
@@ -131,7 +122,7 @@ class RegionTestCase(BaseTestCase):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+        result = self.client.post(
             '/regions/add',
             data={
                   'region_name': '',
@@ -148,7 +139,7 @@ class RegionTestCase(BaseTestCase):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+        result = self.client.post(
             '/regions/add',
             data={
                   'region_name': 'Hhhhh928(@@*@!!',
@@ -166,7 +157,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_delete_valid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/regions/delete/3',
             follow_redirects=True
         )
@@ -176,7 +167,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_delete_invalid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/regions/delete/10',
             follow_redirects=True
         )

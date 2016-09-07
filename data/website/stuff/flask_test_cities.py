@@ -1,20 +1,44 @@
-import os
-from shepard import app
-import unittest
-import tempfile
 import subprocess, os, time
-from BaseTestCase import BaseTestCase
+# from BaseTestCase import BaseTestCase
+from flask_testing import TestCase
 from flask import url_for
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class CityTestCase(BaseTestCase):
+class CityTestCase(TestCase):
+
+    def reset_database(self):
+
+        print 'CityTestCase::resetting...'
+
+        conn = psycopg2.connect(
+            "dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")
+        conn.autocommit = True
+        cursor = conn.cursor()
+        cursor.execute(open("/vagrant/psql/db_create_schema.sql", "r").read())
+        cursor.execute(open("/vagrant/psql/db_data.sql", "r").read())
+        cursor.close()
+        conn.close()
+
+    def create_app(self):
+        app = create_flask()
+        app.config['TESTING'] = True
+        app.testing = True
+        # app = app.test_client()
+        return app
+
+    def setUp(self):
+        # self.reset_database()
+        self.app = self.create_app()
+
+    def tearDown(self):
+        pass
 
     # view all cities default
     def test_city_default(self):
 
-        result = self.app.get(url_for('cities.view_all_cities'))
+        result = self.client.get(url_for('cities.view_all_cities'))
 
         self.assertIn('Cities', result.data)
         self.assertIn('Dali', result.data)
@@ -24,7 +48,7 @@ class CityTestCase(BaseTestCase):
     # view city number 1
     def test_city_view1(self):
 
-        result = self.app.get('/cities/view/1')
+        result = self.client.get('/cities/view/1')
 
         self.assertIn('Dali', result.data)
         self.assertIn('<a href="/cities/edit/1">Edit</a>', result.data)
@@ -33,11 +57,8 @@ class CityTestCase(BaseTestCase):
     # try to view a city that does not exist
     def test_city_view_none(self):
 
-        result = self.app.get(
-            url_for('cities.view_one_city'),
-            data={
-                  'city_id': '99'
-                  },
+        result = self.client.get(
+            '/cities/view/99',
             follow_redirects=True
         )
 
@@ -47,7 +68,7 @@ class CityTestCase(BaseTestCase):
     # view the add page
     def test_city_add(self):
 
-        result = self.app.get('/cities/add')
+        result = self.client.get('/cities/add')
 
         self.assertIn('Add A City', result.data)
         self.assertIn('City Name', result.data)
@@ -57,7 +78,7 @@ class CityTestCase(BaseTestCase):
     # test adding a city with valid outcome
     def test_city_add_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/cities/add',
             data={
                   'city_name': 'Catal',
@@ -76,7 +97,7 @@ class CityTestCase(BaseTestCase):
     # test adding a city with invalid result
     def test_city_add_invalid(self):
         # send invalid name and non-number id
-        result = self.app.post(
+        result = self.client.post(
             '/cities/add',
             data={
                   'city_name': 'Greec1',
@@ -94,7 +115,7 @@ class CityTestCase(BaseTestCase):
     # test editing a city page
     def test_city_edit3(self):
 
-        result = self.app.get('/cities/edit/3')
+        result = self.client.get('/cities/edit/3')
 
         self.assertIn('Edit A City', result.data)
         self.assertIn('Istanbul', result.data)
@@ -103,7 +124,7 @@ class CityTestCase(BaseTestCase):
     # test editing a city
     def test_city_edit_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/cities/edit/3',
             data={
                   'city_name': 'Istabuli',
@@ -120,7 +141,7 @@ class CityTestCase(BaseTestCase):
     # test invalid editing a city
     def test_city_edit_invalid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/cities/edit/3',
             data={
                   'city_name': '88888',
@@ -140,7 +161,7 @@ class CityTestCase(BaseTestCase):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+        result = self.client.post(
             '/cities/add',
             data={
                   'city_name': '',
@@ -158,7 +179,7 @@ class CityTestCase(BaseTestCase):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+        result = self.client.post(
             '/cities/add',
             data={
                   'city_name': 'Hhhhh928(@@*@!!',
@@ -177,7 +198,7 @@ class CityTestCase(BaseTestCase):
     # test that the cities are being deleted correctly
     def test_city_delete_valid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/cities/delete/2',
             follow_redirects=True
         )
@@ -188,7 +209,7 @@ class CityTestCase(BaseTestCase):
     # test that site responds correctly to invalid delete requests
     def test_city_delete_invalid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/cities/delete/10',
             follow_redirects=True
         )

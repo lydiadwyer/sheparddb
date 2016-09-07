@@ -5,9 +5,9 @@
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
     request, abort, flash
-from modules.Cities.model import City
-from modules.Regions.model import Region
 from modules.Countries.model import Country
+from modules.Regions.model import Region
+from modules.Cities.model import City
 from modules.Shared.database import db
 
 # collection of URLs for the cities section of the website

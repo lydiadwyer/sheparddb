@@ -54,19 +54,22 @@ pylint ./modules/Countries/controller.py --reports=n
 # flask unit testing now does this automatically
 #sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql" > /dev/null
 
+# delete all existing .pyc files...
+find . -name \*.pyc -delete
+
 # runs all tests in folder and subfolders
 nosetests --verbosity=2
 
 # run all tests for sheparddb, show coverage
-#     to cover everything w/ tests in another folder, add --cover-inclusive
+# http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
 nosetests --with-xcoverage --cover-package=sheparddb \
-    -q -x --verbosity=2 --cover-inclusive
+    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
 
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
-    -q -x --verbosity=2
+    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
 
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Regions \
-    -q -x --verbosity=2
+    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
 
 nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace \
     --cover-package=sheparddb --cover-inclusive --cover-erase -x
