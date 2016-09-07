@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship
 # this part of the database that is the REGIONS TABLE
 # http://flask-sqlalchemy.pocoo.org/2.1/models/
 class Region(db.Model):
+
     """Region object model
 
     This is a Model class, used as a generic data container. It is an extension

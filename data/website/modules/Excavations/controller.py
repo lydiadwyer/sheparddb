@@ -5,11 +5,11 @@
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
     request, abort
-from modules.Excavations.model import Excavation
-from modules.Cities.model import City
-from modules.Regions.model import Region
-from modules.Countries.model import Country
 from modules.Shared.database import db
+from modules.Countries.model import Country
+from modules.Regions.model import Region
+from modules.Cities.model import City
+from modules.Excavations.model import Excavation
 
 # collection of URLs for the excavations section of the website
 # setup the controller, use a local folder for templates
@@ -29,12 +29,12 @@ def view_all_excavations():
 @excavations.route('/view/<excavation_id>')
 def view_one_excavation(excavation_id):
     entry = Excavation.query.get(excavation_id)
-    return render_template('excavations/view.html', entry=entry)  
+    return render_template('excavations/view.html', entry=entry)
 
 @excavations.route('/add', methods=['GET', 'POST'])
 def add_excavation():
     """ add an excavation page function """
-    
+
     entry = Excavation()  # creates a model.py instance, instance only has a name right now
     error_msg = {}
     form_is_valid = True
@@ -61,7 +61,7 @@ def add_excavation():
                                    region_list=region_list, \
                                    city_list=city_list, \
                                    error_msg=error_msg)
-        #if data is valid, commit
+        # if data is valid, commit
         db.session.add(entry)
         db.session.commit()
         return redirect(url_for('excavations.view_one_excavation', \
@@ -78,7 +78,7 @@ def edit_excavation(excavation_id):
     country_list = Country.query.all()
     region_list = Region.query.all()
     city_list = City.query.all()
-    
+
     if request.method == 'GET':
         return render_template('excavations/edit.html', \
                                entry=entry, error_msg=error_msg, \
@@ -120,8 +120,8 @@ def form_validate_excavation(entry):
     # retrieve ids in the data var from the html form
     entry.country_id = data['country_id']
     entry.region_id = data['region_id']
-    entry.city_id = data['city_id']    
-    
+    entry.city_id = data['city_id']
+
     # validate data
     form_is_valid = True
     error_msg = {}
@@ -143,24 +143,24 @@ def form_validate_excavation(entry):
         error_msg['excavation_name'] = "Please fill in a excavation name only with English letters and numbers."
     else:
         current_app.logger.info("match = " + str(match.group(0)))
-    
+
     # ensure country_id city_id region_id are chosen
     if not entry.country_id:
         form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-    
+
     if not entry.region_id:
         form_is_valid = False
         error_msg['region_id'] = "Please choose the region."
-        
+
     if not entry.city_id:
         form_is_valid = False
         error_msg['city_id'] = "Please choose the city."
-        
+
     return [entry, form_is_valid, error_msg]
 
 
-    
+
 @excavations.route('/delete/<excavation_id>')
 def delete_excavation(excavation_id):
     """ delete an excavation """

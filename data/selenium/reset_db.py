@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+
+# you must have psql installed for this to work
 def reset_database():
 
     conn = psycopg2.connect("dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")

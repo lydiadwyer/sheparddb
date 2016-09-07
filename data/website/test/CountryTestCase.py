@@ -1,18 +1,47 @@
-import os
-from shepard import app
-import unittest
-import tempfile
-import subprocess, os, time
-from BaseTestCase import BaseTestCase
+import subprocess, os, time, psycopg2
+# from BaseTestCase import BaseTestCase
+from flask_testing import TestCase
+from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class CountryTestCase(BaseTestCase):
+class CountryTestCase(TestCase):
 
+    def reset_database(self):
+
+        print 'CountryTestCase::rest_database()'
+
+        conn = psycopg2.connect(
+            "dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")
+        conn.autocommit = True
+        cursor = conn.cursor()
+        cursor.execute(open("/vagrant/psql/db_create_schema.sql", "r").read())
+        cursor.execute(open("/vagrant/psql/db_data.sql", "r").read())
+        cursor.close()
+        conn.close()
+
+    def create_app(self):
+        # self.reset_database()
+        print 'CountryTestCase::create_app()'
+        app = create_flask()
+        app.config['TESTING'] = True
+        app.testing = True
+        # app = app.test_client()
+        return app
+
+    def setUp(self):
+        # self.reset_database()
+        # self.app = self.create_app()
+        pass
+
+    def tearDown(self):
+        pass
+
+#data/website/test/flask_test_countries.py
     def test_country_default(self):
 
-        result = self.app.get('/countries/')
+        result = self.client.get('/countries/')
 
         self.assertIn('Cyprus', result.data)
         self.assertIn('France', result.data)
@@ -21,13 +50,13 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_view1(self):
 
-        result = self.app.get('/countries/view/1')
+        result = self.client.get('/countries/view/1')
 
         self.assertIn('Cyprus', result.data)
 
     def test_country_view_none(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/countries/view/99',
             follow_redirects=True
         )
@@ -36,7 +65,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_add(self):
 
-        result = self.app.get('/countries/add')
+        result = self.client.get('/countries/add')
 
         self.assertIn('Add A Country', result.data)
         self.assertIn('Country Name', result.data)
@@ -44,7 +73,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_add_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/countries/add',
             data={
                   'country_name': 'Greece',
@@ -61,7 +90,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_add_invalid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/countries/add',
             data={
                   'country_name': 'Greec1',
@@ -80,13 +109,13 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_edit3(self):
 
-        result = self.app.get('/countries/edit/3')
+        result = self.client.get('/countries/edit/3')
 
         self.assertIn('Turkey', result.data)
 
     def test_country_edit_valid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/countries/edit/3',
             data={
                   'country_name': 'Turkey',
@@ -104,7 +133,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_edit_invalid(self):
 
-        result = self.app.post(
+        result = self.client.post(
             '/countries/edit/3',
             data={
                   'country_name': 'Turk8',
@@ -122,7 +151,7 @@ class CountryTestCase(BaseTestCase):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.app.post(
+        result = self.client.post(
             '/countries/add',
             data={
                   'country_name': '',
@@ -141,7 +170,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_delete_valid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/countries/delete/2',
             follow_redirects=True
         )
@@ -151,7 +180,7 @@ class CountryTestCase(BaseTestCase):
 
     def test_country_delete_invalid(self):
 
-        result = self.app.get(
+        result = self.client.get(
             '/countries/delete/10',
             follow_redirects=True
         )

@@ -6,9 +6,10 @@ from modules.Shared.database import db
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
 
-#this part of the database that is the EXCAVATIONS TABLE
+# this part of the database that is the EXCAVATIONS TABLE
 # http://flask-sqlalchemy.pocoo.org/2.1/models/
 class Excavation(db.Model):
+
     """Excavation object model
 
     This is a Model class, used as a generic data container. It is an extension
@@ -27,8 +28,8 @@ class Excavation(db.Model):
     excavation_updated  = Column(DateTime)
 
     def __init__(self, excavation_name=""):
-        self.excavation_name    = excavation_name
-        
+        self.excavation_name = excavation_name
+
     def __repr__(self):
         return "<Excavation(excavation_id='%s', excavation_name='%s', excavation_created='%s',excavation_updated='%s')>" % (
             self.excavation_id, self.excavation_name, self.excavation_created, self.excavation_updated)

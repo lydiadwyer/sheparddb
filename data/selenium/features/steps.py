@@ -10,14 +10,18 @@ from time import sleep
 # https://github.com/bbangert/lettuce_webdriver/blob/master/lettuce_webdriver/css_selector_steps.py
 # https://github.com/bbangert/lettuce_webdriver/blob/master/lettuce_webdriver/util.py
 
+# Steps to test the website via chrome automatically
+
 @step('I set the text input, with id "(.*?)" to "(.*?)"')
 def fill_in_textfield_by_id(step, field_name, value):
+    """ fill in a text field by field id/name """
     with AssertContextManager(step):
         text_field = find_input_by_id(world.browser, field_name)
         text_field.clear()
         text_field.send_keys(value)
 
 def find_input_by_id(browser, attribute):
+    """ find an input by its id """
     xpath = "//input[@id='%s']" % attribute
     elems = browser.find_elements_by_xpath(xpath)
     return elems[0] if elems else False
@@ -26,12 +30,14 @@ def find_input_by_id(browser, attribute):
 
 @step('I set the text input, with class "(.*?)" to "(.*?)"')
 def fill_in_textfield_by_class(step, field_name, value):
+    """ fill in a text field by field class """
     with AssertContextManager(step):
         text_field = find_field_by_class(world.browser, field_name)
         text_field.clear()
         text_field.send_keys(value)
 
 def find_field_by_class(browser, attribute):
+    """ find an input by its class """
     xpath = "//input[@class='%s']" % attribute
     elems = browser.find_elements_by_xpath(xpath)
     return elems[0] if elems else False
@@ -40,6 +46,7 @@ def find_field_by_class(browser, attribute):
 
 @step('I click the "(.*?)" button')
 def click_button_by_value(step, button_value):
+    """ find a button by value and click it """
     with AssertContextManager(step):
         button = find_button_by_value(world.browser, button_value)
         button.click()
@@ -54,7 +61,7 @@ def find_button_by_value(browser, attribute):
 @step('I select "(.*?)" from the dynamic select "(.*?)"')
 def select_option_by_value(step, option_val, select_id):
     with AssertContextManager(step):
-
+        
         # wait for jQuery to finish any Ajax calls
         driver = world.browser
         wait = WebDriverWait(driver, 30)
