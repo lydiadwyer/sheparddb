@@ -15,7 +15,7 @@ class Artifact(db.Model):
     of the SQLAlchemy class, and inherits various common database actions.
     """
     __tablename__ = 'artifacts'
-    __table_args__ = {'extend_existing': True}
+
     
     artifact_id         = Column(Integer, primary_key=True)
     artifact_name       = Column(String(128))

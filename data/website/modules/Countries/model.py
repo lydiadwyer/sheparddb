@@ -18,6 +18,7 @@ class Country(db.Model):
 
     __tablename__ = 'countries'
 
+    
     country_id = Column(Integer, primary_key=True)
     country_name = Column(String(128), unique=True)
     country_abrev = Column(String(128), unique=True)

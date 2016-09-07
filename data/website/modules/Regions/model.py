@@ -9,14 +9,14 @@ from sqlalchemy.orm import relationship
 # this part of the database that is the REGIONS TABLE
 # http://flask-sqlalchemy.pocoo.org/2.1/models/
 class Region(db.Model):
-
-    __tablename__ = 'regions'
-
     """Region object model
 
     This is a Model class, used as a generic data container. It is an extension
     of the SQLAlchemy class, and inherits various common database actions.
     """
+
+    __tablename__ = 'regions'
+
 
     region_id = Column(Integer, primary_key=True)
     region_name = Column(String(128), unique=True)

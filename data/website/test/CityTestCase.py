@@ -49,7 +49,7 @@ class CityTestCase(BaseTestCase):
 
         result = self.app.get('/cities/add')
 
-        self.assertIn('Add A City', result.data)
+        self.assertIn('Add city', result.data)
         self.assertIn('City Name', result.data)
 
 

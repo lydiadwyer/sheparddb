@@ -10,11 +10,6 @@ from BaseTestCase import BaseTestCase
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class CountryTestCase(BaseTestCase):
 
-    def setUp(self):
-        self.reset_database()       
-        self.app = app.test_client()
-        self.app.testing = True
-
     def test_country_default(self):
 
         result = self.app.get('/countries/')
