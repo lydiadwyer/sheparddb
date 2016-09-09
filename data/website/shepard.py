@@ -15,6 +15,7 @@ from modules.Artifacts.controller import artifacts
 from modules.Excavations.controller import excavations
 
 def create_flask():
+    """ Create the Flask app """
 
     # print 'shepard::create_flask()'
 

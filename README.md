@@ -57,23 +57,23 @@ pylint ./modules/Countries/controller.py --reports=n
 # delete all existing .pyc files...
 find . -name \*.pyc -delete
 
-# runs all tests in folder and subfolders
+# runs all tests in folder and subfolders (no coverage report)
 nosetests --verbosity=2
 
-# run all tests for sheparddb, show coverage
+# run all tests, show coverage
 # http://nose.readthedocs.io/en/latest/usage.html
 # http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
 nosetests --with-xcoverage --cover-package=sheparddb \
     -x -d -s --verbosity=2 --no-byte-compile
 
-# run tests, check coverage only for the Countries module
+# run all tests, show coverage, only for the Countries module
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
     -x -d -s --verbosity=2 --no-byte-compile
 
 
 
 # check for code duplicates
-clonedigger --cpd-output -o clonedigger.xml project > /dev/null
+clonedigger --cpd-output -o clonedigger.xml ./ > /dev/null
 sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
 
 ```
