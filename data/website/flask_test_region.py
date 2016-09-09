@@ -1,6 +1,7 @@
 import time, unittest
-from reset_database import reset_database
+from reset_database import reset_database, reset_data
 from flask import url_for
+from modules.Shared.database import db
 from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
@@ -8,13 +9,21 @@ from shepard import create_flask
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class RegionTest(unittest.TestCase):
 
+    # Run once during class instatiation
     @classmethod
-    def setUpClass(cls):
+    def setup_class(cls):
         reset_database()
         app = create_flask()
+        app.testing = True
+        db.init_app(app)
         cls.context = app.test_request_context()
         cls.app = app.test_client()
-        cls.app.testing = True
+
+    # Run once during class termination
+    @classmethod
+    def teardown_class(cls):
+        # close any existing db connections
+        db.session.close_all()
 
     def test_region_default(self):
 
@@ -27,12 +36,10 @@ class RegionTest(unittest.TestCase):
 
     def test_region_view1(self):
 
-        reset_database()
+        result = self.app.get('/regions/view/2')
 
-        result = self.app.get('/regions/view/1')
-
-        self.assertIn('Dali', result.data)
-        self.assertIn('<a href="/regions/edit/1">Edit</a>', result.data)
+        self.assertIn('Izmir', result.data)
+        self.assertIn('<a href="/regions/edit/2">Edit</a>', result.data)
         self.assertIn('<a href="/regions/">View All</a>', result.data)
 
     def test_region_view_none(self):
@@ -167,8 +174,6 @@ class RegionTest(unittest.TestCase):
 
 
     def test_region_delete_valid(self):
-
-        reset_database()
 
         result = self.app.get(
             '/regions/delete/1',

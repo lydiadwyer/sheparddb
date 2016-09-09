@@ -64,17 +64,15 @@ nosetests --verbosity=2
 # http://nose.readthedocs.io/en/latest/usage.html
 # http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
 nosetests --with-xcoverage --cover-package=sheparddb \
-    -q -x --verbosity=2 --no-byte-compile
+    -x -d -s --verbosity=2 --no-byte-compile
 
+# run tests, check coverage only for the Countries module
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
-    -q -x --verbosity=2 --no-byte-compile
+    -x -d -s --verbosity=2 --no-byte-compile
 
-nosetests --with-xcoverage --cover-package=sheparddb.modules.Regions \
-    -q -x --verbosity=2 --no-byte-compile
 
-nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace \
-    --cover-package=sheparddb --cover-erase -x
 
+# check for code duplicates
 clonedigger --cpd-output -o clonedigger.xml project > /dev/null
 sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
 

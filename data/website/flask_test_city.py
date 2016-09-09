@@ -1,6 +1,7 @@
 import time, unittest
-from reset_database import reset_database
+from reset_database import reset_database, reset_data
 from flask import url_for
+from modules.Shared.database import db
 from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
@@ -8,15 +9,22 @@ from shepard import create_flask
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class CityTest(unittest.TestCase):
 
+    # Run once during class instatiation
     @classmethod
-    def setUpClass(cls):
+    def setup_class(cls):
         reset_database()
         app = create_flask()
+        app.testing = True
+        db.init_app(app)
         cls.context = app.test_request_context()
         cls.app = app.test_client()
-        cls.app.testing = True
 
-    # view all cities default
+    # Run once during class termination
+    @classmethod
+    def teardown_class(cls):
+        # close any existing db connections
+        db.session.close_all()
+
     def test_city_default(self):
 
         with self.context:
@@ -77,6 +85,18 @@ class CityTest(unittest.TestCase):
         self.assertIn('Edit', result.data)
         self.assertIn('Delete', result.data)
 
+    def test_city_add_null(self):
+
+        result = self.app.post(
+            '/cities/add',
+            data={},
+            follow_redirects=True
+        )
+
+        self.assertIn('Please fill in the city name.', result.data)
+        self.assertIn('Please choose the country.', result.data)
+        self.assertIn('Please choose the region.', result.data)
+
     # test adding a city with invalid result
     def test_city_add_invalid(self):
         # send invalid name and non-number id
@@ -90,7 +110,8 @@ class CityTest(unittest.TestCase):
             follow_redirects=True
         )
 
-        self.assertIn('Please fill in a city name only with English letters.', result.data)
+        self.assertIn('Please fill in a city name only with English letters.',
+                      result.data)
         self.assertIn('Please choose the country.', result.data)
         self.assertIn('Please choose the region.', result.data)
         self.assertIn('<option value="1">Cyprus</option>', result.data)

@@ -160,8 +160,8 @@ def form_validate_city(entry):
     if not match:
         form_is_valid = False
         error_msg['city_name'] = "Please fill in a city name only with English letters."
-    else:
-        current_app.logger.info("match = " + str(match.group(0)))
+    # else:
+    #    current_app.logger.info("match = " + str(match.group(0)))
 
     # ensure country_id and region_id are chosen
     if not entry.country_id:

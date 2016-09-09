@@ -1,6 +1,7 @@
 import time, unittest
-from reset_database import reset_database
+from reset_database import reset_database, reset_data
 from flask import url_for
+from modules.Shared.database import db
 from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
@@ -8,13 +9,21 @@ from shepard import create_flask
 # https://docs.python.org/2/library/unittest.html#assert-methods
 class CountryTest(unittest.TestCase):
 
+    # Run once during class instatiation
     @classmethod
-    def setUpClass(cls):
+    def setup_class(cls):
         reset_database()
         app = create_flask()
+        app.testing = True
+        db.init_app(app)
         cls.context = app.test_request_context()
         cls.app = app.test_client()
-        cls.app.testing = True
+
+    # Run once during class termination
+    @classmethod
+    def teardown_class(cls):
+        # close any existing db connections
+        db.session.close_all()
 
     def test_country_default(self):
 
@@ -64,6 +73,17 @@ class CountryTest(unittest.TestCase):
         self.assertIn('<td>GR</td>', result.data)
         self.assertIn('Edit', result.data)
         self.assertIn('Delete', result.data)
+
+    def test_country_add_null(self):
+
+        result = self.app.post(
+            '/countries/add',
+            data={},
+            follow_redirects=True
+        )
+
+        self.assertIn('Please fill in the country name.', result.data)
+        self.assertIn('Please fill in the country abbreviation.', result.data)
 
     def test_country_add_invalid(self):
 
