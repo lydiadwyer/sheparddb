@@ -104,35 +104,44 @@ def edit_region(region_id):
 
 def form_validate_region(entry):
     """ validate Region form data """
-    
+
     # validate data
     form_is_valid = True
     error_msg = {}
     # retrieve data from the global Request object
     data = request.form
+    # print data
 
     # check to make sure data has attributes we want before stripping them
     if not 'region_name' in data \
-        or not 'country_id' in data:
-    
+        or not 'country_id' in data \
+        or data is None:
+
         if not 'region_name' in data:
             error_msg['region_name'] = "Please fill in the region name."
         if not 'country_id' in data:
             error_msg['country_id'] = "Please choose the country."
         form_is_valid = False
         return [entry, form_is_valid, error_msg]
-    
+
+    # check for null
+    if not data['region_name'] \
+        or data['region_name'] is None:
+        error_msg['region_name'] = "Please fill in the region name."
+        form_is_valid = False
+        return [entry, form_is_valid, error_msg]
+
     # get string, cast to ASCII, truncate to 128 chars, strip multi spaces
     entry.region_name = \
         re.sub(' +', ' ',
-               data['region_name'].encode('ascii', 'ignore')[:127])
+               str(data['region_name']).encode('ascii', 'ignore')[:127])
     # grab the country_id, cast to integer
     if data['country_id'].isdigit():
         entry.country_id = int(data['country_id'])
     else:
-        form_is_valid=False
+        form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-    
+
 
     # ensure the region_name is filled in
     if not entry.region_name:
@@ -154,8 +163,8 @@ def form_validate_region(entry):
     if not entry.country_id:
         form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-        
-        
+
+
     return [entry, form_is_valid, error_msg]
 
 

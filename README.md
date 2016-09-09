@@ -61,18 +61,19 @@ find . -name \*.pyc -delete
 nosetests --verbosity=2
 
 # run all tests for sheparddb, show coverage
+# http://nose.readthedocs.io/en/latest/usage.html
 # http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
 nosetests --with-xcoverage --cover-package=sheparddb \
-    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
+    -q -x --verbosity=2 --no-byte-compile
 
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
-    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
+    -q -x --verbosity=2 --no-byte-compile
 
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Regions \
-    -q -x --verbosity=2 --cover-inclusive --no-byte-compile
+    -q -x --verbosity=2 --no-byte-compile
 
 nosetests --with-xcoverage --with-xunit --all-modules --traverse-namespace \
-    --cover-package=sheparddb --cover-inclusive --cover-erase -x
+    --cover-package=sheparddb --cover-erase -x
 
 clonedigger --cpd-output -o clonedigger.xml project > /dev/null
 sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :

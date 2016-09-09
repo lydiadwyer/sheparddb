@@ -1,20 +1,26 @@
-import os
-from shepard import app
-import unittest
-import tempfile
-import subprocess, os, time
-from BaseTestCase import BaseTestCase
+import time, unittest
+from reset_database import reset_database
 from flask import url_for
+from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class CityTestCase(BaseTestCase):
+class CityTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        reset_database(cls)
+        app = create_flask()
+        cls.context = app.test_request_context()
+        cls.app = app.test_client()
+        cls.app.testing = True
 
     # view all cities default
     def test_city_default(self):
 
-        result = self.app.get(url_for('cities.view_all_cities'))
+        with self.context:
+            result = self.app.get(url_for('cities.view_all_cities'))
 
         self.assertIn('Cities', result.data)
         self.assertIn('Dali', result.data)
@@ -33,13 +39,11 @@ class CityTestCase(BaseTestCase):
     # try to view a city that does not exist
     def test_city_view_none(self):
 
-        result = self.app.get(
-            url_for('cities.view_one_city'),
-            data={
-                  'city_id': '99'
-                  },
-            follow_redirects=True
-        )
+        with self.context:
+            result = self.app.get(
+                url_for('cities.view_one_city', city_id=99),
+                follow_redirects=True
+            )
 
         self.assertIn('Entry does not exist.', result.data)
         self.assertIn('<h1>Cities</h1>', result.data)
@@ -49,7 +53,7 @@ class CityTestCase(BaseTestCase):
 
         result = self.app.get('/cities/add')
 
-        self.assertIn('Add city', result.data)
+        self.assertIn('Add A City', result.data)
         self.assertIn('City Name', result.data)
 
 

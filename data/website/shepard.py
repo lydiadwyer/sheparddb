@@ -7,6 +7,13 @@ from logging import Formatter
 from logging.handlers import WatchedFileHandler
 from flask import Flask, render_template
 
+from modules.Shared.database import db
+from modules.Countries.controller import countries
+from modules.Regions.controller import regions
+from modules.Cities.controller import cities
+from modules.Artifacts.controller import artifacts
+from modules.Excavations.controller import excavations
+
 def create_flask():
 
     print 'shepard::create_flask()'
@@ -18,7 +25,6 @@ def create_flask():
     app.config.from_pyfile('config.py')
 
     # setup database handler
-    from modules.Shared.database import db
     db.app = app
     db.init_app(app)
     # db.Model_RW = db.make_declarative_base()
@@ -38,11 +44,6 @@ def create_flask():
 
     # register the module controllers
     # sets up URL collections, that we wrote in CONTROLLER file
-    from modules.Countries.controller import countries
-    from modules.Regions.controller import regions
-    from modules.Cities.controller import cities
-    from modules.Artifacts.controller import artifacts
-    from modules.Excavations.controller import excavations
 
     app.register_blueprint(artifacts)
     app.register_blueprint(excavations)

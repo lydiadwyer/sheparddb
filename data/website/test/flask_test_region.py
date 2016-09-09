@@ -1,14 +1,24 @@
-import subprocess, os, time
-from BaseTestCase import BaseTestCase
+import time, unittest
+from reset_database import reset_database
+from flask import url_for
+from shepard import create_flask
 
 # http://flask.pocoo.org/docs/0.11/testing/
 # http://flask.pocoo.org/docs/0.11/api/#flask.Response
 # https://docs.python.org/2/library/unittest.html#assert-methods
-class RegionTestCase(BaseTestCase):
+class RegionTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        reset_database()
+        app = create_flask()
+        cls.context = app.test_request_context()
+        cls.app = app.test_client()
+        cls.app.testing = True
 
     def test_region_default(self):
 
-        result = self.client.get('/regions/')
+        result = self.app.get('/regions/')
 
         self.assertIn('Regions', result.data)
         self.assertIn('Dali', result.data)
@@ -17,7 +27,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_view1(self):
 
-        result = self.client.get('/regions/view/1')
+        result = self.app.get('/regions/view/1')
 
         self.assertIn('Dali', result.data)
         self.assertIn('<a href="/regions/edit/1">Edit</a>', result.data)
@@ -25,7 +35,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_view_none(self):
 
-        result = self.client.get(
+        result = self.app.get(
             '/regions/view/99',
             follow_redirects=True
         )
@@ -35,7 +45,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_add(self):
 
-        result = self.client.get('/regions/add')
+        result = self.app.get('/regions/add')
 
         self.assertIn('Add A Region', result.data)
         self.assertIn('Region Name', result.data)
@@ -47,7 +57,7 @@ class RegionTestCase(BaseTestCase):
 #####using country ids created from country testing
     def test_region_add_valid(self):
 
-        result = self.client.post(
+        result = self.app.post(
             '/regions/add',
             data={
                   'region_name': 'Bordeaux',
@@ -64,7 +74,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_add_invalid(self):
         # send invalid name and non-number id
-        result = self.client.post(
+        result = self.app.post(
             '/regions/add',
             data={
                   'region_name': 'Greec1',
@@ -73,14 +83,14 @@ class RegionTestCase(BaseTestCase):
             follow_redirects=True
         )
 
-        self.assertIn('Please fill in a region name only with English letters.', result.data)
-        self.assertIn('Please choose the country.', result.data)
+        self.assertIn('Please fill in the region name.', result.data)
+        # self.assertIn('Please choose the country.', result.data)
         self.assertIn('<option value="1">Cyprus</option>', result.data)
 
 
     def test_region_edit3(self):
 
-        result = self.client.get('/regions/edit/3')
+        result = self.app.get('/regions/edit/3')
 
         self.assertIn('Edit A Region', result.data)
         self.assertIn('Ankara', result.data)
@@ -88,7 +98,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_edit_valid(self):
 
-        result = self.client.post(
+        result = self.app.post(
             '/regions/edit/3',
             data={
                   'region_name': 'Izmir',
@@ -105,7 +115,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_edit_invalid(self):
 
-        result = self.client.post(
+        result = self.app.post(
             '/regions/edit/3',
             data={
                   'region_name': '88888',
@@ -114,15 +124,14 @@ class RegionTestCase(BaseTestCase):
             follow_redirects=True
         )
 
-        self.assertIn('Please fill in a region name only with English letters.',
-                       result.data)
+        self.assertIn('Please fill in the region name.', result.data)
         self.assertIn('Please choose the country.', result.data)
 
     def test_region_form_validation1(self):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.client.post(
+        result = self.app.post(
             '/regions/add',
             data={
                   'region_name': '',
@@ -132,14 +141,14 @@ class RegionTestCase(BaseTestCase):
         )
         # print result.data
 
-        self.assertIn('Please fill in the region name completely.', result.data)
+        self.assertIn('Please fill in the region name.', result.data)
 #        self.assertIn('Please choose a valid country.', result.data)
 
     def test_region_form_validation2(self):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
-        result = self.client.post(
+        result = self.app.post(
             '/regions/add',
             data={
                   'region_name': 'Hhhhh928(@@*@!!',
@@ -149,7 +158,7 @@ class RegionTestCase(BaseTestCase):
         )
         # print result.data
 
-        self.assertIn('Please fill in a region name only with English letters.',
+        self.assertIn('Please fill in the region name.',
                        result.data)
 # this may be passing because its casting to an int on the backend
 #        self.assertIn('Please choose a valid country id.', result.data)
@@ -157,7 +166,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_delete_valid(self):
 
-        result = self.client.get(
+        result = self.app.get(
             '/regions/delete/3',
             follow_redirects=True
         )
@@ -167,7 +176,7 @@ class RegionTestCase(BaseTestCase):
 
     def test_region_delete_invalid(self):
 
-        result = self.client.get(
+        result = self.app.get(
             '/regions/delete/10',
             follow_redirects=True
         )
