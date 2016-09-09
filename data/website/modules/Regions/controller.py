@@ -79,6 +79,9 @@ def edit_region(region_id):
     form_is_valid = True
     country_list = Country.query.all()
 
+    if not entry:
+        return 'Entry does not exist'
+
     if request.method == 'GET':
         return render_template('regions/edit.html', \
                                entry=entry, error_msg=error_msg, \
@@ -115,7 +118,8 @@ def form_validate_region(entry):
     # check to make sure data has attributes we want before stripping them
     if not 'region_name' in data \
         or not 'country_id' in data \
-        or data is None:
+        or data is None \
+        or not data:
 
         if not 'region_name' in data:
             error_msg['region_name'] = "Please fill in the region name."
@@ -134,7 +138,7 @@ def form_validate_region(entry):
     # get string, cast to ASCII, truncate to 128 chars, strip multi spaces
     entry.region_name = \
         re.sub(' +', ' ',
-               str(data['region_name']).encode('ascii', 'ignore')[:127])
+               data['region_name'].encode('ascii', 'ignore')[:127])
     # grab the country_id, cast to integer
     if data['country_id'].isdigit():
         entry.country_id = int(data['country_id'])

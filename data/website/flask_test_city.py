@@ -10,7 +10,7 @@ class CityTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        reset_database(cls)
+        reset_database()
         app = create_flask()
         cls.context = app.test_request_context()
         cls.app = app.test_client()

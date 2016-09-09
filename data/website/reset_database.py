@@ -7,7 +7,7 @@ from shepard import create_flask
 
 def reset_database():
 
-    print 'reset_database()'
+    # print 'reset_database()'
 
     conn = psycopg2.connect(
         "dbname=sheparddb user=shepard host=127.0.0.1 password=shepard")

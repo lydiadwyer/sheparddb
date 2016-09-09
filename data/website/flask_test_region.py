@@ -27,6 +27,8 @@ class RegionTest(unittest.TestCase):
 
     def test_region_view1(self):
 
+        reset_database()
+
         result = self.app.get('/regions/view/1')
 
         self.assertIn('Dali', result.data)
@@ -83,23 +85,23 @@ class RegionTest(unittest.TestCase):
             follow_redirects=True
         )
 
-        self.assertIn('Please fill in the region name.', result.data)
+        self.assertIn('Please fill in a region name only with English letters.', result.data)
         # self.assertIn('Please choose the country.', result.data)
         self.assertIn('<option value="1">Cyprus</option>', result.data)
 
 
     def test_region_edit3(self):
 
-        result = self.app.get('/regions/edit/3')
+        result = self.app.get('/regions/edit/2')
 
         self.assertIn('Edit A Region', result.data)
-        self.assertIn('Ankara', result.data)
-        self.assertIn('<option value="3" selected>Turkey</option>', result.data)
+        self.assertIn('Loire Valley', result.data)
+        self.assertIn('<option value="2" selected>France</option>', result.data)
 
     def test_region_edit_valid(self):
 
         result = self.app.post(
-            '/regions/edit/3',
+            '/regions/edit/2',
             data={
                   'region_name': 'Izmir',
                   'country_id': 3
@@ -109,8 +111,8 @@ class RegionTest(unittest.TestCase):
 
         self.assertIn('<h1>Izmir</h1>', result.data)
         self.assertIn('<td>3</td>', result.data)
-        self.assertIn('<a href="/regions/edit/3">Edit</a>', result.data)
-        self.assertIn('<a href="/regions/delete/3">Delete</a>', result.data)
+        self.assertIn('<a href="/regions/edit/2">Edit</a>', result.data)
+        self.assertIn('<a href="/regions/delete/2">Delete</a>', result.data)
 
 
     def test_region_edit_invalid(self):
@@ -124,7 +126,7 @@ class RegionTest(unittest.TestCase):
             follow_redirects=True
         )
 
-        self.assertIn('Please fill in the region name.', result.data)
+        self.assertIn('Please fill in a region name only with English letters.', result.data)
         self.assertIn('Please choose the country.', result.data)
 
     def test_region_form_validation1(self):
@@ -158,7 +160,7 @@ class RegionTest(unittest.TestCase):
         )
         # print result.data
 
-        self.assertIn('Please fill in the region name.',
+        self.assertIn(' Please fill in a region name only with English letters.',
                        result.data)
 # this may be passing because its casting to an int on the backend
 #        self.assertIn('Please choose a valid country id.', result.data)
@@ -166,13 +168,15 @@ class RegionTest(unittest.TestCase):
 
     def test_region_delete_valid(self):
 
+        reset_database()
+
         result = self.app.get(
-            '/regions/delete/3',
+            '/regions/delete/1',
             follow_redirects=True
         )
         # print result.data
 
-        self.assertNotIn('Bordeaux', result.data)
+        self.assertNotIn('Dali', result.data)
 
     def test_region_delete_invalid(self):
 

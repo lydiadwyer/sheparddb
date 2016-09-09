@@ -16,7 +16,7 @@ from modules.Excavations.controller import excavations
 
 def create_flask():
 
-    print 'shepard::create_flask()'
+    # print 'shepard::create_flask()'
 
     # create app
     app = Flask(__name__)
