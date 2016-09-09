@@ -94,3 +94,4 @@ ENV/
 .vagrant/**
 **.md~
 cover/
+data/website/output.html
