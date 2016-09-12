@@ -24,7 +24,9 @@ class RegionTest(unittest.TestCase):
     def teardown_class(cls):
         # close any existing db connections
         db.session.close_all()
-
+        
+    ### tests begin
+    # test if region homepage works
     def test_region_default(self):
 
         result = self.app.get('/regions/')
@@ -97,7 +99,7 @@ class RegionTest(unittest.TestCase):
         self.assertIn('<option value="1">Cyprus</option>', result.data)
 
 
-    def test_region_edit3(self):
+    def test_region_edit_get(self):
 
         result = self.app.get('/regions/edit/2')
 
@@ -121,8 +123,18 @@ class RegionTest(unittest.TestCase):
         self.assertIn('<a href="/regions/edit/2">Edit</a>', result.data)
         self.assertIn('<a href="/regions/delete/2">Delete</a>', result.data)
 
+    # test if invalid entry can be edited
+    def test_region_edit_invalid1(self):
 
-    def test_region_edit_invalid(self):
+        result = self.app.post(
+            '/regions/edit/88',
+            follow_redirects=True
+        )
+
+        self.assertIn('Entry does not exist.', result.data)
+
+
+    def test_region_edit_invalid2(self):
 
         result = self.app.post(
             '/regions/edit/3',
@@ -136,6 +148,7 @@ class RegionTest(unittest.TestCase):
         self.assertIn('Please fill in a region name only with English letters.', result.data)
         self.assertIn('Please choose the country.', result.data)
 
+    # test if region form is correctly validating
     def test_region_form_validation1(self):
         # ensure data is being cleansed, in ways we havent above
         # response
@@ -143,17 +156,32 @@ class RegionTest(unittest.TestCase):
         result = self.app.post(
             '/regions/add',
             data={
-                  'region_name': '',
-                  'country_id': 98
+                  'region_name': None,
+                  'country_id': '2'
             },
             follow_redirects=True
         )
-        # print result.data
+        self.assertIn('Please fill in the Region name.', result.data)
+#        self.assertIn('<option value="2" selected>France</option>', result.data)
 
-        self.assertIn('Please fill in the region name.', result.data)
-#        self.assertIn('Please choose a valid country.', result.data)
+
 
     def test_region_form_validation2(self):
+        # ensure data is being cleansed, in ways we havent above
+        # response
+        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
+        result = self.app.post(
+            '/regions/add',
+            data={
+                  'region_name': 'Hi',
+                  'country_id': '2'
+            },
+            follow_redirects=True
+        )
+        self.assertIn('Please fill in the region name completely.', result.data)
+ #       self.assertIn('<option value="2" selected>France</option>', result.data)
+
+    def test_region_form_validation3(self):
         # ensure data is being cleansed, in ways we havent above
         # response
         # http://flask.pocoo.org/docs/0.11/api/#flask.Response
@@ -171,6 +199,23 @@ class RegionTest(unittest.TestCase):
                        result.data)
 # this may be passing because its casting to an int on the backend
 #        self.assertIn('Please choose a valid country id.', result.data)
+    def test_region_form_validation4(self):
+        # ensure data is being cleansed, in ways we havent above
+        # response
+        # http://flask.pocoo.org/docs/0.11/api/#flask.Response
+        result = self.app.post(
+            '/regions/add',
+            data={
+                  'region_name': None,
+                  'country_id': None
+            },
+            follow_redirects=True
+        )
+        # print result.data
+
+        self.assertIn('Please fill in the Region name.', result.data)
+        self.assertIn('Please choose the Country.', result.data)
+#        self.assertIn('Please choose a valid country.', result.data)
 
 
     def test_region_delete_valid(self):

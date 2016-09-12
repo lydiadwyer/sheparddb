@@ -25,6 +25,10 @@ class CityTest(unittest.TestCase):
         # close any existing db connections
         db.session.close_all()
 
+
+
+    ### start of tests
+    # test city homepage works
     def test_city_default(self):
 
         with self.context:

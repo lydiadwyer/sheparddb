@@ -80,7 +80,7 @@ def edit_region(region_id):
     country_list = Country.query.all()
 
     if not entry:
-        return 'Entry does not exist'
+        return 'Entry does not exist.'
 
     if request.method == 'GET':
         return render_template('regions/edit.html', \
@@ -122,9 +122,9 @@ def form_validate_region(entry):
         or not data:
 
         if not 'region_name' in data:
-            error_msg['region_name'] = "Please fill in the region name."
+            error_msg['region_name'] = "Please fill in the Region name."
         if not 'country_id' in data:
-            error_msg['country_id'] = "Please choose the country."
+            error_msg['country_id'] = "Please choose the Country."
         form_is_valid = False
         return [entry, form_is_valid, error_msg]
 
@@ -145,12 +145,6 @@ def form_validate_region(entry):
     else:
         form_is_valid = False
         error_msg['country_id'] = "Please choose the country."
-
-
-    # ensure the region_name is filled in
-    if not entry.region_name:
-        form_is_valid = False
-        error_msg['region_name'] = "Please fill in the region name."
 
     # region name underflow check
     if len(entry.region_name) < 4:
