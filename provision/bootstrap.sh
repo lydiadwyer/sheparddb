@@ -1,5 +1,8 @@
 #!/bin/bash
 
+exit 0;
+
+
 # set the session to be noninteractive
 export DEBIAN_FRONTEND="noninteractive"
 
@@ -8,6 +11,22 @@ apt-get update
 
 # install basics
 apt-get -q install -y build-essential daemon
+
+
+
+
+
+
+## Install MongoDB
+echo "INFO: Installing MongoDB..."
+
+# install
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" \
+	| tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+apt-get update
+apt-get install -y mongodb-org=3.2.9 2>&1
+service mongod restart
 
 
 
