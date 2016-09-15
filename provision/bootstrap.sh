@@ -1,8 +1,5 @@
 #!/bin/bash
 
-exit 0;
-
-
 # set the session to be noninteractive
 export DEBIAN_FRONTEND="noninteractive"
 
