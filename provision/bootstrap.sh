@@ -12,6 +12,22 @@ apt-get -q install -y build-essential daemon
 
 
 
+# install Node.JS for Mongo stack
+echo "INFO: Installing NodeJS..."
+
+# install node.js and npm and important packages
+apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
+apt-add-repository "deb https://deb.nodesource.com/node_4.x trusty main"
+apt-get update
+apt-get install -y nodejs
+
+echo "Installing node packages nodemon, pm2, mocha, gulp, bower, mongoose ..."
+npm update -g
+# dont worry about certain dependancies failing, they are mac only libs
+npm install -g nodemon pm2 mocha gulp bower mongoose
+
+
+
 
 
 ## Install MongoDB
@@ -24,9 +40,6 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 apt-get update
 apt-get install -y mongodb-org=3.2.9 2>&1
 service mongod restart
-
-
-
 
 
 ## Install Postgres
@@ -98,6 +111,11 @@ pip install --quiet mock coverage nose nosexcover clonedigger
 
 # install requirements
 pip install -r /vagrant/pip_requirements.txt 2>&1
+
+
+
+
+
 
 
 

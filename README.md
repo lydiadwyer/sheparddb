@@ -85,6 +85,20 @@ su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 ```
 
 
+## Mongo
+
+# autoruns on vagrant up, but to start or stop:
+sudo service mongod start
+sudo service mongod stop
+sudo service mongod restart
+
+# MongoDB test dataset in data folder, primer-dataset.json
+
+# to enter mongo on console
+mongo
+# use pymongo while coding
+
+
 
 ## System Logs
 ```shell
