@@ -1,0 +1,25 @@
+{
+  "name": "sheparddb",
+  "version": "1.0.0",
+  "description": "archaeological_database",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "archaeology"
+  ],
+  "author": "Lydia Lindsay Dwyer",
+  "license": "ISC",
+  "devDependencies": {
+        "nodemon": "1.10.2",
+        "pm2": "2.0.15",
+        "mocha": "3.1.0",
+        "gulp": "3.9.1",
+        "bower": "1.7.9",
+        "mongoose": "4.6.1"
+    }
+}

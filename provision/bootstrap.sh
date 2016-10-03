@@ -19,13 +19,15 @@ echo "INFO: Installing NodeJS..."
 apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
 apt-add-repository "deb https://deb.nodesource.com/node_4.x trusty main"
 apt-get update
-apt-get install -y nodejs
+apt-get install -y nodejs=4.5.0-1nodesource1~trusty1
 
 echo "Installing node packages nodemon, pm2, mocha, gulp, bower, mongoose ..."
+# now modules linked and can be installed?
 npm update -g
 # dont worry about certain dependancies failing, they are mac only libs
-npm install -g nodemon pm2 mocha gulp bower mongoose
-
+#mkdir /home/vagrant/node_modules
+npm install -g nodemon, pm2, mocha, gulp, bower, mongoose
+#nodemon, pm2, mocha, gulp, bower, mongoose
 
 
 
@@ -40,6 +42,16 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 apt-get update
 apt-get install -y mongodb-org=3.2.9 2>&1
 service mongod restart
+
+# configure Mongo
+# INSECURE!!!
+cp /vagrant/mongo/mongod.conf /etc/mongod.conf
+service mongod restart
+
+
+
+
+
 
 
 ## Install Postgres

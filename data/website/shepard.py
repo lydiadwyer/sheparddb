@@ -28,7 +28,7 @@ def create_flask():
     # setup database handler
     db.app = app
     db.init_app(app)
-    # db.Model_RW = db.make_declarative_base()
+
 
     # configure logger
     # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.logger
