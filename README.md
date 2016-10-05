@@ -1,4 +1,16 @@
-# sheparddb
+# ShepardDB
+
+# About
+
+ShepardDB is a project for storing archaeological data, and making it accessable \
+through a website interface. While it is no where near production ready yet, \
+it will take advantage of NoSQL databases which will be critical to comprehensively \
+storing and accessing the data. Most archaeological databases are made with \
+RDBMS SQL databases (usually older versions), which cannot easily handle the \
+complexity of data that represents the real world. This project aims to remedy \
+this problem.
+
+
 
 [![Code Climate](https://codeclimate.com/github/lydiadwyer/sheparddb/badges/gpa.svg)](https://codeclimate.com/github/lydiadwyer/sheparddb)
 
@@ -20,7 +32,7 @@
 sudo su -
 cd /var/www/sheparddb/
 sudo ./shepard.py
-# open http://127.0.0.1:9999
+open http://127.0.0.1:9999 in a browser
 ```
 
 
@@ -49,54 +61,101 @@ export PYTHONPATH=$(pwd)
 
 pylint shepard.py --reports=n
 pylint ./modules/Countries/controller.py --reports=n
+```
 
-# reset the database, before running tests
-# flask unit testing now does this automatically
-#sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql" > /dev/null
+reset the database, flask unit testing now does this automatically
+```sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql" > /dev/null```
 
-# delete all existing .pyc files...
-find . -name \*.pyc -delete
+delete all existing .pyc files...
+```find . -name \*.pyc -delete```
 
 # runs all tests in folder and subfolders (no coverage report)
 nosetests --verbosity=2
 
 # run all tests, show coverage
-# http://nose.readthedocs.io/en/latest/usage.html
-# http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
+ http://nose.readthedocs.io/en/latest/usage.html
+ http://manpages.ubuntu.com/manpages/trusty/man1/nosetests.1.html
+```
 nosetests --with-xcoverage --cover-package=sheparddb \
     -x -d -s --verbosity=2 --no-byte-compile
+```
 
 # run all tests, show coverage, only for the Countries module
+```
 nosetests --with-xcoverage --cover-package=sheparddb.modules.Countries \
     -x -d -s --verbosity=2 --no-byte-compile
-
+```
 
 
 # check for code duplicates
+```
 clonedigger --cpd-output -o clonedigger.xml ./ > /dev/null
 sloccount --duplicates --wide --details . | fgrep -v .svn > sloccount.sc || :
-
 ```
 
 
-## Reset Database
+# Reset SQL Database
 ```shell
 su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
 ```
+
+## Postgres
+
+Ensure that you have the Postgres 9.5 client. To install it, on Ubuntu Wily 15.10:
+
+```shell
+sudo su -
+echo "deb http://apt.postgresql.org/pub/repos/apt/ wily-pgdg main" > \
+    /etc/apt/sources.list.d/postgres.list
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+apt-get update
+apt-get install -y postgresql-client-9.5
+```
+
+Connect to the database, from host machine:
+```shell
+psql -U shepard -d sheparddb -h 127.0.0.1 -W
+# the password is "shepard"
+```
+
+Reset the database, within the guest VM:
+```shell
+sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
+# become the postgres user, and run the command psql, with the file db_reset.sql
+```
+
+## Add a new database table column:
+
+- add new col to db schema
+- add example db data
+- run database reset script
+- add new attribute to the model
+- add new attribute to the model __init__ function
+- update view one template
+- update view all template???
+- update the add and edit HTML templates
+- update the add and edit functions in controller
+- test add
+- test edit
+- test delete
+- test ALL other features (yes really, you may have broken them)
+
 
 
 ## Mongo
 
 # autoruns on vagrant up, but to start or stop:
+```
 sudo service mongod start
 sudo service mongod stop
 sudo service mongod restart
+```
 
-# MongoDB test dataset in data folder, primer-dataset.json
+ MongoDB test dataset in data folder, primer-dataset.json
 
 # to enter mongo on console
-mongo
-# use pymongo while coding
+```mongo```
+
 
 
 
@@ -123,7 +182,7 @@ sudo nano /var/log/nginx/error.log
 
 ## Selenium
 
-### Install on Ubuntu
+# Install on Ubuntu
 
 ```shell
 # install Java
@@ -153,7 +212,7 @@ sudo apt-get install -y python-psycopg2
 
 
 
-### Run Tests
+## Run Tests
 
 ```shell
 # in host machine
@@ -173,35 +232,6 @@ lettuce ./features/country.feature -s 1 --failfast
 
 # run individual steps, in a feature
 lettuce ./features/country.feature -s 1,2
-```
-
-
-
-
-
-## Postgres
-
-Ensure that you have the Postgres 9.5 client. To install it, on Ubuntu Wily 15.10:
-
-```shell
-sudo su -
-echo "deb http://apt.postgresql.org/pub/repos/apt/ wily-pgdg main" > \
-    /etc/apt/sources.list.d/postgres.list
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-apt-get update
-apt-get install -y postgresql-client-9.5
-```
-
-Connect to the database, from host machine:
-```shell
-psql -U shepard -d sheparddb -h 127.0.0.1 -W
-# the password is "shepard"
-```
-
-Reset the database, within the guest VM:
-```shell
-sudo su - postgres -c "psql -f /vagrant/psql/db_reset.sql"
-# become the postgres user, and run the command psql, with the file db_reset.sql
 ```
 
 ## Coding Guidlines
@@ -268,20 +298,3 @@ pylint ./*.py
 
 ```
 
-
-
-## Add a new database table column:
-
-- add new col to db schema
-- add example db data
-- run database reset script
-- add new attribute to the model
-- add new attribute to the model __init__ function
-- update view one template
-- update view all template???
-- update the add and edit HTML templates
-- update the add and edit functions in controller
-- test add
-- test edit
-- test delete
-- test ALL other features (yes really, you may have broken them)
