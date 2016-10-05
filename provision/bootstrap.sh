@@ -13,20 +13,20 @@ apt-get -q install -y build-essential daemon
 
 
 # install Node.JS for Mongo stack
-echo "INFO: Installing NodeJS..."
+#echo "INFO: Installing NodeJS..."
 
 # install node.js and npm and important packages
-apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
-apt-add-repository "deb https://deb.nodesource.com/node_4.x trusty main"
-apt-get update
-apt-get install -y nodejs=4.5.0-1nodesource1~trusty1
+#apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
+#apt-add-repository "deb https://deb.nodesource.com/node_4.x trusty main"
+#apt-get update
+#apt-get install -y nodejs=4.5.0-1nodesource1~trusty1
 
-echo "Installing node packages nodemon, pm2, mocha, gulp, bower, mongoose ..."
+# i dont think i need to install these
+#echo "Installing node packages nodemon, pm2, mocha, gulp, bower, mongoose ..."
 # now modules linked and can be installed?
-npm update -g
+# npm update -g
 # dont worry about certain dependancies failing, they are mac only libs
-#mkdir /home/vagrant/node_modules
-npm install -g nodemon, pm2, mocha, gulp, bower, mongoose
+#npm install -g nodemon, pm2, mocha, gulp, bower, mongoose
 #nodemon, pm2, mocha, gulp, bower, mongoose
 
 

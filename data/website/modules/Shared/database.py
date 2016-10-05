@@ -2,15 +2,16 @@
 .. module:: database
     :platform: Unix
     :synopsis: Globally shared database connection
-.. moduleauthor:: Lydia Dwyer + Apollo Clark <apolloclark@gmail.com>
+.. moduleauthor:: Lydia Dwyer
 """
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_mongoengine import MongoEngine
 
-# connect to mongo db
+# set up mongodb
 
 db = SQLAlchemy()
-
+mongo = MongoEngine()
 
 
 """
