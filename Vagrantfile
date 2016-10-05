@@ -25,6 +25,7 @@ Vagrant.configure(2) do |config|
         # within the machine from a port on the host machine. In the example below,
         # accessing "localhost:8080" will access port 80 on the guest machine.
         override.vm.network "forwarded_port", guest: 5432, host: 5432 # postgres
+        override.vm.network "forwarded_port", guest: 27017, host: 27017 # mongo
         override.vm.network "forwarded_port", guest: 80, host: 8080 # nginx
         override.vm.network "forwarded_port", guest: 80, host: 8000 # uwsgi
         override.vm.network "forwarded_port", guest: 9999, host: 9999 # Flask
