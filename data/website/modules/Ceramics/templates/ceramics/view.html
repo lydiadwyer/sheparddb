@@ -1,0 +1,20 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>A Single Artifact</h1>
+<table>
+    <tr>
+        <td>{{ entry.artifact_id }}</td>
+        <td>{{ entry.artifact_name }}</td>
+        <td>{{ entry.artifact_obj_reg }}</td>
+        <td>{{ entry.artifact_created }}</td>
+        <td>{{ entry.artifact_updated }}</td>
+        <td>
+            <a href="{{ url_for('artifacts.edit_artifact',
+                 artifact_id=entry.artifact_id) }}">Edit</a>
+            <a href="{{ url_for('artifacts.delete_artifact',
+                 artifact_id=entry.artifact_id) }}">Delete</a>
+        </td>
+    </tr>
+</table>
+          <a href=" {{ url_for('artifacts.view_all') }} ">View All</a>
+{% endblock %}

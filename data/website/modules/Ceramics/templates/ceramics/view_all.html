@@ -1,0 +1,24 @@
+{% extends "global.html" %}
+{% block body_content %}
+    <h1>Ceramics</h1>
+    <a href="{{ url_for('ceramics.view_all_ceramics') }}">add</a>
+    <table>
+    <tr>
+        <th>Ceramc Type</th>
+        <th>Ceramic Ware</th>
+        <th>Ceramic Form</th>
+        <th>Ceramic Registration ID</th>
+    </tr>
+    {% for entry in Ceramics.objects() %}
+    <tr>
+        <td>{{ entry.ceramic_type }}</td>
+        <td>{{ entry.ceramic_ware }}</td>
+        <td>{{ entry.ceramic_form }}</td>
+        <td>{{ entry.ceramic_reg_id }}</td>
+        <td>
+
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
