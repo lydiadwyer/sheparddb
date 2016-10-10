@@ -2,11 +2,17 @@
 {% block body_content %}
     <h1>Add A Ceramic Object</h1>
     <form method="POST" action="{{ url_for('ceramics.add_ceramic') }}">
+        <label>Ceramic Type:</label>
         <input type="text" name="ceramic_type" />
+        <label>Ceramic Ware:</label>
         <input type="text" name="ceramic_ware" />
+        <label>Ceramic Form:</label>
         <input type="text" name="ceramic_form" />
+        <label>Ceramic Registration ID (Integer):</label>
         <input type="text" name="ceramic_reg_id" />
+        <label>Historical Period:</label>
         <input type="text" name="date_period" />
+        <label>Excavated From:</label>
         <input type="text" name="excavated_from" />
         <input type="submit" value="submit" />
     </form>

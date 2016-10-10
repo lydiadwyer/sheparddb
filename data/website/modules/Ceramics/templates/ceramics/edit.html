@@ -1,10 +1,26 @@
 {% extends "global.html" %}
 {% block body_content %}
-    <h1>Edit An Artifact</h1>
-    <form method="POST" action="{{ url_for('artifacts.edit_artifact', artifact_id=entry.artifact_id) }}">
-        <input type="text" name="artifact_name" value="{{ entry.artifact_name }}"/>
-        <input type="text" name="artifact_obj_reg"
-            value="{{ entry.artifact_obj_reg }}"/>
+    <h1>Edit A Ceramic Object</h1>
+    <form method="POST" action="{{ url_for('ceramics.edit_ceramic',
+         id=entry.id) }}">
+        <label>Ceramic Type:</label>
+        <input type="text" name="ceramic_type"
+            value="{{ entry.ceramic_type }}"/>
+        <label>Ceramic Ware:</label>
+        <input type="text" name="ceramic_ware"
+            value="{{ entry.ceramic_ware }}"/>
+        <label>Ceramic Form:</label>
+        <input type="text" name="ceramic_form"
+            value="{{ entry.ceramic_form }}"/>
+        <label>Ceramic Registration ID (Integer):</label>
+        <input type="text" name="ceramic_reg_id"
+            value="{{ entry.ceramic_reg_id }}"/>
+        <label>Historical Period:</label>
+        <input type="text" name="date_period"
+            value="{{ entry.date_period }}"/>
+        <label>Excavated From:</label>
+        <input type="text" name="excavated_from"
+            value="{{ entry.excavated_from }}"/>
         <input type="submit" value="submit" />
     </form>
 {% endblock %}

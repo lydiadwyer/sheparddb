@@ -10,17 +10,30 @@ function isUpper(xStr){
     var regEx = /^[A-Z ]+$/;
     return xStr.match(regEx);
 }
-function verify_country() {
+function verify_ceramic() {
 
     // flag for any value errors
     var form_is_valid = true;
 
     // retrieve the form values
-    var country_name = document.getElementById('country_name').value;
-    var country_name_msg = document.getElementById("country_name_msg");
-    // retrieve the form values
-    var country_abrev = document.getElementById('country_abrev').value;
-    var country_abrev_msg = document.getElementById("country_abrev_msg");
+    var ceramic_type = document.getElementById('ceramic_type').value;
+    var ceramic_type_msg = document.getElementById("ceramic_type_msg");
+
+    var ceramic_ware = document.getElementById('ceramic_ware').value;
+    var ceramic_ware_msg = document.getElementById("ceramic_ware_msg");
+
+    var ceramic_form = document.getElementById('ceramic_form').value;
+    var ceramic_form_msg = document.getElementById("ceramic_form_msg");
+
+    var ceramic_reg_id = document.getElementById('ceramic_reg_id').value;
+    var ceramic_reg_id_msg = document.getElementById("ceramic_reg_id_msg");
+
+    var date_period = document.getElementById('date_period').value;
+    var date_period_msg = document.getElementById("date_period_msg");
+
+    var excavated_from = document.getElementById('excavated_from').value;
+    var excavated_from_msg = document.getElementById("excavated_from_msg");
+
 
     // clear out the error message
     country_name_msg.innerHTML = "";

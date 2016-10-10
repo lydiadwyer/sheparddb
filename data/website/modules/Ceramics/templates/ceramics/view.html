@@ -3,19 +3,30 @@
     <h1>A Single Ceramic Artifact</h1>
 <table>
     <tr>
+        <th>ID</th>
         <th>Ceramc Type</th>
         <th>Ceramic Ware</th>
         <th>Ceramic Form</th>
         <th>Ceramic Registration ID</th>
         <th>Period</th>
         <th>Excavation Site</th>
+    </tr>
+    <tr>
+        <td>{{ entry.id }}</td>
+        <td>{{ entry.ceramic_type }}</td>
+        <td>{{ entry.ceramic_ware }}</td>
+        <td>{{ entry.ceramic_form }}</td>
+        <td>{{ entry.ceramic_reg_id }}</td>
+        <td>{{ entry.date_period }}</td>
+        <td>{{ entry.excavated_from }}</td>
         <td>
             <a href="{{ url_for('ceramics.edit_ceramic',
-                 artifact_id=entry.artifact_id) }}">Edit</a>
+                 id=entry.id) }}">Edit</a>
             <a href="{{ url_for('ceramics.delete_ceramic',
-                 artifact_id=entry.artifact_id) }}">Delete</a>
+                 id=entry.id) }}">Delete</a>
         </td>
     </tr>
+
 </table>
           <a href=" {{ url_for('ceramics.view_all_ceramics') }} ">View All</a>
 {% endblock %}
