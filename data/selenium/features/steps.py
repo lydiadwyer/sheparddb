@@ -52,6 +52,7 @@ def click_button_by_value(step, button_value):
         button.click()
 
 def find_button_by_value(browser, attribute):
+    """ find a button by its value """
     xpath = "//input[@type='button' and @value='%s']" % attribute
     elems = browser.find_elements_by_xpath(xpath)
     return elems[0] if elems else False
@@ -61,7 +62,7 @@ def find_button_by_value(browser, attribute):
 @step('I select "(.*?)" from the dynamic select "(.*?)"')
 def select_option_by_value(step, option_val, select_id):
     with AssertContextManager(step):
-        
+        """ select an option in a dropdown list """
         # wait for jQuery to finish any Ajax calls
         driver = world.browser
         wait = WebDriverWait(driver, 30)
@@ -75,7 +76,7 @@ def select_option_by_value(step, option_val, select_id):
 @step('I click "(.*?)" from the auto-suggest')
 def click_autosuggest(step, text_val):
     with AssertContextManager(step):
-
+        """ """
         # wait for jQuery to finish any Ajax calls
         driver = world.browser
         driver.implicitly_wait(5)  # hackish, but that's jQuery :/
@@ -89,7 +90,7 @@ def click_autosuggest(step, text_val):
 @step('I wait up to "(.*?)" seconds for jQuery')
 def jquery_wait(step, int_val):
     with AssertContextManager(step):
-
+        """ """
         # wait for jQuery to finish any Ajax calls
         driver = world.browser
         int_val = int(int_val)
@@ -100,7 +101,7 @@ def jquery_wait(step, int_val):
 @step('I wait "(.*?)" seconds')
 def jquery_wait(step, int_val):
     with AssertContextManager(step):
-
+        """ """
         # wait for jQuery to finish any Ajax calls
         driver = world.browser
         int_val = int(int_val)
@@ -113,6 +114,7 @@ def jquery_wait(step, int_val):
 
 @step('The element with id of "(.*?)" should have the css class "(.*?)"')
 def verify_css_class(step, css_id, css_class):
+    """ """
     with AssertContextManager(step):
         cssSelector = css_id + "." + css_class
         element = find_element_by_id(world.browser, cssSelector)

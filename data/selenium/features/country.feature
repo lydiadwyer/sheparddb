@@ -1,6 +1,6 @@
 Feature: Country, Add
 
-  Users's shoud be able to save Countries
+  Users's shoud be able to add Countries
 
 Scenario: 6a7b, Country Add failure, "Cyprus" country_name, "" country_abrev
   Given I go to "http://127.0.0.1:8080/countries/add"
