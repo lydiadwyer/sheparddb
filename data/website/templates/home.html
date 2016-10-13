@@ -1,29 +1,37 @@
-{% extends "global.html" %}
+<!doctype html>
+<html>
+<head>
+    <title>Shepard DB</title>
+    <script type="application/javascript"
+        src="{{ url_for('static', filename='jquery-3.1.0.min.js') }}"></script>
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ url_for('static', filename='style2.css') }}" />
+</head>
+<body>
 {% block body_content %}
-<h1>Hello World!</h1>
-
-<script type="application/javascript">
-"use strict";
-
-function do_the_ajax(){
-
-    // http://www.w3schools.com/jsref/dom_obj_event.asp
-    // http://api.jquery.com/jquery.ajax/
-    $.ajax({
-        url: "{{ url_for('countries.add_country') }}",
-        data: {'test': 1},
-        method: 'post'
-    }).done(function( data ) {
-        if ( console && console.log ) {
-            console.log( "Sample of data:", data );
-        }
-    });
-return false;
-};
-</script>
-<form  method="post" action="#" onsubmit="return do_the_ajax();">
-    <label>Text</label>
-    <input type="text" name="" value="" />
-    <input type="submit" value="submit" />
-</form>
+    <h1>Shepard DB</h1>
+    <ul class="w3-navbar w3-border w3-brown">
+        <li><a class="active" href="{{ url_for('home') }}">ShepardDB Home</a></li>
+        <li class="w3-dropdown-hover">
+            <a href="#">Countries <i class="fa fa-caret-down"></i></a>
+            <div class="w3-dropdown-content w3-white w3-card-4">
+                <a href="{{ url_for('countries.view_all_countries') }}">
+                    View All Countries</a>
+                <a href="{{ url_for('countries.add_country') }}">
+                    Add A Country</a>
+            </div>
+        </li>
+        <li class="w3-dropdown-hover">
+            <a href="#">Regions <i class="fa fa-caret-down"></i></a>
+            <div class="w3-dropdown-content w3-white w3-card-4">
+                <a href="{{ url_for('regions.view_all_regions') }}">
+                    View All Regions</a>
+                <a href="{{ url_for('regions.add_region') }}">
+                    Add A Region</a>
+            </div>
+        </li>
+    </ul>
 {% endblock %}
+</body>
+</html>

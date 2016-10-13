@@ -1,0 +1,241 @@
+@CHARSET "UTF-8";
+
+/* Colors */
+/* 15% grey = #262626 */
+/* 30% grey = #4C4C4C */
+/* 45% grey = #737373*/
+/* 60% grey = #9A9A9A*/
+/* 85% grey = #D8D8D8*/
+
+*{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html {
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+}
+body{
+    position: relative;
+    padding: 2em;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+html, td, th, p, h1, h2, h3, h4, h5, h6, input, button, select,
+optgroup, option, label, blockquote{
+    font-family: Helvetica, Arial, san-serif;
+    line-height: 1.5em;
+    color: #000;
+    font-size: 14px;
+}
+
+
+
+                                                                    /* Text */
+h1{
+    font-size: 2em;
+    font-weight: 700;
+}
+h2{
+    font-size: 1.5em;
+    font-weight: 700;
+}
+p{
+    font-weight: 400;
+    padding-bottom: 1.5em;
+}
+blockquote{
+    width: 90%;
+    text-align: center;
+    font-size: 3em;
+    line-height: 1.25em;
+    margin: 0 auto 32px;
+    font-family: Times New Roman;
+    font-style: italic;
+}
+a{
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+
+ul{
+    list-style-type: none;
+    width: 100%;
+
+}
+li{
+    float: left;
+    display: block;
+    width: auto;
+
+    line-height: 1.5em;
+    white-space: normal;
+}
+.active{
+    background-color: #008888;
+    color: #000000;
+}
+ul li ul{
+    margin-left: 16px;
+    display: inline;
+}
+ul li ul li{
+    width: auto;
+    margin-left: 16px;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+
+}
+th{
+    height: 50px;
+    text-align: center;
+    margin: 0;
+    border: 2px solid #000;
+    padding: 1em;
+    background-color: #099;
+    color: black;
+}
+
+td{
+    margin: 0;
+    border: 2px solid #000;
+    padding: 1em;
+    text-align: left;
+}
+tr:hover {background-color: #ddd;}
+
+
+
+
+                                                                    /* Forms */
+label{
+    display: block;
+    clear: both;
+    margin: 0 0 4px;
+    font-weight: 700;
+    height: 16px;
+}
+label span{
+    color: #737373;
+}
+input[type="text"],
+input[type="password"],
+input[type="button"],
+input[type="submit"],
+input[type="number"],
+input[type="email"],
+textarea{
+    border: 1px solid #737373;
+    padding: 2px;
+    margin: 0 0 16px;
+    font-size: 1em;
+    color:#000;
+    background-color: #fff;
+}
+input[type="text"],
+input[type="number"]{
+    color: #000;
+    width: 75%;
+}
+div.mce-tinymce{
+    margin-bottom: 15px;
+}
+select{
+    width: 60%;
+    border: 1px solid #737373;
+    height: 32px;
+    padding: 0;
+    margin-bottom: 16px;
+
+    font-size: 1em;
+    text-align: left;
+    color:#000;
+    background-color: #fff;
+}
+option{
+    text-align: left;
+    padding-left: 16px;
+    padding-top: 16px;
+    color: #000;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea{
+    width: 100%;
+    height: 32px;
+    clear: both;
+}
+
+input[type="submit"],
+input[type='button']{
+    margin: 0;
+    border: 1px solid #9A9A9A;
+    padding: 6px 8px 8px 8px;
+    height: 32px;
+    min-width: 86px;
+
+    color: #FFF;
+    background-color: #000;
+    font-weight: 700;
+}
+input[type="submit"]{
+    background-color: #FFF;
+    color: #000;
+}
+input[type="submit"]:hover,
+input[type='button']:hover{
+    cursor: pointer;
+}
+input[type='button']{
+    float: left;
+}
+input[value="Cancel"]{
+    clear: left;
+}
+input[type="checkbox"]{
+    float: left;
+    margin: 8px 8px 0 0;
+}
+input[type='submit']{
+    float: right;
+    clear: right;
+}
+input[value="Remove"]{
+    margin-right: 16px;
+    float: right;
+}
+input.error,
+input.input-error,
+select.input-error{
+    border: 1px solid red;
+}
+input.input-error + ul,
+input.error-resolved + ul,
+select.input-error + ul,
+select.error-resolved + ul{
+    display: none;
+}
+input.input-error + ul li{
+    color: red;
+}
+form div{
+    float: left;
+}
+form span.error_msg{
+    color: red;
+}

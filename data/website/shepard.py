@@ -6,6 +6,7 @@ import logging
 from logging import Formatter
 from logging.handlers import WatchedFileHandler
 from flask import Flask, render_template
+from mongoengine import QuerySet
 
 from modules.Shared.database import db, mongo
 
@@ -28,6 +29,7 @@ def create_flask():
     # set up mongo database handler
     mongo.app = app
     mongo.init_app(app)
+
 
     # configure logger
     # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.logger
@@ -57,7 +59,7 @@ def create_flask():
     app.register_blueprint(regions)
     app.register_blueprint(cities)
     app.register_blueprint(ceramics)
-    
+
     # http://flask.pocoo.org/docs/0.11/api/#flask.Flask.route
     @app.route('/')
     def home():

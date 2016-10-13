@@ -24,6 +24,7 @@ service mongod restart
 
 # configure Mongo
 # INSECURE!!!
+# default mongodb database location is /var/lib/mongodb
 cp /vagrant/mongo/mongod.conf /etc/mongod.conf
 service mongod restart
 
@@ -102,12 +103,6 @@ pip install --quiet mock coverage nose nosexcover clonedigger
 
 # install requirements
 pip install -r /vagrant/pip_requirements.txt 2>&1
-
-
-
-
-
-
 
 
 
