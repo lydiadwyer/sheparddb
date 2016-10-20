@@ -31,7 +31,7 @@ this problem.
 ```shell
 sudo su -
 cd /var/www/sheparddb/
-sudo ./shepard.py
+sudo  ./shepard.py
 open http://127.0.0.1:9999 in a browser
 ```
 
@@ -197,12 +197,12 @@ wget -q http://selenium-release.storage.googleapis.com/2.53/selenium-server-stan
 # install Selenium Chrome driver
 # https://sites.google.com/a/chromium.org/chromedriver/downloads
 # https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
-wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
+wget http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip
 unzip ./chromedriver_linux64.zip
 sudo mv ./chromedriver /usr/local/sbin
 
 # install Python lettuce_webdriver
-sudo -H pip install lettuce lettuce_webdriver nose python-Levenshtein
+sudo -H pip install lettuce lettuce_webdriver nose python-Levenshtein --upgrade
 
 # install Python postgres driver
 # http://initd.org/psycopg/docs/install.html#installation
