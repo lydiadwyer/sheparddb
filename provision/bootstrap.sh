@@ -26,10 +26,12 @@ service mongod restart
 # INSECURE!!!
 # default mongodb database location is /var/lib/mongodb
 cp /vagrant/mongo/mongod.conf /etc/mongod.conf
+cp /vagrant/mongo/ceramictest.json /etc/ceramictest.json
+mongoimport --jsonArray -d sheparddb -c ceramic --file /etc/ceramictest.json
 service mongod restart
 
 
-
+exit;
 
 
 
