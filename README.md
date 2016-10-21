@@ -154,7 +154,7 @@ sudo service mongod restart
  MongoDB test dataset in data folder, primer-dataset.json
 
 # to enter mongo on console
-```mongo```
+```mongod```
 
 
 
