@@ -31,7 +31,6 @@ mongoimport --jsonArray -d sheparddb -c ceramic --file /etc/ceramictest.json
 service mongod restart
 
 
-exit;
 
 
 
