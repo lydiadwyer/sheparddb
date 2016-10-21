@@ -59,8 +59,7 @@ DROP TABLE IF EXISTS countries CASCADE;
 CREATE TABLE countries(
     country_id         SERIAL PRIMARY KEY,
     country_name       VARCHAR(128),
-    country_abrev      VARCHAR(128),
-    country_created    TIMESTAMP
+    country_abrev      VARCHAR(128)
 );
 ALTER TABLE countries OWNER TO shepard;
 
