@@ -28,6 +28,12 @@ function verify_region() {
         form_is_valid = false;
     }
 
+    // character check for region_name
+    if(!region_name_msg.innerHTML && !isAlpha(region_name)) {
+        region_name_msg.innerHTML = "Please fill in a region name only with English letters.";
+        form_is_valid = false;
+    }
+
     // ensure region_name is longer than 3 characters
     if(!region_name_msg.innerHTML && region_name.length < 4) {
         region_name_msg.innerHTML = "Please fill in the region name completely.";
@@ -40,11 +46,7 @@ function verify_region() {
         form_is_valid = false;
     }
 
-    // character check for region_name
-    if(!region_name_msg.innerHTML && !isAlpha(region_name)) {
-        region_name_msg.innerHTML = "Please fill in a region name only with English letters.";
-        form_is_valid = false;
-    }
+
 
     // ensure country_id is not null
     if(!country_id || "" == country_id) {
