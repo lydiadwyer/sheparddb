@@ -96,7 +96,7 @@ echo "INFO: Installing Python..."
 apt-get -q install -y python=2.7.5* python-dev python-pip \
 	libpq-dev python-gi libxml2-dev libxslt-dev libffi-dev libssl-dev
 pip install pip requests --upgrade
-pip install requests['security']
+pip install requests[security] pyopenssl ndg-httpsclient pyasn1
 
 # install code quality tools
 pip install -qqq pylint 2>&1
