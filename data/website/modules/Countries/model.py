@@ -32,6 +32,7 @@ class Country(db.Model):
         
 # notes on this func
 # http://stackoverflow.com/questions/7102754/jsonify-a-sqlalchemy-result-set-in-flask
+# can add a function to process the relationships
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
