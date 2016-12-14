@@ -31,7 +31,7 @@ this problem.
 ```shell
 sudo su -
 cd /var/www/sheparddb/
-sudo  ./shepard.py
+python ./shepard.py
 open http://127.0.0.1:9999 in a browser
 ```
 
