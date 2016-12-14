@@ -22,7 +22,6 @@ class Country(db.Model):
     country_id = Column(Integer, primary_key=True)
     country_name = Column(String(128), unique=True)
     country_abrev = Column(String(128), unique=True)
-    country_created = Column(DateTime)
     regions = relationship("Region", cascade="delete, delete-orphan")
     # dont need city or excavations as children? should auto-cascade on delete?
     # http://docs.sqlalchemy.org/en/latest/orm/cascades.html
@@ -30,3 +29,13 @@ class Country(db.Model):
     def __init__(self, country_name="", country_abrev=""):
         self.country_name = country_name
         self.country_abrev = country_abrev
+        
+# notes on this func
+# http://stackoverflow.com/questions/7102754/jsonify-a-sqlalchemy-result-set-in-flask
+    def serialize(self):
+       """Return object data in easily serializeable format"""
+       return {
+           'country_id'         : self.country_id,
+           'country_name'       : self.country_name,
+           'country_abrev'      : self.country_abrev
+       }

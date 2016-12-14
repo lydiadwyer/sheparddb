@@ -4,7 +4,9 @@
 
 import re
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
-    request, abort, flash, jsonify
+    request, abort, flash, jsonify, make_response
+from psycopg2 import IntegrityError
+from sqlalchemy import exc
 from modules.Countries.model import Country
 from modules.Shared.database import db
 
@@ -18,60 +20,63 @@ countries = Blueprint(
     url_prefix='/countries'
 )
 
-@countries.route('/')
+@countries.route('/', methods=['GET'])
 def view_all_countries():
     """ homepage with all countries in a table """
-    return render_template('countries/view_all.html', Countries=Country)
+    
+    # serialize all the Country database entries into an array of dicts
+    Countries = []
+    for entry in Country.query.order_by('country_id').all():
+        Countries.append(entry.serialize())
+    
+    return jsonify(Countries)
+    #return render_template('countries/view_all.html', Countries=Country)
 
 
-@countries.route('/view/<country_id>')
+@countries.route('/<country_id>', methods=['GET'])
 def view_country(country_id):
     """ view a single country in detail """
     # validate view to return view_country page if country_id exists,
     # else return to view all
     entry = Country.query.get(country_id)
     if not entry is None:
-        return render_template('countries/view.html', entry=entry)
+        return jsonify(entry.serialize())
+        #return render_template('countries/view.html', entry=entry)
     else:
-        flash('Entry does not exist.', 'error')
-        return redirect(url_for('countries.view_all_countries'))
+        abort(500, "Entry does not exist")
 
-@countries.route('/add', methods=['GET', 'POST'])
+@countries.route('/', methods=['POST'])
 def add_country():
-    """ add an country page function """
+    """ add a country function """
 
-
-    # init variables
-    entry = Country()  # creates a model.py instance, instance only has a name right now
+    #make an entry to insert
+    entry = Country()  
     error_msg = {}
     form_is_valid = True
 
-    if request.method == 'GET':
-        return render_template('countries/add.html', entry=entry, \
-                               error_msg=error_msg)
+    # validate input
+    # the form_validate is actually grabbing the incoming request data
+    [entry, form_is_valid, error_msg] = form_validate_country(entry)
 
-    if request.method == 'POST':
-        # validate input
-        [entry, form_is_valid, error_msg] = form_validate_country(entry)
+    # check if the form is valid
+    if not form_is_valid:
+        abort(make_response(jsonify({'error_msg': error_msg}), 400))
 
-        # check if the form is valid
-        if not form_is_valid:
-            # check if it gets an ajax request
-            if request.is_xhr:
-                return jsonify({ 'error_msg': error_msg})
-            # current_app.logger.info('invalid add country')
-            return render_template('countries/add.html', entry=entry, \
-                                   error_msg=error_msg)
-
-        # the data is valid, save it
+    # if the data is valid, try to save it
+    # else throw an error
+    try:
         db.session.add(entry)
         db.session.commit()
+    except exc.SQLAlchemyError:
+        db.session.rollback()
+        db.session.flush()
+        abort(make_response(
+            jsonify({'error_msg': "You tried to add something that already exists"}), 400))
+        
+    
+    return jsonify(entry.serialize())
 
-        return redirect(url_for('countries.view_country', \
-                                country_id=entry.country_id))
-    # current_app.logger.error("unsupported method")
-
-@countries.route('/edit/<country_id>', methods=['GET', 'POST'])
+@countries.route('/<country_id>', methods=['PUT'])
 def edit_country(country_id):
     """ edit country details """
 
@@ -80,26 +85,48 @@ def edit_country(country_id):
     error_msg = {}
     form_is_valid = True
 
-    if request.method == 'GET':
-        return render_template('countries/edit.html', \
-                               entry=entry, error_msg=error_msg)
+    # validate input
+    # the form_validate function is where the request data is being grabbed
+    [entry, form_is_valid, error_msg] = form_validate_country(entry)
 
-    if request.method == 'POST':
+    # check if the form is valid
+    if not form_is_valid:
+        abort(make_response(jsonify({'error_msg': error_msg}), 400))
 
-        # validate input
-        [entry, form_is_valid, error_msg] = form_validate_country(entry)
-
-        # check if the form is valid
-        if not form_is_valid:
-            # current_app.logger.info('invalid edit country: ' + str(entry))
-            return render_template('countries/edit.html', entry=entry, \
-                                   error_msg=error_msg)
-
-        # the data is valid, save it
+    # if the data is valid, try to save it
+    # else throw an error
+    try:
         db.session.commit()
-        return redirect(url_for('countries.view_country', \
-                                country_id=entry.country_id))
+    except exc.SQLAlchemyError:
+        db.session.rollback()
+        db.session.flush()
+        abort(make_response(
+            jsonify({'error_msg': "The edit contained something that already exists"}), 400))
+        
+    
+    return jsonify(entry.serialize())
    # current_app.logger.error("unsupported method")
+
+@countries.route('/<country_id>', methods=['DELETE'])
+def delete_country(country_id):
+    """ delete a country """
+    entry = Country.query.get(country_id)
+    # check something doesnt exist
+    if entry is None:
+        return abort(400, 'Entry does not exist.')
+    
+    try:
+        db.session.delete(entry)
+        db.session.commit()
+    except exc.SQLAlchemyError:
+        db.session.rollback()
+        db.session.flush()
+        abort(make_response(
+            jsonify({'error_msg': "The delete went wrong"}), 400))
+        
+    
+    return view_all_countries()
+
 
 def form_validate_country(entry):
     """ validate Country form data """
@@ -107,7 +134,7 @@ def form_validate_country(entry):
     form_is_valid = True
     error_msg = {}
     # retrieve data from the global Request object
-    data = request.form
+    data = request.get_json()
     
     if not 'country_name' in data \
         or not 'country_abrev' in data:
@@ -169,13 +196,3 @@ def form_validate_country(entry):
 
     return [entry, form_is_valid, error_msg]
 
-@countries.route('/delete/<country_id>')
-def delete_country(country_id):
-    """ delete a country """
-    entry = Country.query.get(country_id)
-    # check something doesnt exist
-    if entry is None:
-        return abort(400, 'Entry does not exist.')
-    db.session.delete(entry)
-    db.session.commit()
-    return redirect(url_for('countries.view_all_countries'))
