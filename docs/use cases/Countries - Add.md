@@ -20,9 +20,9 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	- I see the input called "country_name"
 	- I see the button called "Submit"
 6. I fill in the input "country_name"
-	a. I fill in "Cyprus"
-	b. I fill in "" (null)
-	c. I fill in -1 (type mismatch)
+    a. I fill in "Cyprus" (expected)
+    b. I fill in "" (null)
+    c. I fill in -1 (type mismatch)
     d. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
     e. I fill in "a" (underflow)
     f. I fill in "This    is a multispace test" (excess internal whitespace)
