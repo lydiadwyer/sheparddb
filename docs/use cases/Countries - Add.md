@@ -20,15 +20,15 @@ As an Archeologist, I want to have a list of countries and select them when savi
 	- I see the input called "country_name"
 	- I see the button called "Submit"
 6. I fill in the input "country_name"
-    1. I fill in "Cyprus" (expected)
-    2. I fill in "" (null)
-    3. I fill in -1 (type mismatch)
-    4. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
-    5. I fill in "a" (underflow)
-    6. I fill in "This    is a multispace test" (excess internal whitespace)
-    7. I fill in "a!@#$%^&*()-=☺" (weird chars)
-    8. I fill in "<script>alert("hello!")</script>" (XSS)
-    9. I fill in " onhover="alert('hello!')" " (XSS inline)
+    6.1. I fill in "Cyprus" (expected)
+    6.2. I fill in "" (null)
+    6.3. I fill in -1 (type mismatch)
+    6.4. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
+    6.5. I fill in "a" (underflow)
+    6.6. I fill in "This    is a multispace test" (excess internal whitespace)
+    6.7. I fill in "a!@#$%^&*()-=☺" (weird chars)
+    6.8. I fill in "<script>alert("hello!")</script>" (XSS)
+    6.9. I fill in " onhover="alert('hello!')" " (XSS inline)
 7. I fill in the input "country_abrev"
     a. I fill in "CY"
     b. I fill in "" (null)
