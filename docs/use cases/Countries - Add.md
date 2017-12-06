@@ -20,22 +20,22 @@ As an Archeologist, I want to have a list of countries and select them when savi
   - I see the input called "country_name"
   - I see the button called "Submit"
 6. I fill in the input "country_name"
-  a. I fill in "Cyprus" (expected)
-  b. I fill in "" (null)
-  c. I fill in -1 (type mismatch)
-  d. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
-  e. I fill in "a" (underflow)
-  f. I fill in "This    is a multispace test" (excess internal whitespace)
-  g. I fill in "a!@#$%^&*()-=☺" (weird chars)
-  h. I fill in "<script>alert("hello!")</script>" (XSS)
-  i. I fill in ' onhover="alert('hello!')" ' (XSS inline)
+  6a. I fill in "Cyprus" (expected)
+  6b. I fill in "" (null)
+  6c. I fill in -1 (type mismatch)
+  6d. I fill in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz" (overflow)
+  6e. I fill in "a" (underflow)
+  6f. I fill in "This    is a multispace test" (excess internal whitespace)
+  6g. I fill in "a!@#$%^&*()-=☺" (weird chars)
+  6h. I fill in "<script>alert("hello!")</script>" (XSS)
+  6i. I fill in ' onhover="alert('hello!')" ' (XSS inline)
 7. I fill in the input "country_abrev"
-  a. I fill in "CY"
-  b. I fill in "" (null)
-  c. I fill in -1 (type mismatch)
-  d. I fill in "aaz" (overflow)
-  e. I fill in "a" (underflow)
-  f. I fill in "a!@#$%^&*()-=☺" (weird chars)
+  7a. I fill in "CY"
+  7b. I fill in "" (null)
+  7c. I fill in -1 (type mismatch)
+  7d. I fill in "aaz" (overflow)
+  7e. I fill in "a" (underflow)
+  7f. I fill in "a!@#$%^&*()-=☺" (weird chars)
 8. I click "Submit"
   6a7a. I am forwarded
     7b. I see an error message, for "country_abrev"
