@@ -1,5 +1,7 @@
 # ShepardDB
 
+This is so out of date now
+
 # About
 
 ShepardDB is a project for storing archaeological data, and making it accessable \
